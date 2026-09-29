@@ -2655,6 +2655,18 @@ export class HeatPumpFlowCard extends LitElement {
   public getCardSize(): number {
     return 5;
   }
+
+  /**
+   * Home Assistant Sections view sizing.
+   * Use the full width of the containing section. If the section itself spans
+   * multiple dashboard columns, the card will span that complete width too.
+   * Rows are intentionally omitted so the SVG keeps its natural aspect ratio.
+   */
+  public getGridOptions(): { columns: 'full' } {
+    return {
+      columns: 'full',
+    };
+  }
 }
 
 // Register the card with Home Assistant
