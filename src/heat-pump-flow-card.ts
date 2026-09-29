@@ -945,14 +945,14 @@ export class HeatPumpFlowCard extends LitElement {
                   opacity="${g2ValveState.isActive ? 0.35 : 1}"/>
 
             <!-- DHW branch to coil -->
-            <path d="M 385 295 H 250 V 405 H 230"
+            <path d="M 385 295 H 250 V 447 H 230"
                   stroke="${dhwBranchColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 1 : 0.35}"/>
 
             <!-- Returns merge before the 40 L buffer -->
             <path d="M 555 470 V 525 H 405"
                   stroke="${returnColor}" stroke-width="12" fill="none" stroke-linecap="butt"/>
-            <path d="M 230 510 H 405 V 525"
+            <path d="M 230 557 H 405 V 525"
                   stroke="${dhwReturnColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 1 : 0.35}"/>
             <path d="M 405 525 H 335"
@@ -1088,15 +1088,14 @@ export class HeatPumpFlowCard extends LitElement {
                     font-size="${labelSize}">${dhwVolume} L</text>
 
               <!-- Heat-pump coil: deliberately prominent -->
-              <path d="M 120 65 H 95
-                       Q 68 65, 68 83
-                       Q 68 101, 95 101
-                       Q 112 101, 112 119
-                       Q 112 137, 85 137
-                       Q 58 137, 58 155
-                       Q 58 173, 85 173
-                       Q 112 173, 112 191
-                       Q 112 205, 95 205
+              <path d="M 120 92 H 98
+                       Q 72 92, 72 108
+                       Q 72 124, 98 124
+                       Q 112 124, 112 140
+                       Q 112 156, 86 156
+                       Q 60 156, 60 172
+                       Q 60 188, 86 188
+                       Q 112 188, 112 202
                        H 120"
                     stroke="${g2ValveState.isActive ? hot : neutral}"
                     stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1105,7 +1104,7 @@ export class HeatPumpFlowCard extends LitElement {
 
               <!-- Separate electric immersion element -->
               <g opacity="${electricEnabled ? 1 : 0}">
-                <path d="M 25 82 V 178 M 25 116 H 42 M 25 146 H 42"
+                <path d="M 25 96 V 186 M 25 122 H 42 M 25 154 H 42"
                       stroke="${elementColor}" stroke-width="6" fill="none" stroke-linecap="round"/>
                 <text x="25" y="198" text-anchor="middle" fill="${elementColor}"
                       font-size="${labelSize}" font-weight="bold">
@@ -1124,12 +1123,12 @@ export class HeatPumpFlowCard extends LitElement {
             </g>
 
             <!-- Potable water: cold in at bottom, hot out at top, both bend right -->
-            <path d="M 170 575 V 603 H 300"
+            <path d="M 170 590 V 610 H 300"
                   stroke="${this.config.dhw_tank?.tank_inlet_color || '#3498db'}"
                   stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
             ${this.renderIcon(
               this.config.dhw_tank?.tank_inlet_icon_url || 'mdi:water-outline',
-              303, 584, 34, 34, 0.95, this.config.dhw_tank?.tank_inlet_icon_color
+              303, 591, 34, 34, 0.95, this.config.dhw_tank?.tank_inlet_icon_color
             )}
 
             <path d="M 170 355 V 325 H 300"
@@ -1193,14 +1192,14 @@ export class HeatPumpFlowCard extends LitElement {
               returnColor
             )}
             ${this.renderTemperatureIndicator(
-              255, 405,
+              255, 447,
               this.config.temperature_status?.points?.dhw_inlet?.entity || this.config.dhw_tank?.inlet_temp_entity,
               dhwState.inletTemp,
               this.config.temperature_status?.points?.dhw_inlet,
               dhwBranchColor
             )}
             ${this.renderTemperatureIndicator(
-              255, 510,
+              255, 557,
               this.config.temperature_status?.points?.dhw_outlet?.entity || this.config.dhw_tank?.outlet_temp_entity,
               dhwState.outletTemp,
               this.config.temperature_status?.points?.dhw_outlet,
