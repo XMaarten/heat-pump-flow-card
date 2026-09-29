@@ -942,8 +942,8 @@ export class HeatPumpFlowCard extends LitElement {
             <path d="M 405 220 V 258"
                   stroke="${supplyColor}" stroke-width="12" fill="none" stroke-linecap="butt"/>
 
-            <!-- 3-way valve -> underfloor heating (down) -->
-            <path d="M 405 302 V 405"
+            <!-- 3-way valve -> underfloor heating (down into top of the floor loop) -->
+            <path d="M 405 302 V 390"
                   stroke="${heatingBranchColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 0.30 : 1}"/>
 
@@ -952,14 +952,14 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke="${dhwBranchColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 1 : 0.30}"/>
 
-            <!-- Returns: floor + DHW merge, then through 40 L buffer, then back to outdoor unit -->
-            <path d="M 280 505 H 245 V 557 H 210"
+            <!-- Returns: floor exits downward, joins DHW return, then through the 40 L buffer to outdoor unit -->
+            <path d="M 405 570 V 590 H 210 V 557"
                   stroke="${returnColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 0.30 : 1}"/>
-            <path d="M 620 485 H 575 V 557 H 210"
+            <path d="M 620 505 H 575 V 557 H 210"
                   stroke="${dhwReturnColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 1 : 0.30}"/>
-            <path d="M 130 557 H 15 V 240 H 30"
+            <path d="M 130 557 H 15 V 145 H 30"
                   stroke="${returnColor}" stroke-width="12" fill="none" stroke-linecap="butt"/>
 
             <!-- OUTDOOR UNIT -->
@@ -972,14 +972,14 @@ export class HeatPumpFlowCard extends LitElement {
                 ${this.config.heat_pump?.display_name || 'Buitenunit'}
               </text>
 
-              <text x="18" y="48" fill="#bdc3c7" font-size="${labelSize}">WP uit</text>
+              <text x="18" y="48" fill="#bdc3c7" font-size="${labelSize}">Retour</text>
               <text x="18" y="69" fill="white" font-size="${valueSize}" font-weight="bold">
-                ${this.formatValue(hpState.outletTemp, 1)}°
+                ${this.formatValue(hpState.inletTemp, 1)}°
               </text>
 
-              <text x="192" y="48" text-anchor="end" fill="#bdc3c7" font-size="${labelSize}">Retour</text>
+              <text x="192" y="48" text-anchor="end" fill="#bdc3c7" font-size="${labelSize}">WP uit</text>
               <text x="192" y="69" text-anchor="end" fill="white" font-size="${valueSize}" font-weight="bold">
-                ${this.formatValue(hpState.inletTemp, 1)}°
+                ${this.formatValue(hpState.outletTemp, 1)}°
               </text>
 
               <circle cx="105" cy="126" r="37" fill="#34495e"
@@ -1090,40 +1090,45 @@ export class HeatPumpFlowCard extends LitElement {
               <text x="65" y="48" text-anchor="middle" fill="#bdc3c7"
                     font-size="${labelSize}">${dhwVolume} L</text>
 
-              <text x="65" y="77" text-anchor="middle" fill="white"
+              <!-- Current and target DHW temperatures side by side -->
+              <text x="34" y="69" text-anchor="middle" fill="#bdc3c7"
+                    font-size="${labelSize}">Huidig</text>
+              <text x="34" y="90" text-anchor="middle" fill="white"
                     font-size="${valueSize}" font-weight="bold">
                 ${tankTemp !== undefined ? this.formatValue(tankTemp, 1) + '°' : '—'}
               </text>
 
+              <text x="96" y="69" text-anchor="middle" fill="#bdc3c7"
+                    font-size="${labelSize}">Doel</text>
+              <text x="96" y="90" text-anchor="middle" fill="#e74c3c"
+                    font-size="${valueSize}" font-weight="bold">
+                ${targetTemp !== undefined ? this.formatValue(targetTemp, 1) + '°' : '—'}
+              </text>
+
               <!-- Heat-pump coil -->
-              <path d="M 0 85 H 24
-                       Q 55 85, 55 103
-                       Q 55 121, 28 121
-                       Q 14 121, 14 139
-                       Q 14 157, 42 157
-                       Q 70 157, 70 175
-                       Q 70 193, 42 193
-                       Q 14 193, 14 185
+              <path d="M 0 105 H 24
+                       Q 55 105, 55 122
+                       Q 55 139, 28 139
+                       Q 14 139, 14 156
+                       Q 14 173, 42 173
+                       Q 70 173, 70 190
+                       Q 70 207, 42 207
+                       Q 14 207, 14 205
                        H 0"
                     stroke="${g2ValveState.isActive ? hot : neutral}"
                     stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-              <text x="43" y="145" text-anchor="middle" fill="var(--primary-text-color)"
+              <text x="43" y="164" text-anchor="middle" fill="var(--primary-text-color)"
                     font-size="${labelSize}" font-weight="bold">Spiraal</text>
 
               <!-- Separate electric immersion element -->
               <g opacity="${electricEnabled ? 1 : 0}">
-                <path d="M 102 95 V 192 M 84 125 H 102 M 84 157 H 102"
+                <path d="M 102 110 V 205 M 84 138 H 102 M 84 170 H 102"
                       stroke="${elementColor}" stroke-width="6" fill="none" stroke-linecap="round"/>
-                <text x="102" y="208" text-anchor="middle" fill="${elementColor}"
+                <text x="102" y="220" text-anchor="middle" fill="${elementColor}"
                       font-size="${labelSize}" font-weight="bold">
                   ${electricCfg?.label || 'EL'}
                 </text>
               </g>
-
-              <text x="65" y="225" text-anchor="middle" fill="#e74c3c"
-                    font-size="${labelSize}" font-weight="bold">
-                Doel ${targetTemp !== undefined ? this.formatValue(targetTemp, 1) + '°' : '—'}
-              </text>
             </g>
 
             <!-- Potable water: cold in at bottom, hot out at top, both bend right -->
@@ -1144,24 +1149,31 @@ export class HeatPumpFlowCard extends LitElement {
             )}
 
             <!-- Underfloor heating -->
-            <g transform="translate(280, 405)" filter="url(#entity-shadow)">
-              <rect width="250" height="135" rx="12" fill="#273746" stroke="#34495e" stroke-width="2"/>
-              <text x="125" y="25" text-anchor="middle" fill="white"
+            <g transform="translate(255, 390)" filter="url(#entity-shadow)">
+              <rect width="300" height="180" rx="12" fill="#273746" stroke="#34495e" stroke-width="2"/>
+              <text x="150" y="28" text-anchor="middle" fill="white"
                     font-size="${componentSize}" font-weight="bold">
                 ${this.config.hvac?.name || 'Vloerverwarming'}
               </text>
 
-              <path d="M 28 52 H 210 Q 226 52 226 68 Q 226 84 210 84 H 40 Q 24 84 24 100 Q 24 112 40 112 H 216"
-                    fill="none" stroke="#e67e22" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M 30 60 H 250
+                       Q 270 60, 270 80
+                       Q 270 100, 250 100
+                       H 58
+                       Q 36 100, 36 122
+                       Q 36 140, 58 140
+                       H 254"
+                    fill="none" stroke="#e67e22" stroke-width="7"
+                    stroke-linecap="round" stroke-linejoin="round"/>
 
-              <text x="18" y="124" fill="#bdc3c7" font-size="${labelSize}">Huidig</text>
-              <text x="98" y="124" text-anchor="end" fill="white"
+              <text x="24" y="158" fill="#bdc3c7" font-size="${labelSize}">Huidig</text>
+              <text x="120" y="158" text-anchor="end" fill="white"
                     font-size="${valueSize}" font-weight="bold">
                 ${roomTemp !== undefined ? this.formatValue(roomTemp, 1) + '°' : '—'}
               </text>
 
-              <text x="150" y="124" fill="#bdc3c7" font-size="${labelSize}">Doel</text>
-              <text x="232" y="124" text-anchor="end" fill="#e67e22"
+              <text x="178" y="158" fill="#bdc3c7" font-size="${labelSize}">Doel</text>
+              <text x="276" y="158" text-anchor="end" fill="#e67e22"
                     font-size="${valueSize}" font-weight="bold">
                 ${roomTarget !== undefined ? this.formatValue(roomTarget, 1) + '°' : '—'}
               </text>
