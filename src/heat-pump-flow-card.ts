@@ -861,7 +861,7 @@ export class HeatPumpFlowCard extends LitElement {
 
     // Calculate pipe colors based on temperature delta
     const hpPipeColors = this.getPipeColors(hpState.outletTemp, hpState.inletTemp, hpState.flowRate);
-    const hvacPipeColors = this.getPipeColors(bufferState.supplyTemp, hvacState.returnTemp, hvacState.flowRate);
+    const hvacPipeColors = this.getPipeColors(commonReturn ? hpState.outletTemp : bufferState.supplyTemp, hvacState.returnTemp, hvacState.flowRate);
 
     // Extract individual pipe colors
     const hpOutletColor = hpPipeColors.hotPipe;
