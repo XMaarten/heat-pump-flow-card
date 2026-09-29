@@ -2289,6 +2289,19 @@ export class HeatPumpFlowCard extends LitElement {
                 this.config.dhw_tank?.temp_indicator_radius,
                 '#e74c3c'  // Red for DHW (always heating)
               )}
+
+              ${dhwState.targetTemp !== undefined ? svg`
+                <g>
+                  <text x="45" y="190" text-anchor="middle"
+                        fill="var(--secondary-text-color)"
+                        font-size="${this.getTextSize('label', 9)}">SET</text>
+                  <text x="45" y="205" text-anchor="middle"
+                        fill="#e74c3c"
+                        font-size="${this.getTextSize('value', 12)}" font-weight="bold">
+                    ${this.formatValue(dhwState.targetTemp, 1)}°
+                  </text>
+                </g>
+              ` : ''}
             </g>
 
             <!-- DHW Tank 2 (Secondary/Finishing Heater) - Optional -->
