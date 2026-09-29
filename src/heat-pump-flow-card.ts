@@ -936,7 +936,7 @@ export class HeatPumpFlowCard extends LitElement {
               </filter>
             </defs>
 
-            <!-- SUPPLY: outdoor -> indoor -> 3-way valve -->
+            <!-- SUPPLY: outdoor -> indoor -> 3-way valve (Daikin compact layout) -->
             <path d="M 240 145 H 300"
                   stroke="${supplyColor}" stroke-width="12" fill="none" stroke-linecap="butt"/>
             <path d="M 405 220 V 258"
