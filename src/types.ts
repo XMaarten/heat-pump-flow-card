@@ -10,7 +10,7 @@ export interface HeatPumpFlowCardConfig extends LovelaceCardConfig {
 
   // Overall hydraulic/visual layout
   layout?: {
-    type?: 'standard' | 'daikin_split'; // Dedicated compact Daikin split layout when selected
+    type?: 'standard' | 'daikin_split'; // Compact split-system layout with indoor unit and branch valve
   };
 
   // Heat Pump Configuration
