@@ -83,6 +83,7 @@ export interface HeatPumpFlowCardConfig extends LovelaceCardConfig {
 
   // Buffer Tank Configuration
   buffer_tank?: {
+    position?: 'standard' | 'common_return'; // Tank topology (default: standard)
     supply_temp_entity?: string;  // Supply temperature
     return_temp_entity?: string;  // Return temperature
     level_entity?: string;         // Tank level (optional)
@@ -117,6 +118,7 @@ export interface HeatPumpFlowCardConfig extends LovelaceCardConfig {
     inlet_temp_entity?: string;    // DHW coil inlet temperature
     outlet_temp_entity?: string;   // DHW coil outlet temperature
     tank_temp_entity?: string;     // DHW tank temperature (optional)
+    target_temp_entity?: string;   // DHW target/set temperature (optional; falls back to heat_pump.dhw_target_temp_entity)
     name?: string;                 // Tank display name (default: DHW)
     icon?: string;
     logo_url?: string;             // Logo URL (displayed left of label)
@@ -133,12 +135,12 @@ export interface HeatPumpFlowCardConfig extends LovelaceCardConfig {
     tank_inlet_flow_entity?: string;  // Street water flow rate (L/min) - optional, no animation if not provided
     tank_inlet_temp_entity?: string;  // Street water temperature
     tank_inlet_color?: string;        // Street water pipe color (default: #3498db light blue)
-    tank_inlet_icon_url?: string;     // Icon URL for water source (default: water tower icon)
+    tank_inlet_icon_url?: string;     // Icon URL for water source (default: mdi:water-outline)
     tank_inlet_icon_color?: string;   // Icon color for MDI icons (default: var(--primary-text-color))
     // Hot water outlet (heated water from tank to house)
     tank_outlet_temp_entity?: string; // Hot water outlet temperature
     tank_outlet_color?: string;       // Hot water outlet pipe color (default: #e74c3c red)
-    tank_outlet_icon_url?: string;    // Hot water outlet icon URL (default: faucet icon)
+    tank_outlet_icon_url?: string;    // Hot water outlet icon URL (default: mdi:water-thermometer)
     tank_outlet_icon_color?: string;  // Icon color for MDI icons (default: var(--primary-text-color))
     gradient?: {
       enabled?: boolean;            // Enable gradient visualization (default: true)
@@ -208,10 +210,13 @@ export interface HeatPumpFlowCardConfig extends LovelaceCardConfig {
 
   // HVAC/Load Configuration
   hvac?: {
+    type?: 'generic' | 'underfloor_heating'; // Load visualization type (default: generic)
     thermal_entity?: string;      // Thermal power consumed (W)
     flow_rate_entity?: string;    // Flow rate to radiant floor (L/min)
     supply_temp_entity?: string;  // Supply temperature
     return_temp_entity?: string;  // Return temperature
+    current_temp_entity?: string; // Current room/zone temperature
+    target_temp_entity?: string;  // Target room/zone temperature
     name?: string;
     icon?: string;
     logo_url?: string;            // Logo URL (displayed above HVAC load box)
@@ -255,7 +260,11 @@ export interface HeatPumpFlowCardConfig extends LovelaceCardConfig {
   // Text Style Configuration (for temperatures and flow rates)
   text_style?: {
     font_family?: string;      // Font family (default: 'Courier New, monospace' for computer-like look)
-    font_size?: number;        // Font size in px (default: 11)
+    font_size?: number;        // Base font size in px; now applied to SVG text (default: component-specific)
+    label_font_size?: number;  // Metric/secondary label size; overrides derived base size
+    value_font_size?: number;  // Metric/value size; overrides base size
+    temperature_font_size?: number; // Temperature circle text size; overrides base size
+    component_font_size?: number;   // Main component label size; overrides derived base size
     font_weight?: string;      // Font weight (default: 'bold')
     show_labels?: boolean;     // Show descriptive labels like "HP Supply:" (default: false)
   };
@@ -396,12 +405,15 @@ export interface HVACState {
   flowRate: number;
   supplyTemp: number;
   returnTemp: number;
+  currentTemp?: number;
+  targetTemp?: number;
 }
 
 export interface DHWTankState {
   inletTemp: number;         // DHW coil inlet (hot from HP)
   outletTemp: number;        // DHW coil outlet (return to HP)
   tankTemp?: number;         // Tank water temperature
+  targetTemp?: number;       // Tank target/set temperature
   tankInletFlow?: number;    // Street water flow rate (L/min)
   tankInletTemp?: number;    // Street water temperature
   tankOutletTemp?: number;   // Hot water outlet temperature
