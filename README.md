@@ -775,6 +775,53 @@ hvac:
 
 In `common_return` mode, the heating supply bypasses the buffer and the HVAC and DHW returns join before passing through the buffer back to the heat pump.
 
+
+### Daikin Split Layout
+
+For systems with a water-side indoor unit, return buffer, DHW diverter valve, and underfloor heating, use:
+
+```yaml
+layout:
+  type: daikin_split
+
+buffer_tank:
+  name: Buffer
+  volume_l: 40
+
+indoor_unit:
+  name: Binnenunit
+  inlet_temp_entity: sensor.hp_phe_leaving_temperature
+  outlet_temp_entity: sensor.hp_buh_leaving_temperature
+  show_buh: true
+
+dhw_tank:
+  name: Tapwater
+  volume_l: 300
+  tank_temp_entity: sensor.dhw_temperature
+  target_temp_entity: number.dhw_target_temperature
+  electric_heater:
+    enabled: true
+    state_entity: binary_sensor.dhw_electric_heater
+    power_entity: sensor.dhw_electric_heater_power
+    max_power: 3000
+    label: EL
+
+hvac:
+  type: underfloor_heating
+  name: Vloerverwarming
+  current_temp_entity: sensor.room_temperature
+  target_temp_entity: number.room_target_temperature
+```
+
+The `daikin_split` layout renders:
+- the outdoor unit on the left with a larger 2x2 metrics panel;
+- a separate indoor unit with the BUH shown inside it;
+- the 3-way valve below the indoor unit;
+- a compact 40 L buffer in the common return between the loads and outdoor unit;
+- a larger 300 L DHW tank with a clearly visible hydronic coil and a separate electric immersion element;
+- cold potable water connected at the bottom of the tank and hot water at the top;
+- underfloor heating on the lower-right branch.
+
 ### House Performance Options (`house`)
 
 Building performance metrics for system efficiency tracking.
