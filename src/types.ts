@@ -8,6 +8,11 @@ export interface HeatPumpFlowCardConfig extends LovelaceCardConfig {
   logo_url?: string;            // URL to open when clicking logo (default: GitHub README)
   logo_size?: number;           // Logo size in pixels (default: 40)
 
+  // Overall hydraulic/visual layout
+  layout?: {
+    type?: 'standard' | 'daikin_split'; // Compact split-system layout with indoor unit and branch valve
+  };
+
   // Heat Pump Configuration
   heat_pump?: {
     power_entity?: string;      // Electrical power input (W)
@@ -83,7 +88,8 @@ export interface HeatPumpFlowCardConfig extends LovelaceCardConfig {
 
   // Buffer Tank Configuration
   buffer_tank?: {
-    position?: 'standard' | 'common_return'; // Tank topology (default: standard)
+    position?: 'standard' | 'common_return'; // Legacy topology option (default: standard)
+    volume_l?: number;              // Nominal tank volume, shown in compact layouts
     supply_temp_entity?: string;  // Supply temperature
     return_temp_entity?: string;  // Return temperature
     level_entity?: string;         // Tank level (optional)
@@ -119,6 +125,14 @@ export interface HeatPumpFlowCardConfig extends LovelaceCardConfig {
     outlet_temp_entity?: string;   // DHW coil outlet temperature
     tank_temp_entity?: string;     // DHW tank temperature (optional)
     target_temp_entity?: string;   // DHW target/set temperature (optional; falls back to heat_pump.dhw_target_temp_entity)
+    volume_l?: number;              // Nominal tank volume, shown in compact layouts
+    electric_heater?: {
+      enabled?: boolean;            // Show immersion/electric element in the tank
+      state_entity?: string;        // Optional binary/state entity for on/off status
+      power_entity?: string;        // Optional power entity (W)
+      max_power?: number;           // Used for visual intensity (default: 3000 W)
+      label?: string;               // Display label (default: "EL")
+    };
     name?: string;                 // Tank display name (default: DHW)
     icon?: string;
     logo_url?: string;             // Logo URL (displayed left of label)
@@ -206,6 +220,14 @@ export interface HeatPumpFlowCardConfig extends LovelaceCardConfig {
     glow_size?: number;            // Glow animation extension in pixels (default: 8, larger = more dramatic)
     shadow_blur?: number;          // Drop-shadow blur intensity multiplier (default: 1.0, 2.0 = double blur)
     name?: string;                 // Internal name (deprecated, use display_name)
+  };
+
+  // Indoor hydraulic unit (used by layout.type: daikin_split)
+  indoor_unit?: {
+    name?: string;                 // Display name (default: Binnenunit)
+    inlet_temp_entity?: string;    // Water temperature entering the indoor unit from outdoor unit
+    outlet_temp_entity?: string;   // Water temperature leaving the indoor unit toward the 3-way valve
+    show_buh?: boolean;            // Show BUH/heater coil inside the indoor unit (default: true)
   };
 
   // HVAC/Load Configuration
