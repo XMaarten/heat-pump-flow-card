@@ -894,7 +894,6 @@ export class HeatPumpFlowCard extends LitElement {
     const labelSize = this.getTextSize('label', 10);
     const valueSize = this.getTextSize('value', 14);
     const componentSize = this.getTextSize('component', 14);
-    const tempSize = this.getTextSize('temperature', 11);
 
     const bufferVolume = this.config.buffer_tank?.volume_l ?? 40;
     const dhwVolume = this.config.dhw_tank?.volume_l ?? 300;
@@ -910,18 +909,18 @@ export class HeatPumpFlowCard extends LitElement {
     const buhColor = auxHeaterState.power > 0 ? '#ff7043' : '#95a5a6';
     const elementColor = electricActive ? '#ff7043' : '#95a5a6';
 
-    return html\`
+    return html`
       <ha-card style="--logo-size: ${logoSize}px">
-        ${this.config.title || showLogo ? html\`
+        ${this.config.title || showLogo ? html`
           <h1 class="card-header">
             <span>${this.config.title || ''}</span>
-            ${showLogo ? html\`
+            ${showLogo ? html`
               <a href="${logoUrl}" target="_blank" rel="noopener noreferrer" class="card-logo-link">
                 <img src="${logoPath}" class="card-logo" alt="Heat Pump Flow Card" />
               </a>
-            \` : ''}
+            ` : ''}
           </h1>
-        \` : ''}
+        ` : ''}
 
         <div class="card-content">
           <svg viewBox="0 0 800 630" xmlns="http://www.w3.org/2000/svg">
@@ -1067,11 +1066,11 @@ export class HeatPumpFlowCard extends LitElement {
               </text>
               <text x="35" y="72" text-anchor="middle" fill="white"
                     font-size="${valueSize}" font-weight="bold">${bufferVolume} L</text>
-              ${bufferState.tankTemp !== undefined ? html\`
+              ${bufferState.tankTemp !== undefined ? html`
                 <text x="35" y="96" text-anchor="middle" fill="#bdc3c7" font-size="${labelSize}">
                   ${this.formatValue(bufferState.tankTemp, 1)}°
                 </text>
-              \` : ''}
+              ` : ''}
             </g>
 
             <!-- 300 L DHW tank -->
@@ -1214,7 +1213,7 @@ export class HeatPumpFlowCard extends LitElement {
           </svg>
         </div>
       </ha-card>
-    \`;
+    `;
   }
 
   protected render() {
