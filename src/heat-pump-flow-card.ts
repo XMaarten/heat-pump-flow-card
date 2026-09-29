@@ -953,13 +953,13 @@ export class HeatPumpFlowCard extends LitElement {
                   opacity="${g2ValveState.isActive ? 1 : 0.30}"/>
 
             <!-- Returns: floor + DHW merge, then through 40 L buffer, then back to outdoor unit -->
-            <path d="M 280 505 H 245 V 535 H 210"
+            <path d="M 280 505 H 245 V 557 H 210"
                   stroke="${returnColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 0.30 : 1}"/>
-            <path d="M 620 485 H 575 V 535 H 210"
+            <path d="M 620 485 H 575 V 557 H 210"
                   stroke="${dhwReturnColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 1 : 0.30}"/>
-            <path d="M 130 545 H 15 V 240 H 30"
+            <path d="M 130 557 H 15 V 240 H 30"
                   stroke="${returnColor}" stroke-width="12" fill="none" stroke-linecap="butt"/>
 
             <!-- OUTDOOR UNIT -->
@@ -1127,7 +1127,7 @@ export class HeatPumpFlowCard extends LitElement {
             </g>
 
             <!-- Potable water: cold in at bottom, hot out at top, both bend right -->
-            <path d="M 685 535 V 590 H 770"
+            <path d="M 685 550 V 590 H 770"
                   stroke="${this.config.dhw_tank?.tank_inlet_color || '#3498db'}"
                   stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
             ${this.renderIcon(
