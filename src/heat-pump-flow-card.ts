@@ -150,7 +150,7 @@ export class HeatPumpFlowCard extends LitElement {
 
   protected firstUpdated(): void {
     // Animation variables setup (CSS handles animation automatically via pipe overlays)
-    if (this.config.animation.enabled) {
+    if (this.config.animation?.enabled) {
       setTimeout(() => {
         this.updateAnimationVariables();
       }, 100);
@@ -617,15 +617,20 @@ export class HeatPumpFlowCard extends LitElement {
     const levels = Math.max(2, gradientConfig?.levels ?? 10);  // Minimum 2 levels to avoid division by zero
     const bottomColor = gradientConfig?.bottom_color ?? this.config.temperature?.neutral_color ?? '#95a5a6';
 
-    // Determine top color based on mode
+    // Determine top color based on mode. Narrow the specific gradient type here
+    // instead of reading buffer-only/DHW-only properties from the union.
     let topColor: string;
     if (tankType === 'buffer') {
+      const bufferGradient = this.config.buffer_tank?.gradient;
       topColor = isHeating
-        ? (gradientConfig?.heating_top_color ?? this.config.temperature?.hot_color ?? '#e74c3c')
-        : (gradientConfig?.cooling_top_color ?? this.config.temperature?.cold_color ?? '#3498db');
+        ? (bufferGradient?.heating_top_color ?? this.config.temperature?.hot_color ?? '#e74c3c')
+        : (bufferGradient?.cooling_top_color ?? this.config.temperature?.cold_color ?? '#3498db');
     } else {
-      // DHW tank always uses heating color
-      topColor = gradientConfig?.top_color ?? this.config.temperature?.hot_color ?? '#e74c3c';
+      const dhwGradient = tankType === 'dhw_tank_2'
+        ? this.config.dhw_tank_2?.gradient
+        : this.config.dhw_tank?.gradient;
+      // DHW tanks always use the heating/top color
+      topColor = dhwGradient?.top_color ?? this.config.temperature?.hot_color ?? '#e74c3c';
     }
 
     // Tank dimensions (from SVG)
