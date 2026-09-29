@@ -322,6 +322,8 @@ export class HeatPumpFlowCard extends LitElement {
       flowRate: this.getStateValue(cfg.flow_rate_entity) || 0,
       supplyTemp: this.getStateValue(cfg.supply_temp_entity) || 0,
       returnTemp: this.getStateValue(cfg.return_temp_entity) || 0,
+      currentTemp: this.getStateValue(cfg.current_temp_entity),
+      targetTemp: this.getStateValue(cfg.target_temp_entity),
     };
   }
 
@@ -331,6 +333,7 @@ export class HeatPumpFlowCard extends LitElement {
       inletTemp: this.getStateValue(cfg.inlet_temp_entity) || 0,
       outletTemp: this.getStateValue(cfg.outlet_temp_entity) || 0,
       tankTemp: this.getStateValue(cfg.tank_temp_entity),
+      targetTemp: this.getStateValue(cfg.target_temp_entity) ?? this.getStateValue(this.config.heat_pump?.dhw_target_temp_entity),
       tankInletFlow: this.getStateValue(cfg.tank_inlet_flow_entity),
       tankInletTemp: this.getStateValue(cfg.tank_inlet_temp_entity),
       tankOutletTemp: this.getStateValue(cfg.tank_outlet_temp_entity),
@@ -393,6 +396,15 @@ export class HeatPumpFlowCard extends LitElement {
     return value.toFixed(decimals);
   }
 
+  private getTextSize(kind: 'label' | 'value' | 'temperature' | 'component', fallback: number): number {
+    const style = this.config.text_style;
+    const base = style?.font_size;
+    if (kind === 'label') return style?.label_font_size ?? (base !== undefined ? Math.max(6, base - 1) : fallback);
+    if (kind === 'value') return style?.value_font_size ?? base ?? fallback;
+    if (kind === 'temperature') return style?.temperature_font_size ?? base ?? fallback;
+    return style?.component_font_size ?? base ?? fallback;
+  }
+
   /**
    * Render tank temperature indicator circle (centered in tank)
    * Shows the actual tank temperature when available
@@ -435,7 +447,7 @@ export class HeatPumpFlowCard extends LitElement {
           text-anchor="middle"
           dominant-baseline="middle"
           fill="${tankColor}"
-          font-size="10"
+          font-size="${this.getTextSize('temperature', 10)}"
           font-weight="bold"
           letter-spacing="-0.5"
           font-family="Arial, sans-serif">
@@ -506,7 +518,7 @@ export class HeatPumpFlowCard extends LitElement {
           text-anchor="middle"
           dominant-baseline="middle"
           fill="${pipeColor}"
-          font-size="7.5"
+          font-size="${this.getTextSize('temperature', 7.5)}"
           font-weight="bold"
           letter-spacing="-0.5"
           font-family="Arial, sans-serif">
@@ -845,6 +857,7 @@ export class HeatPumpFlowCard extends LitElement {
     const dhwTank2State = this.getDHWTank2State();
     const g2ValveState = this.getG2ValveState();
     const auxHeaterState = this.getAuxHeaterState();
+    const commonReturn = this.config.buffer_tank?.position === 'common_return';
 
     // Calculate pipe colors based on temperature delta
     const hpPipeColors = this.getPipeColors(hpState.outletTemp, hpState.inletTemp, hpState.flowRate);
@@ -1118,7 +1131,7 @@ export class HeatPumpFlowCard extends LitElement {
 
             <!-- Water source icon (e.g., water tower) at inlet start - rendered after pipe for z-order -->
             ${this.renderIcon(
-              this.config.dhw_tank?.tank_inlet_icon_url || 'mdi:water-pump',
+              this.config.dhw_tank?.tank_inlet_icon_url || 'mdi:water-outline',
               245, 390, 60, 60, 0.9, this.config.dhw_tank?.tank_inlet_icon_color
             )}
 
@@ -1152,13 +1165,13 @@ export class HeatPumpFlowCard extends LitElement {
 
               <!-- Faucet icon at final outlet -->
               ${this.renderIcon(
-                this.config.dhw_tank_2?.tank_outlet_icon_url || 'mdi:faucet-variant',
+                this.config.dhw_tank_2?.tank_outlet_icon_url || 'mdi:water-thermometer',
                 705, 350, 60, 60, 0.9, this.config.dhw_tank_2?.tank_outlet_icon_color
               )}
             ` : svg`
               <!-- Faucet icon at DHW tank 1 outlet (when tank 2 is disabled) -->
               ${this.renderIcon(
-                this.config.dhw_tank?.tank_outlet_icon_url || 'mdi:faucet-variant',
+                this.config.dhw_tank?.tank_outlet_icon_url || 'mdi:water-thermometer',
                 545, 350, 60, 60, 0.9, this.config.dhw_tank?.tank_outlet_icon_color
               )}
             `}
