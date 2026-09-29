@@ -1205,7 +1205,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${!g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${(commonReturn || !g2ValveState.isActive) && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-hp-to-buffer" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1224,7 +1224,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${!g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${(commonReturn || !g2ValveState.isActive) && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
 
             <!-- HP to G2 continuous animation (DHW mode) -->
             <!-- Solid backing to prevent color bleeding through gradient -->
@@ -1257,12 +1257,12 @@ export class HeatPumpFlowCard extends LitElement {
 
             <!-- Buffer to HVAC (horizontal hot) -->
             <!-- Solid backing to prevent color bleeding through gradient -->
-            <path d="M 480 180 L 550 180 L 550 180.01 L 620 180"
+            <path d="${commonReturn ? 'M 620 180 L 620 180' : 'M 480 180 L 550 180 L 550 180.01 L 620 180'}"
                   stroke="${bufferSupplyColor}"
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${hvacState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${commonReturn ? '0' : (hvacState.flowRate > this.config.animation!.idle_threshold ? '1' : '0')}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-4" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1276,21 +1276,21 @@ export class HeatPumpFlowCard extends LitElement {
               </linearGradient>
             </defs>
             <path class="flow-gradient"
-                  d="M 480 180 L 550 180 L 550 180.01 L 620 180"
+                  d="${commonReturn ? 'M 620 180 L 620 180' : 'M 480 180 L 550 180 L 550 180.01 L 620 180'}"
                   stroke="url(#flow-grad-4)"
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${hvacState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${commonReturn ? '0' : (hvacState.flowRate > this.config.animation!.idle_threshold ? '1' : '0')}"></path>
 
             <!-- Buffer to HP return continuous animation (heating mode) -->
             <!-- Solid backing to prevent color bleeding through gradient -->
-            <path d="M 390 220 L 285 220 L 285 220.01 L 180 220"
+            <path d="${commonReturn ? 'M 330 220 L 330 350 L 290 350 M 220 350 L 180 350 L 180 220' : 'M 390 220 L 285 220 L 285 220.01 L 180 220'}"
                   stroke="${hpInletColor}"
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${!g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${(commonReturn || !g2ValveState.isActive) && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-buffer-to-hp-return" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1304,21 +1304,21 @@ export class HeatPumpFlowCard extends LitElement {
               </linearGradient>
             </defs>
             <path class="flow-gradient"
-                  d="M 390 220 L 285 220 L 285 220.01 L 180 220"
+                  d="${commonReturn ? 'M 330 220 L 330 350 L 290 350 M 220 350 L 180 350 L 180 220' : 'M 390 220 L 285 220 L 285 220.01 L 180 220'}"
                   stroke="url(#flow-grad-buffer-to-hp-return)"
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${!g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${(commonReturn || !g2ValveState.isActive) && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
 
             <!-- HVAC to buffer return (horizontal cold) -->
             <!-- Solid backing to prevent color bleeding through gradient -->
-            <path d="M 620 220 L 550 220 L 550 220.01 L 480 220"
+            <path d="${commonReturn ? 'M 620 220 L 475 220 L 475 220.01 L 330 220' : 'M 620 220 L 550 220 L 550 220.01 L 480 220'}"
                   stroke="${hvacReturnColor}"
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${hvacState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${commonReturn ? '0' : (hvacState.flowRate > this.config.animation!.idle_threshold ? '1' : '0')}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-6" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1332,12 +1332,12 @@ export class HeatPumpFlowCard extends LitElement {
               </linearGradient>
             </defs>
             <path class="flow-gradient"
-                  d="M 620 220 L 550 220 L 550 220.01 L 480 220"
+                  d="${commonReturn ? 'M 620 220 L 475 220 L 475 220.01 L 330 220' : 'M 620 220 L 550 220 L 550 220.01 L 480 220'}"
                   stroke="url(#flow-grad-6)"
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${hvacState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${commonReturn ? '0' : (hvacState.flowRate > this.config.animation!.idle_threshold ? '1' : '0')}"></path>
 
             <!-- Z-ORDER: Return paths first (behind), then supply paths (on top) -->
 
@@ -1399,7 +1399,7 @@ export class HeatPumpFlowCard extends LitElement {
 
             <!-- DHW to HP return - horizontal segment 2 (cold) - DHW mode only -->
             <!-- Solid backing to prevent color bleeding through gradient -->
-            <path d="M 330 220 L 255 220 L 255 220.01 L 180 220"
+            <path d="${commonReturn ? 'M 330 220 L 330 220' : 'M 330 220 L 255 220 L 255 220.01 L 180 220'}"
                   stroke="${dhwReturnColor}"
                   stroke-width="10"
                   fill="none"
@@ -1418,7 +1418,7 @@ export class HeatPumpFlowCard extends LitElement {
               </linearGradient>
             </defs>
             <path class="flow-gradient"
-                  d="M 330 220 L 255 220 L 255 220.01 L 180 220"
+                  d="${commonReturn ? 'M 330 220 L 330 220' : 'M 330 220 L 255 220 L 255 220.01 L 180 220'}"
                   stroke="url(#flow-grad-9c)"
                   stroke-width="10"
                   fill="none"
