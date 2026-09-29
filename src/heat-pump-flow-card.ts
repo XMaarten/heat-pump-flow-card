@@ -1318,7 +1318,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${commonReturn ? '0' : (hvacState.flowRate > this.config.animation!.idle_threshold ? '1' : '0')}"></path>
+                  opacity="${hvacState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-6" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1337,7 +1337,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${commonReturn ? '0' : (hvacState.flowRate > this.config.animation!.idle_threshold ? '1' : '0')}"></path>
+                  opacity="${hvacState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
 
             <!-- Z-ORDER: Return paths first (behind), then supply paths (on top) -->
 
