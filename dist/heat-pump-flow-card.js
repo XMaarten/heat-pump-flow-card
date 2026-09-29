@@ -396,13 +396,13 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                   opacity="${o.isActive?1:.3}"/>
 
             <!-- Returns: floor + DHW merge, then through 40 L buffer, then back to outdoor unit -->
-            <path d="M 280 505 H 245 V 535 H 210"
+            <path d="M 280 505 H 245 V 557 H 210"
                   stroke="${$}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${o.isActive?.3:1}"/>
-            <path d="M 620 485 H 575 V 535 H 210"
+            <path d="M 620 485 H 575 V 557 H 210"
                   stroke="${v}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${o.isActive?1:.3}"/>
-            <path d="M 130 545 H 15 V 240 H 30"
+            <path d="M 130 557 H 15 V 240 H 30"
                   stroke="${$}" stroke-width="12" fill="none" stroke-linecap="butt"/>
 
             <!-- OUTDOOR UNIT -->
@@ -570,7 +570,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
             </g>
 
             <!-- Potable water: cold in at bottom, hot out at top, both bend right -->
-            <path d="M 685 535 V 590 H 770"
+            <path d="M 685 550 V 590 H 770"
                   stroke="${this.config.dhw_tank?.tank_inlet_color||"#3498db"}"
                   stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
             ${this.renderIcon(this.config.dhw_tank?.tank_inlet_icon_url||"mdi:water-outline",766,572,30,30,.95,this.config.dhw_tank?.tank_inlet_icon_color)}
