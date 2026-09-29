@@ -854,9 +854,376 @@ export class HeatPumpFlowCard extends LitElement {
 
   // Old animation methods removed - CSS handles all animations now!
 
+
+  private renderDaikinSplitCard() {
+    const hpState = this.getHeatPumpState();
+    const bufferState = this.getBufferTankState();
+    const hvacState = this.getHVACState();
+    const dhwState = this.getDHWTankState();
+    const g2ValveState = this.getG2ValveState();
+    const auxHeaterState = this.getAuxHeaterState();
+
+    const indoorCfg = this.config.indoor_unit || {};
+    const indoorInTemp = this.getStateValue(indoorCfg.inlet_temp_entity) ?? hpState.outletTemp;
+    const indoorOutTemp = this.getStateValue(indoorCfg.outlet_temp_entity) ?? indoorInTemp;
+    const showBuh = indoorCfg.show_buh !== false;
+
+    const electricCfg = this.config.dhw_tank?.electric_heater;
+    const electricPower = this.getStateValue(electricCfg?.power_entity) ?? 0;
+    const electricState = this.getStateString(electricCfg?.state_entity);
+    const electricEnabled = electricCfg?.enabled !== false;
+    const electricActive = electricEnabled && (
+      electricPower > 0 ||
+      electricState === 'on' ||
+      electricState === 'true' ||
+      electricState === '1'
+    );
+
+    const idleThreshold = this.config.animation?.idle_threshold ?? 0;
+    const hasFlow = hpState.flowRate > idleThreshold;
+    const neutral = this.config.temperature?.neutral_color ?? '#95a5a6';
+    const hot = this.config.temperature?.hot_color ?? '#e74c3c';
+    const cold = this.config.temperature?.cold_color ?? '#3498db';
+    const hpPipeColors = this.getPipeColors(hpState.outletTemp, hpState.inletTemp, hpState.flowRate);
+    const supplyColor = hasFlow ? hpPipeColors.hotPipe : neutral;
+    const returnColor = hasFlow ? hpPipeColors.coldPipe : neutral;
+    const heatingBranchColor = !g2ValveState.isActive && hasFlow ? supplyColor : neutral;
+    const dhwBranchColor = g2ValveState.isActive && hasFlow ? hot : neutral;
+    const dhwReturnColor = g2ValveState.isActive && hasFlow ? cold : neutral;
+
+    const labelSize = this.getTextSize('label', 10);
+    const valueSize = this.getTextSize('value', 14);
+    const componentSize = this.getTextSize('component', 14);
+    const tempSize = this.getTextSize('temperature', 11);
+
+    const bufferVolume = this.config.buffer_tank?.volume_l ?? 40;
+    const dhwVolume = this.config.dhw_tank?.volume_l ?? 300;
+    const tankTemp = dhwState.tankTemp;
+    const targetTemp = dhwState.targetTemp;
+    const roomTemp = hvacState.currentTemp;
+    const roomTarget = hvacState.targetTemp;
+    const logoSize = this.config.logo_size || 40;
+    const showLogo = this.config.show_logo !== false;
+    const logoPath = this.config.logo_path || '/local/heat-pump-flow.png';
+    const logoUrl = this.config.logo_url || 'https://github.com/XMaarten/heat-pump-flow-card';
+
+    const buhColor = auxHeaterState.power > 0 ? '#ff7043' : '#95a5a6';
+    const elementColor = electricActive ? '#ff7043' : '#95a5a6';
+
+    return html\`
+      <ha-card style="--logo-size: ${logoSize}px">
+        ${this.config.title || showLogo ? html\`
+          <h1 class="card-header">
+            <span>${this.config.title || ''}</span>
+            ${showLogo ? html\`
+              <a href="${logoUrl}" target="_blank" rel="noopener noreferrer" class="card-logo-link">
+                <img src="${logoPath}" class="card-logo" alt="Heat Pump Flow Card" />
+              </a>
+            \` : ''}
+          </h1>
+        \` : ''}
+
+        <div class="card-content">
+          <svg viewBox="0 0 800 630" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="entity-shadow" x="-50%" y="-50%" width="200%" height="200%">
+                <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.55"/>
+              </filter>
+              <filter id="circle-shadow" x="-50%" y="-50%" width="200%" height="200%">
+                <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
+              </filter>
+            </defs>
+
+            <!-- SUPPLY: outdoor -> indoor -> 3-way valve -->
+            <path d="M 190 145 H 315"
+                  stroke="${supplyColor}" stroke-width="12" fill="none" stroke-linecap="butt"/>
+            <path d="M 495 145 H 520 V 275 H 425"
+                  stroke="${supplyColor}" stroke-width="12" fill="none" stroke-linecap="butt"/>
+
+            <!-- Heating branch to floor -->
+            <path d="M 425 295 H 650 V 365"
+                  stroke="${heatingBranchColor}" stroke-width="12" fill="none" stroke-linecap="butt"
+                  opacity="${g2ValveState.isActive ? 0.35 : 1}"/>
+
+            <!-- DHW branch to coil -->
+            <path d="M 385 295 H 250 V 405 H 230"
+                  stroke="${dhwBranchColor}" stroke-width="12" fill="none" stroke-linecap="butt"
+                  opacity="${g2ValveState.isActive ? 1 : 0.35}"/>
+
+            <!-- Returns merge before the 40 L buffer -->
+            <path d="M 555 470 V 525 H 405"
+                  stroke="${returnColor}" stroke-width="12" fill="none" stroke-linecap="butt"/>
+            <path d="M 230 510 H 405 V 525"
+                  stroke="${dhwReturnColor}" stroke-width="12" fill="none" stroke-linecap="butt"
+                  opacity="${g2ValveState.isActive ? 1 : 0.35}"/>
+            <path d="M 405 525 H 335"
+                  stroke="${returnColor}" stroke-width="12" fill="none" stroke-linecap="butt"/>
+            <path d="M 265 525 H 190 V 205"
+                  stroke="${returnColor}" stroke-width="12" fill="none" stroke-linecap="butt"/>
+
+            <!-- OUTDOOR UNIT -->
+            <g transform="translate(35, 60)" filter="url(#entity-shadow)">
+              <rect width="155" height="180" rx="12"
+                    fill="${this.getHeatPumpColor(hpState)}" fill-opacity="0.16"
+                    stroke="${this.getHeatPumpColor(hpState)}" stroke-width="3"/>
+              <text x="77.5" y="24" text-anchor="middle"
+                    fill="var(--primary-text-color)" font-size="${componentSize}" font-weight="bold">
+                ${this.config.heat_pump?.display_name || 'Buitenunit'}
+              </text>
+
+              <circle cx="77.5" cy="78" r="38" fill="#34495e"
+                      stroke="${this.getHeatPumpColor(hpState)}" stroke-width="2"/>
+              <g id="fan-blades">
+                <path d="M 77.5 40 Q 91 64, 77.5 78 Q 64 64, 77.5 40" fill="#7f8c8d"/>
+                <path d="M 115.5 78 Q 91 91, 77.5 78 Q 91 64, 115.5 78" fill="#7f8c8d"/>
+                <path d="M 77.5 116 Q 64 91, 77.5 78 Q 91 91, 77.5 116" fill="#7f8c8d"/>
+                <path d="M 39.5 78 Q 64 64, 77.5 78 Q 64 91, 39.5 78" fill="#7f8c8d"/>
+                <circle cx="77.5" cy="78" r="9" fill="#2c3e50"/>
+              </g>
+
+              <text x="77.5" y="137" text-anchor="middle"
+                    fill="var(--primary-text-color)" font-size="${labelSize}" font-weight="bold">
+                ${this.getDisplayMode(hpState, g2ValveState)}
+              </text>
+            </g>
+
+            <!-- Readable outdoor metrics: 2 x 2 -->
+            <g transform="translate(35, 255)">
+              <rect width="200" height="104" rx="10"
+                    fill="var(--secondary-background-color)" opacity="0.9"/>
+              <text x="14" y="22" fill="var(--secondary-text-color)" font-size="${labelSize}">Elektrisch</text>
+              <text x="14" y="43" fill="var(--primary-text-color)" font-size="${valueSize}" font-weight="bold">
+                ${this.formatValue(hpState.power / 1000, 1)} kW
+              </text>
+
+              <text x="108" y="22" fill="var(--secondary-text-color)" font-size="${labelSize}">Thermisch</text>
+              <text x="108" y="43" fill="var(--primary-text-color)" font-size="${valueSize}" font-weight="bold">
+                ${this.formatValue(hpState.thermal / 1000, 1)} kW
+              </text>
+
+              <text x="14" y="68" fill="var(--secondary-text-color)" font-size="${labelSize}">COP</text>
+              <text x="14" y="90" fill="var(--primary-text-color)" font-size="${valueSize}" font-weight="bold">
+                ${this.formatValue(hpState.cop, 2)}
+              </text>
+
+              <text x="108" y="68" fill="var(--secondary-text-color)" font-size="${labelSize}">Flow</text>
+              <text x="108" y="90" fill="var(--primary-text-color)" font-size="${valueSize}" font-weight="bold">
+                ${this.formatValue(hpState.flowRate, 1)} ${this.getStateUnit(this.config.heat_pump?.flow_rate_entity) || 'L/min'}
+              </text>
+            </g>
+
+            <!-- INDOOR UNIT with BUH -->
+            <g transform="translate(315, 60)" filter="url(#entity-shadow)">
+              <rect width="180" height="155" rx="12" fill="#273746" stroke="#5d6d7e" stroke-width="3"/>
+              <text x="90" y="25" text-anchor="middle" fill="white"
+                    font-size="${componentSize}" font-weight="bold">
+                ${indoorCfg.name || 'Binnenunit'}
+              </text>
+
+              <text x="18" y="52" fill="#bdc3c7" font-size="${labelSize}">PHE / in</text>
+              <text x="18" y="72" fill="white" font-size="${valueSize}" font-weight="bold">
+                ${this.formatValue(indoorInTemp, 1)}°
+              </text>
+
+              <text x="162" y="52" text-anchor="end" fill="#bdc3c7" font-size="${labelSize}">Aanvoer</text>
+              <text x="162" y="72" text-anchor="end" fill="white" font-size="${valueSize}" font-weight="bold">
+                ${this.formatValue(indoorOutTemp, 1)}°
+              </text>
+
+              <path d="M 30 105 H 48 L 58 90 L 72 120 L 86 90 L 100 120 L 114 90 L 128 120 L 138 105 H 150"
+                    stroke="${showBuh ? buhColor : '#5d6d7e'}"
+                    stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                    opacity="${showBuh ? 1 : 0.25}"/>
+              <text x="90" y="143" text-anchor="middle"
+                    fill="${showBuh ? buhColor : '#95a5a6'}" font-size="${labelSize}" font-weight="bold">
+                BUH${auxHeaterState.power > 0 ? ' ' + this.formatValue(auxHeaterState.power / 1000, 1) + ' kW' : ''}
+              </text>
+            </g>
+
+            <!-- 3-way valve below indoor unit -->
+            <g transform="translate(405, 295)" filter="url(#entity-shadow)">
+              <circle r="22" fill="#d5dbdb" stroke="#7f8c8d" stroke-width="3"/>
+              <circle r="7" fill="${supplyColor}"/>
+              <path d="M 0 -22 V -7" stroke="${supplyColor}" stroke-width="6"/>
+              <path d="M -22 0 H -7" stroke="${dhwBranchColor}" stroke-width="6"/>
+              <path d="M 7 0 H 22" stroke="${heatingBranchColor}" stroke-width="6"/>
+              <text x="0" y="-34" text-anchor="middle"
+                    fill="var(--primary-text-color)" font-size="${labelSize}" font-weight="bold">3-wegklep</text>
+              <text x="0" y="39" text-anchor="middle"
+                    fill="var(--secondary-text-color)" font-size="${labelSize}">
+                ${g2ValveState.isActive ? 'Tapwater' : 'Vloerverwarming'}
+              </text>
+            </g>
+
+            <!-- 40 L return buffer -->
+            <g transform="translate(265, 445)" filter="url(#entity-shadow)">
+              <rect x="0" y="12" width="70" height="110" fill="#34495e" stroke="#2c3e50" stroke-width="3"/>
+              <ellipse cx="35" cy="12" rx="35" ry="12" fill="#34495e" stroke="#2c3e50" stroke-width="3"/>
+              <ellipse cx="35" cy="122" rx="35" ry="12" fill="#2c3e50" stroke="#2c3e50" stroke-width="3"/>
+              <rect x="6" y="20" width="58" height="94" fill="${returnColor}" opacity="0.20"/>
+              <text x="35" y="17" text-anchor="middle" dominant-baseline="middle"
+                    fill="white" font-size="${labelSize}" font-weight="bold">
+                ${this.config.buffer_tank?.name || 'Buffer'}
+              </text>
+              <text x="35" y="72" text-anchor="middle" fill="white"
+                    font-size="${valueSize}" font-weight="bold">${bufferVolume} L</text>
+              ${bufferState.tankTemp !== undefined ? html\`
+                <text x="35" y="96" text-anchor="middle" fill="#bdc3c7" font-size="${labelSize}">
+                  ${this.formatValue(bufferState.tankTemp, 1)}°
+                </text>
+              \` : ''}
+            </g>
+
+            <!-- 300 L DHW tank -->
+            <g transform="translate(110, 355)" filter="url(#entity-shadow)">
+              <rect x="0" y="15" width="120" height="205" fill="#34495e" stroke="#2c3e50" stroke-width="3"/>
+              <ellipse cx="60" cy="15" rx="60" ry="15" fill="#34495e" stroke="#2c3e50" stroke-width="3"/>
+              <ellipse cx="60" cy="220" rx="60" ry="15" fill="#2c3e50" stroke="#2c3e50" stroke-width="3"/>
+              <rect x="8" y="25" width="104" height="185" fill="#3498db" opacity="0.16"/>
+
+              <text x="60" y="20" text-anchor="middle" dominant-baseline="middle"
+                    fill="white" font-size="${componentSize}" font-weight="bold">
+                ${this.config.dhw_tank?.name || 'Tapwater'}
+              </text>
+              <text x="60" y="47" text-anchor="middle" fill="#bdc3c7"
+                    font-size="${labelSize}">${dhwVolume} L</text>
+
+              <!-- Heat-pump coil: deliberately prominent -->
+              <path d="M 120 65 H 95
+                       Q 68 65, 68 83
+                       Q 68 101, 95 101
+                       Q 112 101, 112 119
+                       Q 112 137, 85 137
+                       Q 58 137, 58 155
+                       Q 58 173, 85 173
+                       Q 112 173, 112 191
+                       Q 112 205, 95 205
+                       H 120"
+                    stroke="${g2ValveState.isActive ? hot : neutral}"
+                    stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <text x="62" y="125" text-anchor="middle" fill="var(--primary-text-color)"
+                    font-size="${labelSize}" font-weight="bold">Spiraal</text>
+
+              <!-- Separate electric immersion element -->
+              <g opacity="${electricEnabled ? 1 : 0}">
+                <path d="M 25 82 V 178 M 25 116 H 42 M 25 146 H 42"
+                      stroke="${elementColor}" stroke-width="6" fill="none" stroke-linecap="round"/>
+                <text x="25" y="198" text-anchor="middle" fill="${elementColor}"
+                      font-size="${labelSize}" font-weight="bold">
+                  ${electricCfg?.label || 'EL'}
+                </text>
+              </g>
+
+              <text x="60" y="73" text-anchor="middle" fill="white"
+                    font-size="${valueSize}" font-weight="bold">
+                ${tankTemp !== undefined ? this.formatValue(tankTemp, 1) + '°' : '—'}
+              </text>
+              <text x="60" y="214" text-anchor="middle" fill="#e74c3c"
+                    font-size="${labelSize}" font-weight="bold">
+                Doel ${targetTemp !== undefined ? this.formatValue(targetTemp, 1) + '°' : '—'}
+              </text>
+            </g>
+
+            <!-- Potable water: cold in at bottom, hot out at top, both bend right -->
+            <path d="M 170 575 V 603 H 300"
+                  stroke="${this.config.dhw_tank?.tank_inlet_color || '#3498db'}"
+                  stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            ${this.renderIcon(
+              this.config.dhw_tank?.tank_inlet_icon_url || 'mdi:water-outline',
+              303, 584, 34, 34, 0.95, this.config.dhw_tank?.tank_inlet_icon_color
+            )}
+
+            <path d="M 170 355 V 325 H 300"
+                  stroke="${this.config.dhw_tank?.tank_outlet_color || '#e74c3c'}"
+                  stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            ${this.renderIcon(
+              this.config.dhw_tank?.tank_outlet_icon_url || 'mdi:water-thermometer',
+              303, 306, 34, 34, 0.95, this.config.dhw_tank?.tank_outlet_icon_color
+            )}
+
+            <!-- Underfloor heating -->
+            <g transform="translate(555, 365)" filter="url(#entity-shadow)">
+              <rect width="190" height="125" rx="12" fill="#273746" stroke="#34495e" stroke-width="2"/>
+              <text x="95" y="24" text-anchor="middle" fill="white"
+                    font-size="${componentSize}" font-weight="bold">
+                ${this.config.hvac?.name || 'Vloerverwarming'}
+              </text>
+              <path d="M 22 48 H 160 Q 174 48 174 62 Q 174 76 160 76 H 30 Q 16 76 16 90 Q 16 102 30 102 H 166"
+                    fill="none" stroke="#e67e22" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+              <text x="16" y="118" fill="#bdc3c7" font-size="${labelSize}">Huidig</text>
+              <text x="70" y="118" text-anchor="end" fill="white"
+                    font-size="${valueSize}" font-weight="bold">
+                ${roomTemp !== undefined ? this.formatValue(roomTemp, 1) + '°' : '—'}
+              </text>
+
+              <text x="118" y="118" fill="#bdc3c7" font-size="${labelSize}">Doel</text>
+              <text x="178" y="118" text-anchor="end" fill="#e67e22"
+                    font-size="${valueSize}" font-weight="bold">
+                ${roomTarget !== undefined ? this.formatValue(roomTarget, 1) + '°' : '—'}
+              </text>
+            </g>
+
+            <!-- Larger temperature badges at useful hydraulic points -->
+            ${this.renderTemperatureIndicator(
+              220, 145,
+              this.config.temperature_status?.points?.hp_outlet?.entity || this.config.heat_pump?.outlet_temp_entity,
+              hpState.outletTemp,
+              this.config.temperature_status?.points?.hp_outlet,
+              supplyColor
+            )}
+            ${this.renderTemperatureIndicator(
+              210, 525,
+              this.config.temperature_status?.points?.hp_inlet?.entity || this.config.heat_pump?.inlet_temp_entity,
+              hpState.inletTemp,
+              this.config.temperature_status?.points?.hp_inlet,
+              returnColor
+            )}
+            ${this.renderTemperatureIndicator(
+              620, 295,
+              this.config.temperature_status?.points?.hvac_supply?.entity || this.config.hvac?.supply_temp_entity,
+              hvacState.supplyTemp,
+              this.config.temperature_status?.points?.hvac_supply,
+              heatingBranchColor
+            )}
+            ${this.renderTemperatureIndicator(
+              530, 470,
+              this.config.temperature_status?.points?.hvac_return?.entity || this.config.hvac?.return_temp_entity,
+              hvacState.returnTemp,
+              this.config.temperature_status?.points?.hvac_return,
+              returnColor
+            )}
+            ${this.renderTemperatureIndicator(
+              255, 405,
+              this.config.temperature_status?.points?.dhw_inlet?.entity || this.config.dhw_tank?.inlet_temp_entity,
+              dhwState.inletTemp,
+              this.config.temperature_status?.points?.dhw_inlet,
+              dhwBranchColor
+            )}
+            ${this.renderTemperatureIndicator(
+              255, 510,
+              this.config.temperature_status?.points?.dhw_outlet?.entity || this.config.dhw_tank?.outlet_temp_entity,
+              dhwState.outletTemp,
+              this.config.temperature_status?.points?.dhw_outlet,
+              dhwReturnColor
+            )}
+
+            <text x="790" y="18" text-anchor="end" fill="#95a5a6" font-size="10" opacity="0.7">
+              v${CARD_VERSION}
+            </text>
+          </svg>
+        </div>
+      </ha-card>
+    \`;
+  }
+
   protected render() {
     if (!this.config || !this.hass) {
       return html``;
+    }
+
+    if (this.config.layout?.type === 'daikin_split') {
+      return this.renderDaikinSplitCard();
     }
 
     const hpState = this.getHeatPumpState();
