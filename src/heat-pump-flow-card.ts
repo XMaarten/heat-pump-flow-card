@@ -537,7 +537,8 @@ export class HeatPumpFlowCard extends LitElement {
     const delta = Math.abs(hotTemp - coldTemp);
 
     // If flow below idle threshold or delta below threshold, both pipes are neutral
-    if (flowRate <= this.config.animation!.idle_threshold! || delta < cfg.delta_threshold!) {
+    const idleThreshold = this.config.animation?.idle_threshold ?? 0;
+    if (flowRate <= idleThreshold || delta < cfg.delta_threshold!) {
       return {
         hotPipe: cfg.neutral_color!,
         coldPipe: cfg.neutral_color!
@@ -836,16 +837,19 @@ export class HeatPumpFlowCard extends LitElement {
   }
 
   private getAnimationDuration(flowRate: number): number {
-    const cfg = this.config.animation!;
-    if (flowRate <= 0) return cfg.min_flow_rate!;  // No flow = slowest (longest duration)
+    const cfg = this.config.animation;
+    const minDuration = cfg?.min_flow_rate ?? 5;
+    const maxDuration = cfg?.max_flow_rate ?? 1;
+    const maxFlowRate = cfg?.max_flow_rate_value ?? 50;
+    if (flowRate <= 0) return minDuration;  // No flow = slowest (longest duration)
 
     // Normalize flow rate based on configured maximum
-    const normalized = Math.min(flowRate / cfg.max_flow_rate_value!, 1);
+    const normalized = Math.min(flowRate / maxFlowRate, 1);
 
     // Interpolate: higher flow = shorter duration (faster animation)
-    // At normalized=0 (low flow): use min_flow_rate (slow, e.g., 5 seconds)
-    // At normalized=1 (high flow): use max_flow_rate (fast, e.g., 1 second)
-    return cfg.min_flow_rate! - (normalized * (cfg.min_flow_rate! - cfg.max_flow_rate!));
+    // At normalized=0 (low flow): use minDuration
+    // At normalized=1 (high flow): use maxDuration
+    return minDuration - (normalized * (minDuration - maxDuration));
   }
 
   // Old animation methods removed - CSS handles all animations now!
@@ -863,6 +867,7 @@ export class HeatPumpFlowCard extends LitElement {
     const g2ValveState = this.getG2ValveState();
     const auxHeaterState = this.getAuxHeaterState();
     const commonReturn = this.config.buffer_tank?.position === 'common_return';
+    const idleThreshold = this.config.animation?.idle_threshold ?? 0;
 
     // Calculate pipe colors based on temperature delta
     const hpPipeColors = this.getPipeColors(hpState.outletTemp, hpState.inletTemp, hpState.flowRate);
@@ -875,7 +880,7 @@ export class HeatPumpFlowCard extends LitElement {
     const hvacReturnColor = hvacPipeColors.coldPipe;
 
     // Check if there's active flow (for valve element coloring)
-    const hasFlow = hpState.flowRate > this.config.animation!.idle_threshold!;
+    const hasFlow = hpState.flowRate > idleThreshold!;
 
     // DHW pipes always use hot/cold colors when active (not calculated from delta)
     // to match the fixed-color flow gradient animations
@@ -1085,7 +1090,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="12"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${hpState.flowRate > this.config.animation!.idle_threshold ? '0' : '1'}"/>
+                  opacity="${hpState.flowRate > idleThreshold ? '0' : '1'}"/>
 
             <!-- Pipe: G2 to Buffer (continuation) - only active in heating mode -->
             <path id="g2-to-buffer-path"
@@ -1210,7 +1215,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${(commonReturn || !g2ValveState.isActive) && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${(commonReturn || !g2ValveState.isActive) && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-hp-to-buffer" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1229,7 +1234,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${(commonReturn || !g2ValveState.isActive) && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${(commonReturn || !g2ValveState.isActive) && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
 
             <!-- HP to G2 continuous animation (DHW mode) -->
             <!-- Solid backing to prevent color bleeding through gradient -->
@@ -1238,7 +1243,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${g2ValveState.isActive && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-hp-to-g2" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1257,7 +1262,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${g2ValveState.isActive && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
 
 
             <!-- Buffer to HVAC (horizontal hot) -->
@@ -1267,7 +1272,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${commonReturn ? '0' : (hvacState.flowRate > this.config.animation!.idle_threshold ? '1' : '0')}"></path>
+                  opacity="${commonReturn ? '0' : (hvacState.flowRate > idleThreshold ? '1' : '0')}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-4" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1286,7 +1291,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${commonReturn ? '0' : (hvacState.flowRate > this.config.animation!.idle_threshold ? '1' : '0')}"></path>
+                  opacity="${commonReturn ? '0' : (hvacState.flowRate > idleThreshold ? '1' : '0')}"></path>
 
             <!-- Buffer to HP return continuous animation (heating mode) -->
             <!-- Solid backing to prevent color bleeding through gradient -->
@@ -1295,7 +1300,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${(commonReturn || !g2ValveState.isActive) && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${(commonReturn || !g2ValveState.isActive) && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-buffer-to-hp-return" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1314,7 +1319,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${(commonReturn || !g2ValveState.isActive) && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${(commonReturn || !g2ValveState.isActive) && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
 
             <!-- HVAC to buffer return (horizontal cold) -->
             <!-- Solid backing to prevent color bleeding through gradient -->
@@ -1323,7 +1328,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${hvacState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${hvacState.flowRate > idleThreshold ? '1' : '0'}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-6" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1342,7 +1347,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${hvacState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${hvacState.flowRate > idleThreshold ? '1' : '0'}"></path>
 
             <!-- Z-ORDER: Return paths first (behind), then supply paths (on top) -->
 
@@ -1353,7 +1358,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${g2ValveState.isActive && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-9a" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1372,7 +1377,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${g2ValveState.isActive && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
 
             <!-- DHW to HP return - vertical segment (cold) - DHW mode only -->
             <!-- Solid backing to prevent color bleeding through gradient -->
@@ -1381,7 +1386,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${g2ValveState.isActive && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-9b" x1="330" y1="470" x2="330" y2="220" gradientUnits="userSpaceOnUse">
@@ -1400,7 +1405,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${g2ValveState.isActive && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
 
             <!-- DHW to HP return - horizontal segment 2 (cold) - DHW mode only -->
             <!-- Solid backing to prevent color bleeding through gradient -->
@@ -1409,7 +1414,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${g2ValveState.isActive && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-9c" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1428,7 +1433,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${g2ValveState.isActive && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
 
             <!-- G2 to DHW - vertical segment (hot) - DHW mode only -->
             <!-- Solid backing to prevent color bleeding through gradient -->
@@ -1437,7 +1442,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${g2ValveState.isActive && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-7a" x1="348" y1="195" x2="348" y2="370" gradientUnits="userSpaceOnUse">
@@ -1456,7 +1461,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${g2ValveState.isActive && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
 
             <!-- G2 to DHW - horizontal segment (hot) - DHW mode only -->
             <!-- Solid backing to prevent color bleeding through gradient -->
@@ -1465,7 +1470,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${g2ValveState.isActive && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-7b" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1484,7 +1489,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${g2ValveState.isActive && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
 
             <!-- DHW coil spiral (vertical hot) - DHW mode only -->
             <!-- Solid backing to prevent color bleeding through gradient -->
@@ -1493,7 +1498,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${g2ValveState.isActive && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-8" x1="438" y1="370" x2="438" y2="478" gradientUnits="userSpaceOnUse">
@@ -1512,7 +1517,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="10"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${g2ValveState.isActive && hpState.flowRate > idleThreshold ? '1' : '0'}"></path>
 
             <!-- DHW Tank Inlet (street water) - horizontal cold -->
             <!-- Solid backing to prevent color bleeding through gradient -->
@@ -1521,7 +1526,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="6"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${(dhwState.tankInletFlow ?? 0) > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${(dhwState.tankInletFlow ?? 0) > idleThreshold ? '1' : '0'}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-dhw-inlet" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1540,7 +1545,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="6"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${(dhwState.tankInletFlow ?? 0) > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${(dhwState.tankInletFlow ?? 0) > idleThreshold ? '1' : '0'}"></path>
 
             <!-- DHW Tank Outlet (hot water to house) - horizontal hot -->
             <!-- Solid backing to prevent color bleeding through gradient -->
@@ -1549,7 +1554,7 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="6"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${(dhwState.tankInletFlow ?? 0) > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${(dhwState.tankInletFlow ?? 0) > idleThreshold ? '1' : '0'}"></path>
             <!-- Animated gradient overlay -->
             <defs>
               <linearGradient id="flow-grad-dhw-outlet" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -1568,26 +1573,26 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke-width="6"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${(dhwState.tankInletFlow ?? 0) > this.config.animation!.idle_threshold ? '1' : '0'}"></path>
+                  opacity="${(dhwState.tankInletFlow ?? 0) > idleThreshold ? '1' : '0'}"></path>
 
             <!-- Pipe corner elbows to hide animation seams - DHW mode only -->
             <!-- Corner at G2 to DHW (348, 370) - vertical to horizontal -->
             <rect x="341" y="363"
                   width="14" height="14"
                   fill="${this.config.temperature?.neutral_color || '#95a5a6'}"
-                  opacity="${g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></rect>
+                  opacity="${g2ValveState.isActive && hpState.flowRate > idleThreshold ? '1' : '0'}"></rect>
 
             <!-- Corner at DHW to HP return first turn (330, 470) - horizontal to vertical -->
             <rect x="323" y="463"
                   width="14" height="14"
                   fill="${this.config.temperature?.neutral_color || '#95a5a6'}"
-                  opacity="${g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></rect>
+                  opacity="${g2ValveState.isActive && hpState.flowRate > idleThreshold ? '1' : '0'}"></rect>
 
             <!-- Corner at DHW to HP return second turn (330, 220) - vertical to horizontal -->
             <rect x="323" y="213"
                   width="14" height="14"
                   fill="${this.config.temperature?.neutral_color || '#95a5a6'}"
-                  opacity="${g2ValveState.isActive && hpState.flowRate > this.config.animation!.idle_threshold ? '1' : '0'}"></rect>
+                  opacity="${g2ValveState.isActive && hpState.flowRate > idleThreshold ? '1' : '0'}"></rect>
 
             <!-- Heat Pump (left side) -->
             <g id="heat-pump" transform="translate(50, 100)" filter="url(#entity-shadow)">
