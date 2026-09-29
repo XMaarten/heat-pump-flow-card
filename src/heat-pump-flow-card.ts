@@ -2364,7 +2364,45 @@ export class HeatPumpFlowCard extends LitElement {
             </g>
             ` : ''}
 
-            <!-- HVAC Load (right side) -->
+            <!-- HVAC / Underfloor Heating Load (right side) -->
+            ${this.config.hvac?.type === 'underfloor_heating' ? svg`
+              <g id="hvac-load" transform="translate(630, 145)" filter="url(#entity-shadow)">
+                <rect width="120" height="115" rx="10" fill="#2c3e50" stroke="#34495e" stroke-width="2"/>
+
+                <text x="60" y="20" text-anchor="middle" fill="white"
+                      font-size="${this.getTextSize('component', 12)}" font-weight="bold">
+                  ${this.config.hvac?.name || 'Vloerverwarming'}
+                </text>
+
+                <!-- Stylized underfloor-heating loop -->
+                <path d="M 18 38 H 98 Q 108 38 108 48 Q 108 58 98 58 H 22 Q 12 58 12 68 Q 12 78 22 78 H 102"
+                      fill="none" stroke="#e67e22" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M 18 38 v 40 M 102 78 v -8"
+                      fill="none" stroke="#bdc3c7" stroke-width="2" opacity="0.75"/>
+
+                ${hvacState.currentTemp !== undefined ? svg`
+                  <g style="cursor: pointer;" @click="${(e: Event) => this.handleTemperatureClick(e, this.config.hvac!.current_temp_entity!)}">
+                    <text x="8" y="96" text-anchor="start" fill="#bdc3c7"
+                          font-size="${this.getTextSize('label', 8)}">Huidig</text>
+                    <text x="8" y="109" text-anchor="start" fill="white"
+                          font-size="${this.getTextSize('value', 12)}" font-weight="bold">
+                      ${this.formatValue(hvacState.currentTemp, 1)}°
+                    </text>
+                  </g>
+                ` : ''}
+
+                ${hvacState.targetTemp !== undefined ? svg`
+                  <g style="cursor: pointer;" @click="${(e: Event) => this.handleTemperatureClick(e, this.config.hvac!.target_temp_entity!)}">
+                    <text x="112" y="96" text-anchor="end" fill="#bdc3c7"
+                          font-size="${this.getTextSize('label', 8)}">Doel</text>
+                    <text x="112" y="109" text-anchor="end" fill="#e67e22"
+                          font-size="${this.getTextSize('value', 12)}" font-weight="bold">
+                      ${this.formatValue(hvacState.targetTemp, 1)}°
+                    </text>
+                  </g>
+                ` : ''}
+              </g>
+            ` : svg`
             <g id="hvac-load" transform="translate(630, 150)" filter="url(#entity-shadow)">
               <!-- Logo centered above HVAC box -->
               ${this.config.hvac?.logo_url ? svg`
@@ -2406,7 +2444,7 @@ export class HeatPumpFlowCard extends LitElement {
                 </text>
               `}
             </g>
-
+            `}
             <!-- Auxiliary Heater - Glowing cylinder with animated pulsing glow -->
             <!-- Centered between HP outlet (180) and G2 inlet (328) = 254 -->
             <!-- Glow size configurable via aux_heater.glow_size (default: 8px) -->
