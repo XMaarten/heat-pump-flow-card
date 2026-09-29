@@ -1,4 +1,4 @@
-var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=arguments.length,n=r<3?e:null===o?o=Object.getOwnPropertyDescriptor(e,i):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(t,e,i,o);else for(var s=t.length-1;s>=0;s--)(a=t[s])&&(n=(r<3?a(n):r>3?a(e,i,n):a(e,i))||n);return r>3&&n&&Object.defineProperty(e,i,n),n}"function"==typeof SuppressedError&&SuppressedError;const i=globalThis,o=i.ShadowRoot&&(void 0===i.ShadyCSS||i.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,a=Symbol(),r=new WeakMap;let n=class{constructor(t,e,i){if(this._$cssResult$=!0,i!==a)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t,this.t=e}get styleSheet(){let t=this.o;const e=this.t;if(o&&void 0===t){const i=void 0!==e&&1===e.length;i&&(t=r.get(e)),void 0===t&&((this.o=t=new CSSStyleSheet).replaceSync(this.cssText),i&&r.set(e,t))}return t}toString(){return this.cssText}};const s=o?t=>t:t=>t instanceof CSSStyleSheet?(t=>{let e="";for(const i of t.cssRules)e+=i.cssText;return(t=>new n("string"==typeof t?t:t+"",void 0,a))(e)})(t):t,{is:l,defineProperty:c,getOwnPropertyDescriptor:h,getOwnPropertyNames:d,getOwnPropertySymbols:p,getPrototypeOf:f}=Object,u=globalThis,g=u.trustedTypes,m=g?g.emptyScript:"",y=u.reactiveElementPolyfillSupport,_=(t,e)=>t,w={toAttribute(t,e){switch(e){case Boolean:t=t?m:null;break;case Object:case Array:t=null==t?t:JSON.stringify(t)}return t},fromAttribute(t,e){let i=t;switch(e){case Boolean:i=null!==t;break;case Number:i=null===t?null:Number(t);break;case Object:case Array:try{i=JSON.parse(t)}catch(t){i=null}}return i}},$=(t,e)=>!l(t,e),x={attribute:!0,type:String,converter:w,reflect:!1,useDefault:!1,hasChanged:$};Symbol.metadata??=Symbol("metadata"),u.litPropertyMetadata??=new WeakMap;let b=class extends HTMLElement{static addInitializer(t){this._$Ei(),(this.l??=[]).push(t)}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(t,e=x){if(e.state&&(e.attribute=!1),this._$Ei(),this.prototype.hasOwnProperty(t)&&((e=Object.create(e)).wrapped=!0),this.elementProperties.set(t,e),!e.noAccessor){const i=Symbol(),o=this.getPropertyDescriptor(t,i,e);void 0!==o&&c(this.prototype,t,o)}}static getPropertyDescriptor(t,e,i){const{get:o,set:a}=h(this.prototype,t)??{get(){return this[e]},set(t){this[e]=t}};return{get:o,set(e){const r=o?.call(this);a?.call(this,e),this.requestUpdate(t,r,i)},configurable:!0,enumerable:!0}}static getPropertyOptions(t){return this.elementProperties.get(t)??x}static _$Ei(){if(this.hasOwnProperty(_("elementProperties")))return;const t=f(this);t.finalize(),void 0!==t.l&&(this.l=[...t.l]),this.elementProperties=new Map(t.elementProperties)}static finalize(){if(this.hasOwnProperty(_("finalized")))return;if(this.finalized=!0,this._$Ei(),this.hasOwnProperty(_("properties"))){const t=this.properties,e=[...d(t),...p(t)];for(const i of e)this.createProperty(i,t[i])}const t=this[Symbol.metadata];if(null!==t){const e=litPropertyMetadata.get(t);if(void 0!==e)for(const[t,i]of e)this.elementProperties.set(t,i)}this._$Eh=new Map;for(const[t,e]of this.elementProperties){const i=this._$Eu(t,e);void 0!==i&&this._$Eh.set(i,t)}this.elementStyles=this.finalizeStyles(this.styles)}static finalizeStyles(t){const e=[];if(Array.isArray(t)){const i=new Set(t.flat(1/0).reverse());for(const t of i)e.unshift(s(t))}else void 0!==t&&e.push(s(t));return e}static _$Eu(t,e){const i=e.attribute;return!1===i?void 0:"string"==typeof i?i:"string"==typeof t?t.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Em=null,this._$Ev()}_$Ev(){this._$ES=new Promise(t=>this.enableUpdating=t),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach(t=>t(this))}addController(t){(this._$EO??=new Set).add(t),void 0!==this.renderRoot&&this.isConnected&&t.hostConnected?.()}removeController(t){this._$EO?.delete(t)}_$E_(){const t=new Map,e=this.constructor.elementProperties;for(const i of e.keys())this.hasOwnProperty(i)&&(t.set(i,this[i]),delete this[i]);t.size>0&&(this._$Ep=t)}createRenderRoot(){const t=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return((t,e)=>{if(o)t.adoptedStyleSheets=e.map(t=>t instanceof CSSStyleSheet?t:t.styleSheet);else for(const o of e){const e=document.createElement("style"),a=i.litNonce;void 0!==a&&e.setAttribute("nonce",a),e.textContent=o.cssText,t.appendChild(e)}})(t,this.constructor.elementStyles),t}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(!0),this._$EO?.forEach(t=>t.hostConnected?.())}enableUpdating(t){}disconnectedCallback(){this._$EO?.forEach(t=>t.hostDisconnected?.())}attributeChangedCallback(t,e,i){this._$AK(t,i)}_$ET(t,e){const i=this.constructor.elementProperties.get(t),o=this.constructor._$Eu(t,i);if(void 0!==o&&!0===i.reflect){const a=(void 0!==i.converter?.toAttribute?i.converter:w).toAttribute(e,i.type);this._$Em=t,null==a?this.removeAttribute(o):this.setAttribute(o,a),this._$Em=null}}_$AK(t,e){const i=this.constructor,o=i._$Eh.get(t);if(void 0!==o&&this._$Em!==o){const t=i.getPropertyOptions(o),a="function"==typeof t.converter?{fromAttribute:t.converter}:void 0!==t.converter?.fromAttribute?t.converter:w;this._$Em=o;const r=a.fromAttribute(e,t.type);this[o]=r??this._$Ej?.get(o)??r,this._$Em=null}}requestUpdate(t,e,i){if(void 0!==t){const o=this.constructor,a=this[t];if(i??=o.getPropertyOptions(t),!((i.hasChanged??$)(a,e)||i.useDefault&&i.reflect&&a===this._$Ej?.get(t)&&!this.hasAttribute(o._$Eu(t,i))))return;this.C(t,e,i)}!1===this.isUpdatePending&&(this._$ES=this._$EP())}C(t,e,{useDefault:i,reflect:o,wrapped:a},r){i&&!(this._$Ej??=new Map).has(t)&&(this._$Ej.set(t,r??e??this[t]),!0!==a||void 0!==r)||(this._$AL.has(t)||(this.hasUpdated||i||(e=void 0),this._$AL.set(t,e)),!0===o&&this._$Em!==t&&(this._$Eq??=new Set).add(t))}async _$EP(){this.isUpdatePending=!0;try{await this._$ES}catch(t){Promise.reject(t)}const t=this.scheduleUpdate();return null!=t&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(const[t,e]of this._$Ep)this[t]=e;this._$Ep=void 0}const t=this.constructor.elementProperties;if(t.size>0)for(const[e,i]of t){const{wrapped:t}=i,o=this[e];!0!==t||this._$AL.has(e)||void 0===o||this.C(e,void 0,i,o)}}let t=!1;const e=this._$AL;try{t=this.shouldUpdate(e),t?(this.willUpdate(e),this._$EO?.forEach(t=>t.hostUpdate?.()),this.update(e)):this._$EM()}catch(e){throw t=!1,this._$EM(),e}t&&this._$AE(e)}willUpdate(t){}_$AE(t){this._$EO?.forEach(t=>t.hostUpdated?.()),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(t)),this.updated(t)}_$EM(){this._$AL=new Map,this.isUpdatePending=!1}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(t){return!0}update(t){this._$Eq&&=this._$Eq.forEach(t=>this._$ET(t,this[t])),this._$EM()}updated(t){}firstUpdated(t){}};b.elementStyles=[],b.shadowRootOptions={mode:"open"},b[_("elementProperties")]=new Map,b[_("finalized")]=new Map,y?.({ReactiveElement:b}),(u.reactiveElementVersions??=[]).push("2.1.1");const k=globalThis,v=k.trustedTypes,S=v?v.createPolicy("lit-html",{createHTML:t=>t}):void 0,T="$lit$",A=`lit$${Math.random().toFixed(9).slice(2)}$`,C="?"+A,z=`<${C}>`,H=document,L=()=>H.createComment(""),M=t=>null===t||"object"!=typeof t&&"function"!=typeof t,P=Array.isArray,V="[ \t\n\f\r]",E=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,R=/-->/g,D=/>/g,O=RegExp(`>|${V}(?:([^\\s"'>=/]+)(${V}*=${V}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),F=/'/g,W=/"/g,N=/^(?:script|style|textarea|title)$/i,I=t=>(e,...i)=>({_$litType$:t,strings:e,values:i}),U=I(1),G=I(2),Q=Symbol.for("lit-noChange"),B=Symbol.for("lit-nothing"),j=new WeakMap,q=H.createTreeWalker(H,129);function Z(t,e){if(!P(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==S?S.createHTML(e):e}const J=(t,e)=>{const i=t.length-1,o=[];let a,r=2===e?"<svg>":3===e?"<math>":"",n=E;for(let e=0;e<i;e++){const i=t[e];let s,l,c=-1,h=0;for(;h<i.length&&(n.lastIndex=h,l=n.exec(i),null!==l);)h=n.lastIndex,n===E?"!--"===l[1]?n=R:void 0!==l[1]?n=D:void 0!==l[2]?(N.test(l[2])&&(a=RegExp("</"+l[2],"g")),n=O):void 0!==l[3]&&(n=O):n===O?">"===l[0]?(n=a??E,c=-1):void 0===l[1]?c=-2:(c=n.lastIndex-l[2].length,s=l[1],n=void 0===l[3]?O:'"'===l[3]?W:F):n===W||n===F?n=O:n===R||n===D?n=E:(n=O,a=void 0);const d=n===O&&t[e+1].startsWith("/>")?" ":"";r+=n===E?i+z:c>=0?(o.push(s),i.slice(0,c)+T+i.slice(c)+A+d):i+A+(-2===c?e:d)}return[Z(t,r+(t[i]||"<?>")+(2===e?"</svg>":3===e?"</math>":"")),o]};class Y{constructor({strings:t,_$litType$:e},i){let o;this.parts=[];let a=0,r=0;const n=t.length-1,s=this.parts,[l,c]=J(t,e);if(this.el=Y.createElement(l,i),q.currentNode=this.el.content,2===e||3===e){const t=this.el.content.firstChild;t.replaceWith(...t.childNodes)}for(;null!==(o=q.nextNode())&&s.length<n;){if(1===o.nodeType){if(o.hasAttributes())for(const t of o.getAttributeNames())if(t.endsWith(T)){const e=c[r++],i=o.getAttribute(t).split(A),n=/([.?@])?(.*)/.exec(e);s.push({type:1,index:a,name:n[2],strings:i,ctor:"."===n[1]?it:"?"===n[1]?ot:"@"===n[1]?at:et}),o.removeAttribute(t)}else t.startsWith(A)&&(s.push({type:6,index:a}),o.removeAttribute(t));if(N.test(o.tagName)){const t=o.textContent.split(A),e=t.length-1;if(e>0){o.textContent=v?v.emptyScript:"";for(let i=0;i<e;i++)o.append(t[i],L()),q.nextNode(),s.push({type:2,index:++a});o.append(t[e],L())}}}else if(8===o.nodeType)if(o.data===C)s.push({type:2,index:a});else{let t=-1;for(;-1!==(t=o.data.indexOf(A,t+1));)s.push({type:7,index:a}),t+=A.length-1}a++}}static createElement(t,e){const i=H.createElement("template");return i.innerHTML=t,i}}function X(t,e,i=t,o){if(e===Q)return e;let a=void 0!==o?i._$Co?.[o]:i._$Cl;const r=M(e)?void 0:e._$litDirective$;return a?.constructor!==r&&(a?._$AO?.(!1),void 0===r?a=void 0:(a=new r(t),a._$AT(t,i,o)),void 0!==o?(i._$Co??=[])[o]=a:i._$Cl=a),void 0!==a&&(e=X(t,a._$AS(t,e.values),a,o)),e}class K{constructor(t,e){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=e}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){const{el:{content:e},parts:i}=this._$AD,o=(t?.creationScope??H).importNode(e,!0);q.currentNode=o;let a=q.nextNode(),r=0,n=0,s=i[0];for(;void 0!==s;){if(r===s.index){let e;2===s.type?e=new tt(a,a.nextSibling,this,t):1===s.type?e=new s.ctor(a,s.name,s.strings,this,t):6===s.type&&(e=new rt(a,this,t)),this._$AV.push(e),s=i[++n]}r!==s?.index&&(a=q.nextNode(),r++)}return q.currentNode=H,o}p(t){let e=0;for(const i of this._$AV)void 0!==i&&(void 0!==i.strings?(i._$AI(t,i,e),e+=i.strings.length-2):i._$AI(t[e])),e++}}class tt{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(t,e,i,o){this.type=2,this._$AH=B,this._$AN=void 0,this._$AA=t,this._$AB=e,this._$AM=i,this.options=o,this._$Cv=o?.isConnected??!0}get parentNode(){let t=this._$AA.parentNode;const e=this._$AM;return void 0!==e&&11===t?.nodeType&&(t=e.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,e=this){t=X(this,t,e),M(t)?t===B||null==t||""===t?(this._$AH!==B&&this._$AR(),this._$AH=B):t!==this._$AH&&t!==Q&&this._(t):void 0!==t._$litType$?this.$(t):void 0!==t.nodeType?this.T(t):(t=>P(t)||"function"==typeof t?.[Symbol.iterator])(t)?this.k(t):this._(t)}O(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}T(t){this._$AH!==t&&(this._$AR(),this._$AH=this.O(t))}_(t){this._$AH!==B&&M(this._$AH)?this._$AA.nextSibling.data=t:this.T(H.createTextNode(t)),this._$AH=t}$(t){const{values:e,_$litType$:i}=t,o="number"==typeof i?this._$AC(t):(void 0===i.el&&(i.el=Y.createElement(Z(i.h,i.h[0]),this.options)),i);if(this._$AH?._$AD===o)this._$AH.p(e);else{const t=new K(o,this),i=t.u(this.options);t.p(e),this.T(i),this._$AH=t}}_$AC(t){let e=j.get(t.strings);return void 0===e&&j.set(t.strings,e=new Y(t)),e}k(t){P(this._$AH)||(this._$AH=[],this._$AR());const e=this._$AH;let i,o=0;for(const a of t)o===e.length?e.push(i=new tt(this.O(L()),this.O(L()),this,this.options)):i=e[o],i._$AI(a),o++;o<e.length&&(this._$AR(i&&i._$AB.nextSibling,o),e.length=o)}_$AR(t=this._$AA.nextSibling,e){for(this._$AP?.(!1,!0,e);t!==this._$AB;){const e=t.nextSibling;t.remove(),t=e}}setConnected(t){void 0===this._$AM&&(this._$Cv=t,this._$AP?.(t))}}class et{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(t,e,i,o,a){this.type=1,this._$AH=B,this._$AN=void 0,this.element=t,this.name=e,this._$AM=o,this.options=a,i.length>2||""!==i[0]||""!==i[1]?(this._$AH=Array(i.length-1).fill(new String),this.strings=i):this._$AH=B}_$AI(t,e=this,i,o){const a=this.strings;let r=!1;if(void 0===a)t=X(this,t,e,0),r=!M(t)||t!==this._$AH&&t!==Q,r&&(this._$AH=t);else{const o=t;let n,s;for(t=a[0],n=0;n<a.length-1;n++)s=X(this,o[i+n],e,n),s===Q&&(s=this._$AH[n]),r||=!M(s)||s!==this._$AH[n],s===B?t=B:t!==B&&(t+=(s??"")+a[n+1]),this._$AH[n]=s}r&&!o&&this.j(t)}j(t){t===B?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,t??"")}}class it extends et{constructor(){super(...arguments),this.type=3}j(t){this.element[this.name]=t===B?void 0:t}}class ot extends et{constructor(){super(...arguments),this.type=4}j(t){this.element.toggleAttribute(this.name,!!t&&t!==B)}}class at extends et{constructor(t,e,i,o,a){super(t,e,i,o,a),this.type=5}_$AI(t,e=this){if((t=X(this,t,e,0)??B)===Q)return;const i=this._$AH,o=t===B&&i!==B||t.capture!==i.capture||t.once!==i.once||t.passive!==i.passive,a=t!==B&&(i===B||o);o&&this.element.removeEventListener(this.name,this,i),a&&this.element.addEventListener(this.name,this,t),this._$AH=t}handleEvent(t){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,t):this._$AH.handleEvent(t)}}class rt{constructor(t,e,i){this.element=t,this.type=6,this._$AN=void 0,this._$AM=e,this.options=i}get _$AU(){return this._$AM._$AU}_$AI(t){X(this,t)}}const nt=k.litHtmlPolyfillSupport;nt?.(Y,tt),(k.litHtmlVersions??=[]).push("3.3.1");const st=globalThis;class lt extends b{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){const t=super.createRenderRoot();return this.renderOptions.renderBefore??=t.firstChild,t}update(t){const e=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=((t,e,i)=>{const o=i?.renderBefore??e;let a=o._$litPart$;if(void 0===a){const t=i?.renderBefore??null;o._$litPart$=a=new tt(e.insertBefore(L(),t),t,void 0,i??{})}return a._$AI(t),a})(e,this.renderRoot,this.renderOptions)}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(!0)}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(!1)}render(){return Q}}lt._$litElement$=!0,lt.finalized=!0,st.litElementHydrateSupport?.({LitElement:lt});const ct=st.litElementPolyfillSupport;ct?.({LitElement:lt}),(st.litElementVersions??=[]).push("4.2.1");const ht={attribute:!0,type:String,converter:w,reflect:!1,hasChanged:$},dt=(t=ht,e,i)=>{const{kind:o,metadata:a}=i;let r=globalThis.litPropertyMetadata.get(a);if(void 0===r&&globalThis.litPropertyMetadata.set(a,r=new Map),"setter"===o&&((t=Object.create(t)).wrapped=!0),r.set(i.name,t),"accessor"===o){const{name:o}=i;return{set(i){const a=e.get.call(this);e.set.call(this,i),this.requestUpdate(o,a,t)},init(e){return void 0!==e&&this.C(o,void 0,t,e),e}}}if("setter"===o){const{name:o}=i;return function(i){const a=this[o];e.call(this,i),this.requestUpdate(o,a,t)}}throw Error("Unsupported decorator location: "+o)};function pt(t){return(e,i)=>"object"==typeof i?dt(t,e,i):((t,e,i)=>{const o=e.hasOwnProperty(i);return e.constructor.createProperty(i,t),o?Object.getOwnPropertyDescriptor(e,i):void 0})(t,e,i)}function ft(t,e){return(e,i,o)=>((t,e,i)=>(i.configurable=!0,i.enumerable=!0,Reflect.decorate&&"object"!=typeof e&&Object.defineProperty(t,e,i),i))(e,i,{get(){return(e=>e.renderRoot?.querySelector(t)??null)(this)}})}const ut="1.1.2",gt=(new Date).toISOString(),mt=((t,...e)=>{const i=1===t.length?t[0]:e.reduce((e,i,o)=>e+(t=>{if(!0===t._$cssResult$)return t.cssText;if("number"==typeof t)return t;throw Error("Value passed to 'css' function must be a 'css' function result: "+t+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(i)+t[o+1],t[0]);return new n(i,t,a)})`
+var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=arguments.length,n=r<3?e:null===o?o=Object.getOwnPropertyDescriptor(e,i):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(t,e,i,o);else for(var s=t.length-1;s>=0;s--)(a=t[s])&&(n=(r<3?a(n):r>3?a(e,i,n):a(e,i))||n);return r>3&&n&&Object.defineProperty(e,i,n),n}"function"==typeof SuppressedError&&SuppressedError;const i=globalThis,o=i.ShadowRoot&&(void 0===i.ShadyCSS||i.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,a=Symbol(),r=new WeakMap;let n=class{constructor(t,e,i){if(this._$cssResult$=!0,i!==a)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t,this.t=e}get styleSheet(){let t=this.o;const e=this.t;if(o&&void 0===t){const i=void 0!==e&&1===e.length;i&&(t=r.get(e)),void 0===t&&((this.o=t=new CSSStyleSheet).replaceSync(this.cssText),i&&r.set(e,t))}return t}toString(){return this.cssText}};const s=o?t=>t:t=>t instanceof CSSStyleSheet?(t=>{let e="";for(const i of t.cssRules)e+=i.cssText;return(t=>new n("string"==typeof t?t:t+"",void 0,a))(e)})(t):t,{is:l,defineProperty:h,getOwnPropertyDescriptor:c,getOwnPropertyNames:d,getOwnPropertySymbols:p,getPrototypeOf:f}=Object,u=globalThis,g=u.trustedTypes,m=g?g.emptyScript:"",y=u.reactiveElementPolyfillSupport,_=(t,e)=>t,w={toAttribute(t,e){switch(e){case Boolean:t=t?m:null;break;case Object:case Array:t=null==t?t:JSON.stringify(t)}return t},fromAttribute(t,e){let i=t;switch(e){case Boolean:i=null!==t;break;case Number:i=null===t?null:Number(t);break;case Object:case Array:try{i=JSON.parse(t)}catch(t){i=null}}return i}},x=(t,e)=>!l(t,e),$={attribute:!0,type:String,converter:w,reflect:!1,useDefault:!1,hasChanged:x};Symbol.metadata??=Symbol("metadata"),u.litPropertyMetadata??=new WeakMap;let b=class extends HTMLElement{static addInitializer(t){this._$Ei(),(this.l??=[]).push(t)}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(t,e=$){if(e.state&&(e.attribute=!1),this._$Ei(),this.prototype.hasOwnProperty(t)&&((e=Object.create(e)).wrapped=!0),this.elementProperties.set(t,e),!e.noAccessor){const i=Symbol(),o=this.getPropertyDescriptor(t,i,e);void 0!==o&&h(this.prototype,t,o)}}static getPropertyDescriptor(t,e,i){const{get:o,set:a}=c(this.prototype,t)??{get(){return this[e]},set(t){this[e]=t}};return{get:o,set(e){const r=o?.call(this);a?.call(this,e),this.requestUpdate(t,r,i)},configurable:!0,enumerable:!0}}static getPropertyOptions(t){return this.elementProperties.get(t)??$}static _$Ei(){if(this.hasOwnProperty(_("elementProperties")))return;const t=f(this);t.finalize(),void 0!==t.l&&(this.l=[...t.l]),this.elementProperties=new Map(t.elementProperties)}static finalize(){if(this.hasOwnProperty(_("finalized")))return;if(this.finalized=!0,this._$Ei(),this.hasOwnProperty(_("properties"))){const t=this.properties,e=[...d(t),...p(t)];for(const i of e)this.createProperty(i,t[i])}const t=this[Symbol.metadata];if(null!==t){const e=litPropertyMetadata.get(t);if(void 0!==e)for(const[t,i]of e)this.elementProperties.set(t,i)}this._$Eh=new Map;for(const[t,e]of this.elementProperties){const i=this._$Eu(t,e);void 0!==i&&this._$Eh.set(i,t)}this.elementStyles=this.finalizeStyles(this.styles)}static finalizeStyles(t){const e=[];if(Array.isArray(t)){const i=new Set(t.flat(1/0).reverse());for(const t of i)e.unshift(s(t))}else void 0!==t&&e.push(s(t));return e}static _$Eu(t,e){const i=e.attribute;return!1===i?void 0:"string"==typeof i?i:"string"==typeof t?t.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Em=null,this._$Ev()}_$Ev(){this._$ES=new Promise(t=>this.enableUpdating=t),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach(t=>t(this))}addController(t){(this._$EO??=new Set).add(t),void 0!==this.renderRoot&&this.isConnected&&t.hostConnected?.()}removeController(t){this._$EO?.delete(t)}_$E_(){const t=new Map,e=this.constructor.elementProperties;for(const i of e.keys())this.hasOwnProperty(i)&&(t.set(i,this[i]),delete this[i]);t.size>0&&(this._$Ep=t)}createRenderRoot(){const t=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return((t,e)=>{if(o)t.adoptedStyleSheets=e.map(t=>t instanceof CSSStyleSheet?t:t.styleSheet);else for(const o of e){const e=document.createElement("style"),a=i.litNonce;void 0!==a&&e.setAttribute("nonce",a),e.textContent=o.cssText,t.appendChild(e)}})(t,this.constructor.elementStyles),t}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(!0),this._$EO?.forEach(t=>t.hostConnected?.())}enableUpdating(t){}disconnectedCallback(){this._$EO?.forEach(t=>t.hostDisconnected?.())}attributeChangedCallback(t,e,i){this._$AK(t,i)}_$ET(t,e){const i=this.constructor.elementProperties.get(t),o=this.constructor._$Eu(t,i);if(void 0!==o&&!0===i.reflect){const a=(void 0!==i.converter?.toAttribute?i.converter:w).toAttribute(e,i.type);this._$Em=t,null==a?this.removeAttribute(o):this.setAttribute(o,a),this._$Em=null}}_$AK(t,e){const i=this.constructor,o=i._$Eh.get(t);if(void 0!==o&&this._$Em!==o){const t=i.getPropertyOptions(o),a="function"==typeof t.converter?{fromAttribute:t.converter}:void 0!==t.converter?.fromAttribute?t.converter:w;this._$Em=o;const r=a.fromAttribute(e,t.type);this[o]=r??this._$Ej?.get(o)??r,this._$Em=null}}requestUpdate(t,e,i){if(void 0!==t){const o=this.constructor,a=this[t];if(i??=o.getPropertyOptions(t),!((i.hasChanged??x)(a,e)||i.useDefault&&i.reflect&&a===this._$Ej?.get(t)&&!this.hasAttribute(o._$Eu(t,i))))return;this.C(t,e,i)}!1===this.isUpdatePending&&(this._$ES=this._$EP())}C(t,e,{useDefault:i,reflect:o,wrapped:a},r){i&&!(this._$Ej??=new Map).has(t)&&(this._$Ej.set(t,r??e??this[t]),!0!==a||void 0!==r)||(this._$AL.has(t)||(this.hasUpdated||i||(e=void 0),this._$AL.set(t,e)),!0===o&&this._$Em!==t&&(this._$Eq??=new Set).add(t))}async _$EP(){this.isUpdatePending=!0;try{await this._$ES}catch(t){Promise.reject(t)}const t=this.scheduleUpdate();return null!=t&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(const[t,e]of this._$Ep)this[t]=e;this._$Ep=void 0}const t=this.constructor.elementProperties;if(t.size>0)for(const[e,i]of t){const{wrapped:t}=i,o=this[e];!0!==t||this._$AL.has(e)||void 0===o||this.C(e,void 0,i,o)}}let t=!1;const e=this._$AL;try{t=this.shouldUpdate(e),t?(this.willUpdate(e),this._$EO?.forEach(t=>t.hostUpdate?.()),this.update(e)):this._$EM()}catch(e){throw t=!1,this._$EM(),e}t&&this._$AE(e)}willUpdate(t){}_$AE(t){this._$EO?.forEach(t=>t.hostUpdated?.()),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(t)),this.updated(t)}_$EM(){this._$AL=new Map,this.isUpdatePending=!1}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(t){return!0}update(t){this._$Eq&&=this._$Eq.forEach(t=>this._$ET(t,this[t])),this._$EM()}updated(t){}firstUpdated(t){}};b.elementStyles=[],b.shadowRootOptions={mode:"open"},b[_("elementProperties")]=new Map,b[_("finalized")]=new Map,y?.({ReactiveElement:b}),(u.reactiveElementVersions??=[]).push("2.1.1");const k=globalThis,v=k.trustedTypes,S=v?v.createPolicy("lit-html",{createHTML:t=>t}):void 0,T="$lit$",A=`lit$${Math.random().toFixed(9).slice(2)}$`,z="?"+A,H=`<${z}>`,C=document,M=()=>C.createComment(""),L=t=>null===t||"object"!=typeof t&&"function"!=typeof t,P=Array.isArray,V="[ \t\n\f\r]",D=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,E=/-->/g,R=/>/g,O=RegExp(`>|${V}(?:([^\\s"'>=/]+)(${V}*=${V}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),W=/'/g,F=/"/g,N=/^(?:script|style|textarea|title)$/i,I=t=>(e,...i)=>({_$litType$:t,strings:e,values:i}),U=I(1),Q=I(2),G=Symbol.for("lit-noChange"),B=Symbol.for("lit-nothing"),j=new WeakMap,q=C.createTreeWalker(C,129);function Z(t,e){if(!P(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==S?S.createHTML(e):e}const Y=(t,e)=>{const i=t.length-1,o=[];let a,r=2===e?"<svg>":3===e?"<math>":"",n=D;for(let e=0;e<i;e++){const i=t[e];let s,l,h=-1,c=0;for(;c<i.length&&(n.lastIndex=c,l=n.exec(i),null!==l);)c=n.lastIndex,n===D?"!--"===l[1]?n=E:void 0!==l[1]?n=R:void 0!==l[2]?(N.test(l[2])&&(a=RegExp("</"+l[2],"g")),n=O):void 0!==l[3]&&(n=O):n===O?">"===l[0]?(n=a??D,h=-1):void 0===l[1]?h=-2:(h=n.lastIndex-l[2].length,s=l[1],n=void 0===l[3]?O:'"'===l[3]?F:W):n===F||n===W?n=O:n===E||n===R?n=D:(n=O,a=void 0);const d=n===O&&t[e+1].startsWith("/>")?" ":"";r+=n===D?i+H:h>=0?(o.push(s),i.slice(0,h)+T+i.slice(h)+A+d):i+A+(-2===h?e:d)}return[Z(t,r+(t[i]||"<?>")+(2===e?"</svg>":3===e?"</math>":"")),o]};class J{constructor({strings:t,_$litType$:e},i){let o;this.parts=[];let a=0,r=0;const n=t.length-1,s=this.parts,[l,h]=Y(t,e);if(this.el=J.createElement(l,i),q.currentNode=this.el.content,2===e||3===e){const t=this.el.content.firstChild;t.replaceWith(...t.childNodes)}for(;null!==(o=q.nextNode())&&s.length<n;){if(1===o.nodeType){if(o.hasAttributes())for(const t of o.getAttributeNames())if(t.endsWith(T)){const e=h[r++],i=o.getAttribute(t).split(A),n=/([.?@])?(.*)/.exec(e);s.push({type:1,index:a,name:n[2],strings:i,ctor:"."===n[1]?it:"?"===n[1]?ot:"@"===n[1]?at:et}),o.removeAttribute(t)}else t.startsWith(A)&&(s.push({type:6,index:a}),o.removeAttribute(t));if(N.test(o.tagName)){const t=o.textContent.split(A),e=t.length-1;if(e>0){o.textContent=v?v.emptyScript:"";for(let i=0;i<e;i++)o.append(t[i],M()),q.nextNode(),s.push({type:2,index:++a});o.append(t[e],M())}}}else if(8===o.nodeType)if(o.data===z)s.push({type:2,index:a});else{let t=-1;for(;-1!==(t=o.data.indexOf(A,t+1));)s.push({type:7,index:a}),t+=A.length-1}a++}}static createElement(t,e){const i=C.createElement("template");return i.innerHTML=t,i}}function X(t,e,i=t,o){if(e===G)return e;let a=void 0!==o?i._$Co?.[o]:i._$Cl;const r=L(e)?void 0:e._$litDirective$;return a?.constructor!==r&&(a?._$AO?.(!1),void 0===r?a=void 0:(a=new r(t),a._$AT(t,i,o)),void 0!==o?(i._$Co??=[])[o]=a:i._$Cl=a),void 0!==a&&(e=X(t,a._$AS(t,e.values),a,o)),e}class K{constructor(t,e){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=e}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){const{el:{content:e},parts:i}=this._$AD,o=(t?.creationScope??C).importNode(e,!0);q.currentNode=o;let a=q.nextNode(),r=0,n=0,s=i[0];for(;void 0!==s;){if(r===s.index){let e;2===s.type?e=new tt(a,a.nextSibling,this,t):1===s.type?e=new s.ctor(a,s.name,s.strings,this,t):6===s.type&&(e=new rt(a,this,t)),this._$AV.push(e),s=i[++n]}r!==s?.index&&(a=q.nextNode(),r++)}return q.currentNode=C,o}p(t){let e=0;for(const i of this._$AV)void 0!==i&&(void 0!==i.strings?(i._$AI(t,i,e),e+=i.strings.length-2):i._$AI(t[e])),e++}}class tt{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(t,e,i,o){this.type=2,this._$AH=B,this._$AN=void 0,this._$AA=t,this._$AB=e,this._$AM=i,this.options=o,this._$Cv=o?.isConnected??!0}get parentNode(){let t=this._$AA.parentNode;const e=this._$AM;return void 0!==e&&11===t?.nodeType&&(t=e.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,e=this){t=X(this,t,e),L(t)?t===B||null==t||""===t?(this._$AH!==B&&this._$AR(),this._$AH=B):t!==this._$AH&&t!==G&&this._(t):void 0!==t._$litType$?this.$(t):void 0!==t.nodeType?this.T(t):(t=>P(t)||"function"==typeof t?.[Symbol.iterator])(t)?this.k(t):this._(t)}O(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}T(t){this._$AH!==t&&(this._$AR(),this._$AH=this.O(t))}_(t){this._$AH!==B&&L(this._$AH)?this._$AA.nextSibling.data=t:this.T(C.createTextNode(t)),this._$AH=t}$(t){const{values:e,_$litType$:i}=t,o="number"==typeof i?this._$AC(t):(void 0===i.el&&(i.el=J.createElement(Z(i.h,i.h[0]),this.options)),i);if(this._$AH?._$AD===o)this._$AH.p(e);else{const t=new K(o,this),i=t.u(this.options);t.p(e),this.T(i),this._$AH=t}}_$AC(t){let e=j.get(t.strings);return void 0===e&&j.set(t.strings,e=new J(t)),e}k(t){P(this._$AH)||(this._$AH=[],this._$AR());const e=this._$AH;let i,o=0;for(const a of t)o===e.length?e.push(i=new tt(this.O(M()),this.O(M()),this,this.options)):i=e[o],i._$AI(a),o++;o<e.length&&(this._$AR(i&&i._$AB.nextSibling,o),e.length=o)}_$AR(t=this._$AA.nextSibling,e){for(this._$AP?.(!1,!0,e);t!==this._$AB;){const e=t.nextSibling;t.remove(),t=e}}setConnected(t){void 0===this._$AM&&(this._$Cv=t,this._$AP?.(t))}}class et{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(t,e,i,o,a){this.type=1,this._$AH=B,this._$AN=void 0,this.element=t,this.name=e,this._$AM=o,this.options=a,i.length>2||""!==i[0]||""!==i[1]?(this._$AH=Array(i.length-1).fill(new String),this.strings=i):this._$AH=B}_$AI(t,e=this,i,o){const a=this.strings;let r=!1;if(void 0===a)t=X(this,t,e,0),r=!L(t)||t!==this._$AH&&t!==G,r&&(this._$AH=t);else{const o=t;let n,s;for(t=a[0],n=0;n<a.length-1;n++)s=X(this,o[i+n],e,n),s===G&&(s=this._$AH[n]),r||=!L(s)||s!==this._$AH[n],s===B?t=B:t!==B&&(t+=(s??"")+a[n+1]),this._$AH[n]=s}r&&!o&&this.j(t)}j(t){t===B?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,t??"")}}class it extends et{constructor(){super(...arguments),this.type=3}j(t){this.element[this.name]=t===B?void 0:t}}class ot extends et{constructor(){super(...arguments),this.type=4}j(t){this.element.toggleAttribute(this.name,!!t&&t!==B)}}class at extends et{constructor(t,e,i,o,a){super(t,e,i,o,a),this.type=5}_$AI(t,e=this){if((t=X(this,t,e,0)??B)===G)return;const i=this._$AH,o=t===B&&i!==B||t.capture!==i.capture||t.once!==i.once||t.passive!==i.passive,a=t!==B&&(i===B||o);o&&this.element.removeEventListener(this.name,this,i),a&&this.element.addEventListener(this.name,this,t),this._$AH=t}handleEvent(t){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,t):this._$AH.handleEvent(t)}}class rt{constructor(t,e,i){this.element=t,this.type=6,this._$AN=void 0,this._$AM=e,this.options=i}get _$AU(){return this._$AM._$AU}_$AI(t){X(this,t)}}const nt=k.litHtmlPolyfillSupport;nt?.(J,tt),(k.litHtmlVersions??=[]).push("3.3.1");const st=globalThis;class lt extends b{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){const t=super.createRenderRoot();return this.renderOptions.renderBefore??=t.firstChild,t}update(t){const e=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=((t,e,i)=>{const o=i?.renderBefore??e;let a=o._$litPart$;if(void 0===a){const t=i?.renderBefore??null;o._$litPart$=a=new tt(e.insertBefore(M(),t),t,void 0,i??{})}return a._$AI(t),a})(e,this.renderRoot,this.renderOptions)}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(!0)}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(!1)}render(){return G}}lt._$litElement$=!0,lt.finalized=!0,st.litElementHydrateSupport?.({LitElement:lt});const ht=st.litElementPolyfillSupport;ht?.({LitElement:lt}),(st.litElementVersions??=[]).push("4.2.1");const ct={attribute:!0,type:String,converter:w,reflect:!1,hasChanged:x},dt=(t=ct,e,i)=>{const{kind:o,metadata:a}=i;let r=globalThis.litPropertyMetadata.get(a);if(void 0===r&&globalThis.litPropertyMetadata.set(a,r=new Map),"setter"===o&&((t=Object.create(t)).wrapped=!0),r.set(i.name,t),"accessor"===o){const{name:o}=i;return{set(i){const a=e.get.call(this);e.set.call(this,i),this.requestUpdate(o,a,t)},init(e){return void 0!==e&&this.C(o,void 0,t,e),e}}}if("setter"===o){const{name:o}=i;return function(i){const a=this[o];e.call(this,i),this.requestUpdate(o,a,t)}}throw Error("Unsupported decorator location: "+o)};function pt(t){return(e,i)=>"object"==typeof i?dt(t,e,i):((t,e,i)=>{const o=e.hasOwnProperty(i);return e.constructor.createProperty(i,t),o?Object.getOwnPropertyDescriptor(e,i):void 0})(t,e,i)}function ft(t,e){return(e,i,o)=>((t,e,i)=>(i.configurable=!0,i.enumerable=!0,Reflect.decorate&&"object"!=typeof e&&Object.defineProperty(t,e,i),i))(e,i,{get(){return(e=>e.renderRoot?.querySelector(t)??null)(this)}})}const ut="1.1.2",gt=(new Date).toISOString(),mt=((t,...e)=>{const i=1===t.length?t[0]:e.reduce((e,i,o)=>e+(t=>{if(!0===t._$cssResult$)return t.cssText;if("number"==typeof t)return t;throw Error("Value passed to 'css' function must be a 'css' function result: "+t+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(i)+t[o+1],t[0]);return new n(i,t,a)})`
   ha-card {
     padding: 16px;
     background: var(--ha-card-background, var(--card-background-color, white));
@@ -273,7 +273,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
       animation: none !important;
     }
   }
-`;return console.info(`%c  HEAT-PUMP-FLOW-CARD  \n%c  Version ${ut}  \n%c  Built: ${gt}  `,"color: orange; font-weight: bold; background: black","color: white; font-weight: bold; background: dimgray","color: #95a5a6; font-weight: normal; background: dimgray"),t.HeatPumpFlowCard=class extends lt{constructor(){super(...arguments),this.lastRenderTime=0,this.lastHassState={}}static getConfigElement(){}static getStubConfig(){return{type:"custom:heat-pump-flow-card",title:"Heat Pump Flow"}}setConfig(t){if(!t)throw new Error("Invalid configuration");const{animation:e,temperature:i,display:o,heat_pump_visual:a,labels:r,temperature_status:n,...s}=t;this.config={...s,animation:{enabled:!0,min_flow_rate:5,max_flow_rate:1,max_flow_rate_value:50,idle_threshold:0,...e},temperature:{delta_threshold:10,hot_color:"#e74c3c",cold_color:"#3498db",neutral_color:"#95a5a6",unit:"C",...i},display:{show_values:!0,show_labels:!0,show_icons:!0,compact:!1,decimal_places:1,...o},heat_pump_visual:{off_color:"#95a5a6",heating_color:"#e74c3c",cooling_color:"#3498db",dhw_color:"#e67e22",defrost_color:"#f1c40f",show_metrics:!0,animate_fan:!0,...a},labels:{hp_supply:"HP Supply",hp_return:"HP Return",hvac_supply:"HVAC Supply",hvac_return:"HVAC Return",buffer_tank:"BUFFER",dhw_tank:"DHW",power_in:"Power In",thermal_out:"Thermal Out",cop:"COP",flow:"Flow",energy:"Energy",cost:"Cost",...r},temperature_status:{enabled:!1,circle_radius:12,...n,points:{hp_outlet:{enabled:!0},hp_inlet:{enabled:!0},buffer_supply:{enabled:!0},buffer_return:{enabled:!0},hvac_supply:{enabled:!0},hvac_return:{enabled:!0},dhw_inlet:{enabled:!0},dhw_outlet:{enabled:!0},dhw_tank_inlet:{enabled:!0},dhw_tank_outlet:{enabled:!0},dhw_tank_2_outlet:{enabled:!0},...n?.points}}}}shouldUpdate(t){if(t.has("config"))return!0;if(t.has("hass")){const t=Date.now();if(t-this.lastRenderTime<1e3)return this.updateAnimationVariables(),!1;this.lastRenderTime=t}return super.shouldUpdate(t)}updated(t){super.updated(t),t.has("hass")&&this.hass&&this.updateAnimationVariables()}firstUpdated(){this.config.animation?.enabled&&setTimeout(()=>{this.updateAnimationVariables()},100),this.setupVisibilityListener(),window.debugCard=()=>{const t=document.querySelector("heat-pump-flow-card");return t?(console.log("Card found:",t),console.log("Shadow root:",t.shadowRoot),{card:t,shadowRoot:t.shadowRoot,config:this.config,dhwTank2State:this.getDHWTank2State(),querySelector:e=>t.shadowRoot?.querySelector(e)}):null}}setupVisibilityListener(){this.visibilityChangeHandler=()=>{document.hidden?this.pauseAnimations():this.resumeAnimations()},document.addEventListener("visibilitychange",this.visibilityChangeHandler)}pauseAnimations(){const t=this.shadowRoot?.querySelector("svg");t&&t.classList.add("animations-paused")}resumeAnimations(){const t=this.shadowRoot?.querySelector("svg");t&&t.classList.remove("animations-paused")}disconnectedCallback(){super.disconnectedCallback(),this.visibilityChangeHandler&&document.removeEventListener("visibilitychange",this.visibilityChangeHandler)}updateAnimationVariables(){this.updateFanAnimation()}updateFanAnimation(){const t=this.shadowRoot?.querySelector("#fan-blades");if(!t||!this.config.heat_pump_visual?.animate_fan)return;const e=this.getHeatPumpState().fanSpeed||0;if(e>0){t.classList.add("fan-rotating");const i=e>0?100/e:999;t.style.setProperty("--fan-duration",`${i}s`)}else t.classList.remove("fan-rotating")}getHeatPumpState(){const t=this.config.heat_pump||{};return{power:this.getStateValue(t.power_entity)||0,thermal:this.getStateValue(t.thermal_entity)||0,cop:this.getStateValue(t.cop_entity)||0,outletTemp:this.getStateValue(t.outlet_temp_entity)||0,inletTemp:this.getStateValue(t.inlet_temp_entity)||0,flowRate:this.getStateValue(t.flow_rate_entity)||0,fanSpeed:this.getStateValue(t.fan_speed_entity),mode:this.getStateString(t.mode_entity),modeDisplay:this.getStateString(t.mode_display_entity),defrost:"on"===this.getStateString(t.defrost_entity),error:this.getStateString(t.error_entity),energy:this.getStateValue(t.energy_entity),cost:this.getStateValue(t.cost_entity),runtime:this.getStateValue(t.runtime_entity),heatingTargetTemp:this.getStateValue(t.heating_target_temp_entity),dhwTargetTemp:this.getStateValue(t.dhw_target_temp_entity),coolingTargetTemp:this.getStateValue(t.cooling_target_temp_entity),amps:this.getStateValue(t.amps_entity),volts:this.getStateValue(t.volts_entity),compressorFrequency:this.getStateValue(t.compressor_frequency_entity),dischargeTemp:this.getStateValue(t.discharge_temp_entity),ambientTemp:this.getStateValue(t.ambient_temp_entity),dhwTemp:this.getStateValue(t.dhw_temp_entity),outdoorCoilTemp:this.getStateValue(t.outdoor_coil_temp_entity),suctionTemp:this.getStateValue(t.suction_temp_entity),heatExchangerTemp:this.getStateValue(t.heat_exchanger_temp_entity),plateExchangeTemp:this.getStateValue(t.plate_exchange_temp_entity),ecFanMotor1Speed:this.getStateValue(t.ec_fan_motor_1_speed_entity),ecFanMotor2Speed:this.getStateValue(t.ec_fan_motor_2_speed_entity),busLineVoltage:this.getStateValue(t.bus_line_voltage_entity),fanShutdownCode:this.getStateValue(t.fan_shutdown_code_entity),ipmTemp:this.getStateValue(t.ipm_temp_entity),compressorRunningTime:this.getStateValue(t.compressor_running_time_entity),eHeaterPower:this.getStateValue(t.e_heater_power_entity),din6ModeSwitch:this.getStateValue(t.din6_mode_switch_entity),din7ModeSwitch:this.getStateValue(t.din7_mode_switch_entity),pumpEnabled:"on"===this.getStateString(t.pump_enabled_entity),compressorMaxPercentage:this.getStateValue(t.compressor_max_percentage_entity)}}getStateString(t){if(!t||!this.hass)return;const e=this.hass.states[t];return e?.state}getBufferTankState(){const t=this.config.buffer_tank||{};return{supplyTemp:this.getStateValue(t.supply_temp_entity)||0,returnTemp:this.getStateValue(t.return_temp_entity)||0,level:this.getStateValue(t.level_entity),tankTemp:this.getStateValue(t.tank_temp_entity),energyReserve:this.getStateValue(t.energy_reserve_entity)}}getHVACState(){const t=this.config.hvac||{};return{thermal:this.getStateValue(t.thermal_entity)||0,flowRate:this.getStateValue(t.flow_rate_entity)||0,supplyTemp:this.getStateValue(t.supply_temp_entity)||0,returnTemp:this.getStateValue(t.return_temp_entity)||0,currentTemp:this.getStateValue(t.current_temp_entity),targetTemp:this.getStateValue(t.target_temp_entity)}}getDHWTankState(){const t=this.config.dhw_tank||{};return{inletTemp:this.getStateValue(t.inlet_temp_entity)||0,outletTemp:this.getStateValue(t.outlet_temp_entity)||0,tankTemp:this.getStateValue(t.tank_temp_entity),targetTemp:this.getStateValue(t.target_temp_entity)??this.getStateValue(this.config.heat_pump?.dhw_target_temp_entity),tankInletFlow:this.getStateValue(t.tank_inlet_flow_entity),tankInletTemp:this.getStateValue(t.tank_inlet_temp_entity),tankOutletTemp:this.getStateValue(t.tank_outlet_temp_entity)}}getDHWTank2State(){const t=this.config.dhw_tank_2||{};return{enabled:t.enabled||!1,inletTemp:this.getStateValue(t.inlet_temp_entity)||0,outletTemp:this.getStateValue(t.outlet_temp_entity)||0,tankTemp:this.getStateValue(t.tank_temp_entity)}}getG2ValveState(){const t=this.config.g2_valve||{},e=this.getStateString(t.state_entity);return{isActive:"on"===e||"true"===e||"1"===e}}getAuxHeaterState(){const t=this.config.aux_heater||{},e=t.enabled||!1,i=this.getStateValue(t.power_entity)||0,o=t.max_power||18e3;return{enabled:e,power:i,maxPower:o,intensity:Math.min(i/o,1),displayName:t.display_name||t.name||"AUX"}}getStateValue(t){if(!t||!this.hass)return;const e=this.hass.states[t];if(!e)return;const i=parseFloat(e.state);return isNaN(i)?void 0:i}getStateUnit(t){if(!t||!this.hass)return"";const e=this.hass.states[t];return e?.attributes?.unit_of_measurement||""}formatValue(t,e=1){return void 0===t?"N/A":t.toFixed(e)}getTextSize(t,e){const i=this.config.text_style,o=i?.font_size;return"label"===t?i?.label_font_size??(void 0!==o?Math.max(6,o-1):e):"value"===t?i?.value_font_size??o??e:"temperature"===t?i?.temperature_font_size??o??e:i?.component_font_size??o??e}renderTankTempIndicator(t,e,i,o,a,r,n){if(!a||!o||void 0===i||isNaN(i))return G``;return G`
+`;return console.info(`%c  HEAT-PUMP-FLOW-CARD  \n%c  Version ${ut}  \n%c  Built: ${gt}  `,"color: orange; font-weight: bold; background: black","color: white; font-weight: bold; background: dimgray","color: #95a5a6; font-weight: normal; background: dimgray"),t.HeatPumpFlowCard=class extends lt{constructor(){super(...arguments),this.lastRenderTime=0,this.lastHassState={}}static getConfigElement(){}static getStubConfig(){return{type:"custom:heat-pump-flow-card",title:"Heat Pump Flow"}}setConfig(t){if(!t)throw new Error("Invalid configuration");const{animation:e,temperature:i,display:o,heat_pump_visual:a,labels:r,temperature_status:n,...s}=t;this.config={...s,animation:{enabled:!0,min_flow_rate:5,max_flow_rate:1,max_flow_rate_value:50,idle_threshold:0,...e},temperature:{delta_threshold:10,hot_color:"#e74c3c",cold_color:"#3498db",neutral_color:"#95a5a6",unit:"C",...i},display:{show_values:!0,show_labels:!0,show_icons:!0,compact:!1,decimal_places:1,...o},heat_pump_visual:{off_color:"#95a5a6",heating_color:"#e74c3c",cooling_color:"#3498db",dhw_color:"#e67e22",defrost_color:"#f1c40f",show_metrics:!0,animate_fan:!0,...a},labels:{hp_supply:"HP Supply",hp_return:"HP Return",hvac_supply:"HVAC Supply",hvac_return:"HVAC Return",buffer_tank:"BUFFER",dhw_tank:"DHW",power_in:"Power In",thermal_out:"Thermal Out",cop:"COP",flow:"Flow",energy:"Energy",cost:"Cost",...r},temperature_status:{enabled:!1,circle_radius:12,...n,points:{hp_outlet:{enabled:!0},hp_inlet:{enabled:!0},buffer_supply:{enabled:!0},buffer_return:{enabled:!0},hvac_supply:{enabled:!0},hvac_return:{enabled:!0},dhw_inlet:{enabled:!0},dhw_outlet:{enabled:!0},dhw_tank_inlet:{enabled:!0},dhw_tank_outlet:{enabled:!0},dhw_tank_2_outlet:{enabled:!0},...n?.points}}}}shouldUpdate(t){if(t.has("config"))return!0;if(t.has("hass")){const t=Date.now();if(t-this.lastRenderTime<1e3)return this.updateAnimationVariables(),!1;this.lastRenderTime=t}return super.shouldUpdate(t)}updated(t){super.updated(t),t.has("hass")&&this.hass&&this.updateAnimationVariables()}firstUpdated(){this.config.animation?.enabled&&setTimeout(()=>{this.updateAnimationVariables()},100),this.setupVisibilityListener(),window.debugCard=()=>{const t=document.querySelector("heat-pump-flow-card");return t?(console.log("Card found:",t),console.log("Shadow root:",t.shadowRoot),{card:t,shadowRoot:t.shadowRoot,config:this.config,dhwTank2State:this.getDHWTank2State(),querySelector:e=>t.shadowRoot?.querySelector(e)}):null}}setupVisibilityListener(){this.visibilityChangeHandler=()=>{document.hidden?this.pauseAnimations():this.resumeAnimations()},document.addEventListener("visibilitychange",this.visibilityChangeHandler)}pauseAnimations(){const t=this.shadowRoot?.querySelector("svg");t&&t.classList.add("animations-paused")}resumeAnimations(){const t=this.shadowRoot?.querySelector("svg");t&&t.classList.remove("animations-paused")}disconnectedCallback(){super.disconnectedCallback(),this.visibilityChangeHandler&&document.removeEventListener("visibilitychange",this.visibilityChangeHandler)}updateAnimationVariables(){this.updateFanAnimation()}updateFanAnimation(){const t=this.shadowRoot?.querySelector("#fan-blades");if(!t||!this.config.heat_pump_visual?.animate_fan)return;const e=this.getHeatPumpState().fanSpeed||0;if(e>0){t.classList.add("fan-rotating");const i=e>0?100/e:999;t.style.setProperty("--fan-duration",`${i}s`)}else t.classList.remove("fan-rotating")}getHeatPumpState(){const t=this.config.heat_pump||{};return{power:this.getStateValue(t.power_entity)||0,thermal:this.getStateValue(t.thermal_entity)||0,cop:this.getStateValue(t.cop_entity)||0,outletTemp:this.getStateValue(t.outlet_temp_entity)||0,inletTemp:this.getStateValue(t.inlet_temp_entity)||0,flowRate:this.getStateValue(t.flow_rate_entity)||0,fanSpeed:this.getStateValue(t.fan_speed_entity),mode:this.getStateString(t.mode_entity),modeDisplay:this.getStateString(t.mode_display_entity),defrost:"on"===this.getStateString(t.defrost_entity),error:this.getStateString(t.error_entity),energy:this.getStateValue(t.energy_entity),cost:this.getStateValue(t.cost_entity),runtime:this.getStateValue(t.runtime_entity),heatingTargetTemp:this.getStateValue(t.heating_target_temp_entity),dhwTargetTemp:this.getStateValue(t.dhw_target_temp_entity),coolingTargetTemp:this.getStateValue(t.cooling_target_temp_entity),amps:this.getStateValue(t.amps_entity),volts:this.getStateValue(t.volts_entity),compressorFrequency:this.getStateValue(t.compressor_frequency_entity),dischargeTemp:this.getStateValue(t.discharge_temp_entity),ambientTemp:this.getStateValue(t.ambient_temp_entity),dhwTemp:this.getStateValue(t.dhw_temp_entity),outdoorCoilTemp:this.getStateValue(t.outdoor_coil_temp_entity),suctionTemp:this.getStateValue(t.suction_temp_entity),heatExchangerTemp:this.getStateValue(t.heat_exchanger_temp_entity),plateExchangeTemp:this.getStateValue(t.plate_exchange_temp_entity),ecFanMotor1Speed:this.getStateValue(t.ec_fan_motor_1_speed_entity),ecFanMotor2Speed:this.getStateValue(t.ec_fan_motor_2_speed_entity),busLineVoltage:this.getStateValue(t.bus_line_voltage_entity),fanShutdownCode:this.getStateValue(t.fan_shutdown_code_entity),ipmTemp:this.getStateValue(t.ipm_temp_entity),compressorRunningTime:this.getStateValue(t.compressor_running_time_entity),eHeaterPower:this.getStateValue(t.e_heater_power_entity),din6ModeSwitch:this.getStateValue(t.din6_mode_switch_entity),din7ModeSwitch:this.getStateValue(t.din7_mode_switch_entity),pumpEnabled:"on"===this.getStateString(t.pump_enabled_entity),compressorMaxPercentage:this.getStateValue(t.compressor_max_percentage_entity)}}getStateString(t){if(!t||!this.hass)return;const e=this.hass.states[t];return e?.state}getBufferTankState(){const t=this.config.buffer_tank||{};return{supplyTemp:this.getStateValue(t.supply_temp_entity)||0,returnTemp:this.getStateValue(t.return_temp_entity)||0,level:this.getStateValue(t.level_entity),tankTemp:this.getStateValue(t.tank_temp_entity),energyReserve:this.getStateValue(t.energy_reserve_entity)}}getHVACState(){const t=this.config.hvac||{};return{thermal:this.getStateValue(t.thermal_entity)||0,flowRate:this.getStateValue(t.flow_rate_entity)||0,supplyTemp:this.getStateValue(t.supply_temp_entity)||0,returnTemp:this.getStateValue(t.return_temp_entity)||0,currentTemp:this.getStateValue(t.current_temp_entity),targetTemp:this.getStateValue(t.target_temp_entity)}}getDHWTankState(){const t=this.config.dhw_tank||{};return{inletTemp:this.getStateValue(t.inlet_temp_entity)||0,outletTemp:this.getStateValue(t.outlet_temp_entity)||0,tankTemp:this.getStateValue(t.tank_temp_entity),targetTemp:this.getStateValue(t.target_temp_entity)??this.getStateValue(this.config.heat_pump?.dhw_target_temp_entity),tankInletFlow:this.getStateValue(t.tank_inlet_flow_entity),tankInletTemp:this.getStateValue(t.tank_inlet_temp_entity),tankOutletTemp:this.getStateValue(t.tank_outlet_temp_entity)}}getDHWTank2State(){const t=this.config.dhw_tank_2||{};return{enabled:t.enabled||!1,inletTemp:this.getStateValue(t.inlet_temp_entity)||0,outletTemp:this.getStateValue(t.outlet_temp_entity)||0,tankTemp:this.getStateValue(t.tank_temp_entity)}}getG2ValveState(){const t=this.config.g2_valve||{},e=this.getStateString(t.state_entity);return{isActive:"on"===e||"true"===e||"1"===e}}getAuxHeaterState(){const t=this.config.aux_heater||{},e=t.enabled||!1,i=this.getStateValue(t.power_entity)||0,o=t.max_power||18e3;return{enabled:e,power:i,maxPower:o,intensity:Math.min(i/o,1),displayName:t.display_name||t.name||"AUX"}}getStateValue(t){if(!t||!this.hass)return;const e=this.hass.states[t];if(!e)return;const i=parseFloat(e.state);return isNaN(i)?void 0:i}getStateUnit(t){if(!t||!this.hass)return"";const e=this.hass.states[t];return e?.attributes?.unit_of_measurement||""}formatValue(t,e=1){return void 0===t?"N/A":t.toFixed(e)}getTextSize(t,e){const i=this.config.text_style,o=i?.font_size;return"label"===t?i?.label_font_size??(void 0!==o?Math.max(6,o-1):e):"value"===t?i?.value_font_size??o??e:"temperature"===t?i?.temperature_font_size??o??e:i?.component_font_size??o??e}renderTankTempIndicator(t,e,i,o,a,r,n){if(!a||!o||void 0===i||isNaN(i))return Q``;return Q`
       <g class="tank-temp-indicator"
          style="cursor: pointer;"
          @click="${t=>this.handleTemperatureClick(t,o)}">
@@ -302,7 +302,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
           ${this.formatValue(i,1)}°
         </text>
       </g>
-    `}handleTemperatureClick(t,e){if(t.stopPropagation(),!e||!this.hass)return;const i=new CustomEvent("hass-more-info",{bubbles:!0,composed:!0,detail:{entityId:e}});this.dispatchEvent(i)}renderTemperatureIndicator(t,e,i,o,a,r){if(!this.config.temperature_status?.enabled||!a?.enabled||!i)return G``;if(void 0===o||isNaN(o))return G``;const n=this.config.temperature_status.circle_radius||12;return G`
+    `}handleTemperatureClick(t,e){if(t.stopPropagation(),!e||!this.hass)return;const i=new CustomEvent("hass-more-info",{bubbles:!0,composed:!0,detail:{entityId:e}});this.dispatchEvent(i)}renderTemperatureIndicator(t,e,i,o,a,r){if(!this.config.temperature_status?.enabled||!a?.enabled||!i)return Q``;if(void 0===o||isNaN(o))return Q``;const n=this.config.temperature_status.circle_radius||12;return Q`
       <g class="temp-status-indicator"
          style="cursor: pointer;"
          @click="${t=>this.handleTemperatureClick(t,i)}">
@@ -331,7 +331,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
           ${this.formatValue(o,1)}°
         </text>
       </g>
-    `}getPipeColors(t,e,i){const o=this.config.temperature,a=Math.abs(t-e);return i<=(this.config.animation?.idle_threshold??0)||a<o.delta_threshold?{hotPipe:o.neutral_color,coldPipe:o.neutral_color}:t>e?{hotPipe:o.hot_color,coldPipe:o.cold_color}:{hotPipe:o.cold_color,coldPipe:o.hot_color}}generateTankGradient(t,e,i){const o="buffer"===t?this.config.buffer_tank?.gradient:"dhw_tank_2"===t?this.config.dhw_tank_2?.gradient:this.config.dhw_tank?.gradient;let a,r;if(void 0!==o?.min_temp){a=("number"==typeof o.min_temp?o.min_temp:this.getStateValue(o.min_temp))??60}else a=this.getStateValue(o?.min_temp_entity)??o?.min_temp_fallback??60;if(void 0!==o?.max_temp){r=("number"==typeof o.max_temp?o.max_temp:this.getStateValue(o.max_temp))??130}else r=this.getStateValue(o?.max_temp_entity)??o?.max_temp_fallback??130;const n=r-a,s=n>0?Math.max(0,Math.min(1,(e-a)/n)):0,l=Math.round(100*s);if(!1===o?.enabled)return{levels:[],fillPercentage:l};const c=Math.max(2,o?.levels??10),h=o?.bottom_color??this.config.temperature?.neutral_color??"#95a5a6";let d;if("buffer"===t){const t=this.config.buffer_tank?.gradient;d=i?t?.heating_top_color??this.config.temperature?.hot_color??"#e74c3c":t?.cooling_top_color??this.config.temperature?.cold_color??"#3498db"}else{const e="dhw_tank_2"===t?this.config.dhw_tank_2?.gradient:this.config.dhw_tank?.gradient;d=e?.top_color??this.config.temperature?.hot_color??"#e74c3c"}const p=130/c,f=[];for(let t=0;t<c;t++){const e=t/(c-1),i=155-(t+1)*p,o=this.interpolateColor(h,d,e),a=(t/c+(t+1)/c)/2<=s?.95:.05;f.push({y:i,height:p,color:o,opacity:a})}return{levels:f,fillPercentage:l}}renderGradientRects(t){const e=[];for(let i=0;i<t.length;i++){const o=t[i];e.push(G`<rect x="15" y="${o.y}" width="60" height="${o.height}" fill="${o.color}" opacity="${o.opacity}"></rect>`)}return e}hexToRgb(t){const e={black:"#000000",white:"#FFFFFF",red:"#FF0000",green:"#008000",blue:"#0000FF",yellow:"#FFFF00",cyan:"#00FFFF",magenta:"#FF00FF",orange:"#FFA500",purple:"#800080",pink:"#FFC0CB",brown:"#A52A2A",gray:"#808080",grey:"#808080"}[t.toLowerCase()]||t,i=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(e);return i?{r:parseInt(i[1],16),g:parseInt(i[2],16),b:parseInt(i[3],16)}:{r:0,g:0,b:0}}interpolateColor(t,e,i){i=Math.max(0,Math.min(1,i));const o=this.hexToRgb(t),a=this.hexToRgb(e),r=Math.round(o.r+(a.r-o.r)*i),n=Math.round(o.g+(a.g-o.g)*i),s=Math.round(o.b+(a.b-o.b)*i);return`#${r.toString(16).padStart(2,"0")}${n.toString(16).padStart(2,"0")}${s.toString(16).padStart(2,"0")}`}getHeatPumpColor(t){const e=this.config.heat_pump_visual;if(t.defrost)return e.defrost_color;if(t.power<=0)return e.off_color;const i=(t.mode||t.modeDisplay)?.toLowerCase();return i?.includes("heat")?e.heating_color:i?.includes("cool")?e.cooling_color:i?.includes("dhw")||i?.includes("hot water")?e.dhw_color:e.off_color}getDisplayMode(t,e){return t.mode?t.mode.toUpperCase():t.modeDisplay?t.modeDisplay.toUpperCase():t.defrost?"DEFROST":t.power<=0&&t.thermal<=0?"OFF":t.power>0?e.isActive?"DHW":"HEATING":"OFF"}getContrastTextColor(t){const e=t.replace("#","");return(.299*parseInt(e.substr(0,2),16)+.587*parseInt(e.substr(2,2),16)+.114*parseInt(e.substr(4,2),16))/255>.35?"#2c3e50":"#ffffff"}renderIcon(t,e,i,o,a,r=.8,n){if(t.startsWith("mdi:")){const s=5;return G`
+    `}getPipeColors(t,e,i){const o=this.config.temperature,a=Math.abs(t-e);return i<=(this.config.animation?.idle_threshold??0)||a<o.delta_threshold?{hotPipe:o.neutral_color,coldPipe:o.neutral_color}:t>e?{hotPipe:o.hot_color,coldPipe:o.cold_color}:{hotPipe:o.cold_color,coldPipe:o.hot_color}}generateTankGradient(t,e,i){const o="buffer"===t?this.config.buffer_tank?.gradient:"dhw_tank_2"===t?this.config.dhw_tank_2?.gradient:this.config.dhw_tank?.gradient;let a,r;if(void 0!==o?.min_temp){a=("number"==typeof o.min_temp?o.min_temp:this.getStateValue(o.min_temp))??60}else a=this.getStateValue(o?.min_temp_entity)??o?.min_temp_fallback??60;if(void 0!==o?.max_temp){r=("number"==typeof o.max_temp?o.max_temp:this.getStateValue(o.max_temp))??130}else r=this.getStateValue(o?.max_temp_entity)??o?.max_temp_fallback??130;const n=r-a,s=n>0?Math.max(0,Math.min(1,(e-a)/n)):0,l=Math.round(100*s);if(!1===o?.enabled)return{levels:[],fillPercentage:l};const h=Math.max(2,o?.levels??10),c=o?.bottom_color??this.config.temperature?.neutral_color??"#95a5a6";let d;if("buffer"===t){const t=this.config.buffer_tank?.gradient;d=i?t?.heating_top_color??this.config.temperature?.hot_color??"#e74c3c":t?.cooling_top_color??this.config.temperature?.cold_color??"#3498db"}else{const e="dhw_tank_2"===t?this.config.dhw_tank_2?.gradient:this.config.dhw_tank?.gradient;d=e?.top_color??this.config.temperature?.hot_color??"#e74c3c"}const p=130/h,f=[];for(let t=0;t<h;t++){const e=t/(h-1),i=155-(t+1)*p,o=this.interpolateColor(c,d,e),a=(t/h+(t+1)/h)/2<=s?.95:.05;f.push({y:i,height:p,color:o,opacity:a})}return{levels:f,fillPercentage:l}}renderGradientRects(t){const e=[];for(let i=0;i<t.length;i++){const o=t[i];e.push(Q`<rect x="15" y="${o.y}" width="60" height="${o.height}" fill="${o.color}" opacity="${o.opacity}"></rect>`)}return e}hexToRgb(t){const e={black:"#000000",white:"#FFFFFF",red:"#FF0000",green:"#008000",blue:"#0000FF",yellow:"#FFFF00",cyan:"#00FFFF",magenta:"#FF00FF",orange:"#FFA500",purple:"#800080",pink:"#FFC0CB",brown:"#A52A2A",gray:"#808080",grey:"#808080"}[t.toLowerCase()]||t,i=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(e);return i?{r:parseInt(i[1],16),g:parseInt(i[2],16),b:parseInt(i[3],16)}:{r:0,g:0,b:0}}interpolateColor(t,e,i){i=Math.max(0,Math.min(1,i));const o=this.hexToRgb(t),a=this.hexToRgb(e),r=Math.round(o.r+(a.r-o.r)*i),n=Math.round(o.g+(a.g-o.g)*i),s=Math.round(o.b+(a.b-o.b)*i);return`#${r.toString(16).padStart(2,"0")}${n.toString(16).padStart(2,"0")}${s.toString(16).padStart(2,"0")}`}getHeatPumpColor(t){const e=this.config.heat_pump_visual;if(t.defrost)return e.defrost_color;if(t.power<=0)return e.off_color;const i=(t.mode||t.modeDisplay)?.toLowerCase();return i?.includes("heat")?e.heating_color:i?.includes("cool")?e.cooling_color:i?.includes("dhw")||i?.includes("hot water")?e.dhw_color:e.off_color}getDisplayMode(t,e){return t.mode?t.mode.toUpperCase():t.modeDisplay?t.modeDisplay.toUpperCase():t.defrost?"DEFROST":t.power<=0&&t.thermal<=0?"OFF":t.power>0?e.isActive?"DHW":"HEATING":"OFF"}getContrastTextColor(t){const e=t.replace("#","");return(.299*parseInt(e.substr(0,2),16)+.587*parseInt(e.substr(2,2),16)+.114*parseInt(e.substr(4,2),16))/255>.35?"#2c3e50":"#ffffff"}renderIcon(t,e,i,o,a,r=.8,n){if(t.startsWith("mdi:")){const s=5;return Q`
         <foreignObject x="${e-s}" y="${i-s}" width="${o+2*s}" height="${a+2*s}">
           <ha-icon
             icon="${t}"
@@ -346,7 +346,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
             "
           ></ha-icon>
         </foreignObject>
-      `}return G`
+      `}return Q`
         <image
           x="${e}"
           y="${i}"
@@ -355,13 +355,275 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
           href="${t}"
           opacity="${r}"
         />
-      `}getAnimationDuration(t){const e=this.config.animation,i=e?.min_flow_rate??5,o=e?.max_flow_rate??1,a=e?.max_flow_rate_value??50;if(t<=0)return i;return i-Math.min(t/a,1)*(i-o)}render(){if(!this.config||!this.hass)return U``;const t=this.getHeatPumpState(),e=this.getBufferTankState(),i=this.getHVACState(),o=this.getDHWTankState(),a=this.getDHWTank2State(),r=this.getG2ValveState(),n=this.getAuxHeaterState(),s="common_return"===this.config.buffer_tank?.position,l=this.config.animation?.idle_threshold??0,c=this.getPipeColors(t.outletTemp,t.inletTemp,t.flowRate),h=this.getPipeColors(s?t.outletTemp:e.supplyTemp,i.returnTemp,i.flowRate),d=c.hotPipe,p=c.coldPipe,f=h.hotPipe,u=h.coldPipe,g=t.flowRate>l,m=this.config.temperature.hot_color,y=this.config.temperature.cold_color,_=this.config.dhw_tank?.inlet_color||this.config.temperature.hot_color,w=this.config.dhw_tank?.outlet_color||this.config.temperature.cold_color,$=this.config.dhw_tank?.tank_inlet_color||"#3498db",x=this.config.dhw_tank?.tank_outlet_color||"#e74c3c",b=this.config.dhw_tank_2?.tank_outlet_color||"#e74c3c",k=e.supplyTemp>e.returnTemp,v=e.supplyTemp,S=this.generateTankGradient("buffer",v,k),T=S.levels,A=S.fillPercentage,C=o.tankTemp??o.inletTemp,z=this.generateTankGradient("dhw",C,!0),H=z.levels,L=z.fillPercentage;let M=[],P=0;if(a.enabled){const t=a.tankTemp??a.inletTemp,e=this.generateTankGradient("dhw_tank_2",t,!0);M=e.levels,P=e.fillPercentage}const V=this.getHeatPumpColor(t),E=this.getContrastTextColor(V),R="var(--primary-text-color)";t.error;const D=n.intensity;let O="#bdc3c7";if(D>0){const t=189,e=195,i=199,o=255,a=68,r=34;O=`rgb(${Math.round(t+(o-t)*D)}, ${Math.round(e+(a-e)*D)}, ${Math.round(i+(r-i)*D)})`}const F=this.config.aux_heater?.glow_size??8,W=224,N=172,I=60,Q=W,B=N-F,j=I,q=16+2*F,Z=2,J=2,Y=W,X=N-.75*F,K=I,tt=16+2*F*.75,et=2,it=2,ot=W,at=N-.5*F,rt=I,nt=16+2*F*.5,st=2,lt=2,ct=D>0?2-1.4*D:2,ht=Math.max(1.2,Math.min(4,4-.18*t.flowRate)),dt=this.config.aux_heater?.shadow_blur??1,pt=D>0?"aux-glow-outer":"aux-heater-layer",ft=D>0?"aux-glow-middle":"aux-heater-layer",gt=D>0?"aux-glow-inner":"aux-heater-layer",mt=D>0?"aux-cylinder-pulse":"",yt=this.config.logo_size||40,_t=!1!==this.config.show_logo,wt=this.config.logo_path||"/local/heat-pump-flow.png",$t=this.config.logo_url||"https://github.com/jasipsw/heat-pump-flow-card#readme";return U`
+      `}getAnimationDuration(t){const e=this.config.animation,i=e?.min_flow_rate??5,o=e?.max_flow_rate??1,a=e?.max_flow_rate_value??50;if(t<=0)return i;return i-Math.min(t/a,1)*(i-o)}renderDaikinSplitCard(){const t=this.getHeatPumpState(),e=this.getBufferTankState(),i=this.getHVACState(),o=this.getDHWTankState(),a=this.getG2ValveState(),r=this.getAuxHeaterState(),n=this.config.indoor_unit||{},s=this.getStateValue(n.inlet_temp_entity)??t.outletTemp,l=this.getStateValue(n.outlet_temp_entity)??s,h=!1!==n.show_buh,c=this.config.dhw_tank?.electric_heater,d=this.getStateValue(c?.power_entity)??0,p=this.getStateString(c?.state_entity),f=!1!==c?.enabled,u=f&&(d>0||"on"===p||"true"===p||"1"===p),g=this.config.animation?.idle_threshold??0,m=t.flowRate>g,y=this.config.temperature?.neutral_color??"#95a5a6",_=this.config.temperature?.hot_color??"#e74c3c",w=this.config.temperature?.cold_color??"#3498db",x=this.getPipeColors(t.outletTemp,t.inletTemp,t.flowRate),$=m?x.hotPipe:y,b=m?x.coldPipe:y,k=!a.isActive&&m?$:y,v=a.isActive&&m?_:y,S=a.isActive&&m?w:y,T=this.getTextSize("label",10),A=this.getTextSize("value",14),z=this.getTextSize("component",14),H=this.config.buffer_tank?.volume_l??40,C=this.config.dhw_tank?.volume_l??300,M=o.tankTemp,L=o.targetTemp,P=i.currentTemp,V=i.targetTemp,D=this.config.logo_size||40,E=!1!==this.config.show_logo,R=this.config.logo_path||"/local/heat-pump-flow.png",O=this.config.logo_url||"https://github.com/XMaarten/heat-pump-flow-card",W=r.power>0?"#ff7043":"#95a5a6",F=u?"#ff7043":"#95a5a6";return U`
+      <ha-card style="--logo-size: ${D}px">
+        ${this.config.title||E?U`
+          <h1 class="card-header">
+            <span>${this.config.title||""}</span>
+            ${E?U`
+              <a href="${O}" target="_blank" rel="noopener noreferrer" class="card-logo-link">
+                <img src="${R}" class="card-logo" alt="Heat Pump Flow Card" />
+              </a>
+            `:""}
+          </h1>
+        `:""}
+
+        <div class="card-content">
+          <svg viewBox="0 0 800 630" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <filter id="entity-shadow" x="-50%" y="-50%" width="200%" height="200%">
+                <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.55"/>
+              </filter>
+              <filter id="circle-shadow" x="-50%" y="-50%" width="200%" height="200%">
+                <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.3"/>
+              </filter>
+            </defs>
+
+            <!-- SUPPLY: outdoor -> indoor -> 3-way valve -->
+            <path d="M 190 145 H 315"
+                  stroke="${$}" stroke-width="12" fill="none" stroke-linecap="butt"/>
+            <path d="M 495 145 H 520 V 275 H 425"
+                  stroke="${$}" stroke-width="12" fill="none" stroke-linecap="butt"/>
+
+            <!-- Heating branch to floor -->
+            <path d="M 425 295 H 650 V 365"
+                  stroke="${k}" stroke-width="12" fill="none" stroke-linecap="butt"
+                  opacity="${a.isActive?.35:1}"/>
+
+            <!-- DHW branch to coil -->
+            <path d="M 385 295 H 250 V 405 H 230"
+                  stroke="${v}" stroke-width="12" fill="none" stroke-linecap="butt"
+                  opacity="${a.isActive?1:.35}"/>
+
+            <!-- Returns merge before the 40 L buffer -->
+            <path d="M 555 470 V 525 H 405"
+                  stroke="${b}" stroke-width="12" fill="none" stroke-linecap="butt"/>
+            <path d="M 230 510 H 405 V 525"
+                  stroke="${S}" stroke-width="12" fill="none" stroke-linecap="butt"
+                  opacity="${a.isActive?1:.35}"/>
+            <path d="M 405 525 H 335"
+                  stroke="${b}" stroke-width="12" fill="none" stroke-linecap="butt"/>
+            <path d="M 265 525 H 190 V 205"
+                  stroke="${b}" stroke-width="12" fill="none" stroke-linecap="butt"/>
+
+            <!-- OUTDOOR UNIT -->
+            <g transform="translate(35, 60)" filter="url(#entity-shadow)">
+              <rect width="155" height="180" rx="12"
+                    fill="${this.getHeatPumpColor(t)}" fill-opacity="0.16"
+                    stroke="${this.getHeatPumpColor(t)}" stroke-width="3"/>
+              <text x="77.5" y="24" text-anchor="middle"
+                    fill="var(--primary-text-color)" font-size="${z}" font-weight="bold">
+                ${this.config.heat_pump?.display_name||"Buitenunit"}
+              </text>
+
+              <circle cx="77.5" cy="78" r="38" fill="#34495e"
+                      stroke="${this.getHeatPumpColor(t)}" stroke-width="2"/>
+              <g id="fan-blades">
+                <path d="M 77.5 40 Q 91 64, 77.5 78 Q 64 64, 77.5 40" fill="#7f8c8d"/>
+                <path d="M 115.5 78 Q 91 91, 77.5 78 Q 91 64, 115.5 78" fill="#7f8c8d"/>
+                <path d="M 77.5 116 Q 64 91, 77.5 78 Q 91 91, 77.5 116" fill="#7f8c8d"/>
+                <path d="M 39.5 78 Q 64 64, 77.5 78 Q 64 91, 39.5 78" fill="#7f8c8d"/>
+                <circle cx="77.5" cy="78" r="9" fill="#2c3e50"/>
+              </g>
+
+              <text x="77.5" y="137" text-anchor="middle"
+                    fill="var(--primary-text-color)" font-size="${T}" font-weight="bold">
+                ${this.getDisplayMode(t,a)}
+              </text>
+            </g>
+
+            <!-- Readable outdoor metrics: 2 x 2 -->
+            <g transform="translate(35, 255)">
+              <rect width="200" height="104" rx="10"
+                    fill="var(--secondary-background-color)" opacity="0.9"/>
+              <text x="14" y="22" fill="var(--secondary-text-color)" font-size="${T}">Elektrisch</text>
+              <text x="14" y="43" fill="var(--primary-text-color)" font-size="${A}" font-weight="bold">
+                ${this.formatValue(t.power/1e3,1)} kW
+              </text>
+
+              <text x="108" y="22" fill="var(--secondary-text-color)" font-size="${T}">Thermisch</text>
+              <text x="108" y="43" fill="var(--primary-text-color)" font-size="${A}" font-weight="bold">
+                ${this.formatValue(t.thermal/1e3,1)} kW
+              </text>
+
+              <text x="14" y="68" fill="var(--secondary-text-color)" font-size="${T}">COP</text>
+              <text x="14" y="90" fill="var(--primary-text-color)" font-size="${A}" font-weight="bold">
+                ${this.formatValue(t.cop,2)}
+              </text>
+
+              <text x="108" y="68" fill="var(--secondary-text-color)" font-size="${T}">Flow</text>
+              <text x="108" y="90" fill="var(--primary-text-color)" font-size="${A}" font-weight="bold">
+                ${this.formatValue(t.flowRate,1)} ${this.getStateUnit(this.config.heat_pump?.flow_rate_entity)||"L/min"}
+              </text>
+            </g>
+
+            <!-- INDOOR UNIT with BUH -->
+            <g transform="translate(315, 60)" filter="url(#entity-shadow)">
+              <rect width="180" height="155" rx="12" fill="#273746" stroke="#5d6d7e" stroke-width="3"/>
+              <text x="90" y="25" text-anchor="middle" fill="white"
+                    font-size="${z}" font-weight="bold">
+                ${n.name||"Binnenunit"}
+              </text>
+
+              <text x="18" y="52" fill="#bdc3c7" font-size="${T}">PHE / in</text>
+              <text x="18" y="72" fill="white" font-size="${A}" font-weight="bold">
+                ${this.formatValue(s,1)}°
+              </text>
+
+              <text x="162" y="52" text-anchor="end" fill="#bdc3c7" font-size="${T}">Aanvoer</text>
+              <text x="162" y="72" text-anchor="end" fill="white" font-size="${A}" font-weight="bold">
+                ${this.formatValue(l,1)}°
+              </text>
+
+              <path d="M 30 105 H 48 L 58 90 L 72 120 L 86 90 L 100 120 L 114 90 L 128 120 L 138 105 H 150"
+                    stroke="${h?W:"#5d6d7e"}"
+                    stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                    opacity="${h?1:.25}"/>
+              <text x="90" y="143" text-anchor="middle"
+                    fill="${h?W:"#95a5a6"}" font-size="${T}" font-weight="bold">
+                BUH${r.power>0?" "+this.formatValue(r.power/1e3,1)+" kW":""}
+              </text>
+            </g>
+
+            <!-- 3-way valve below indoor unit -->
+            <g transform="translate(405, 295)" filter="url(#entity-shadow)">
+              <circle r="22" fill="#d5dbdb" stroke="#7f8c8d" stroke-width="3"/>
+              <circle r="7" fill="${$}"/>
+              <path d="M 0 -22 V -7" stroke="${$}" stroke-width="6"/>
+              <path d="M -22 0 H -7" stroke="${v}" stroke-width="6"/>
+              <path d="M 7 0 H 22" stroke="${k}" stroke-width="6"/>
+              <text x="0" y="-34" text-anchor="middle"
+                    fill="var(--primary-text-color)" font-size="${T}" font-weight="bold">3-wegklep</text>
+              <text x="0" y="39" text-anchor="middle"
+                    fill="var(--secondary-text-color)" font-size="${T}">
+                ${a.isActive?"Tapwater":"Vloerverwarming"}
+              </text>
+            </g>
+
+            <!-- 40 L return buffer -->
+            <g transform="translate(265, 445)" filter="url(#entity-shadow)">
+              <rect x="0" y="12" width="70" height="110" fill="#34495e" stroke="#2c3e50" stroke-width="3"/>
+              <ellipse cx="35" cy="12" rx="35" ry="12" fill="#34495e" stroke="#2c3e50" stroke-width="3"/>
+              <ellipse cx="35" cy="122" rx="35" ry="12" fill="#2c3e50" stroke="#2c3e50" stroke-width="3"/>
+              <rect x="6" y="20" width="58" height="94" fill="${b}" opacity="0.20"/>
+              <text x="35" y="17" text-anchor="middle" dominant-baseline="middle"
+                    fill="white" font-size="${T}" font-weight="bold">
+                ${this.config.buffer_tank?.name||"Buffer"}
+              </text>
+              <text x="35" y="72" text-anchor="middle" fill="white"
+                    font-size="${A}" font-weight="bold">${H} L</text>
+              ${void 0!==e.tankTemp?U`
+                <text x="35" y="96" text-anchor="middle" fill="#bdc3c7" font-size="${T}">
+                  ${this.formatValue(e.tankTemp,1)}°
+                </text>
+              `:""}
+            </g>
+
+            <!-- 300 L DHW tank -->
+            <g transform="translate(110, 355)" filter="url(#entity-shadow)">
+              <rect x="0" y="15" width="120" height="205" fill="#34495e" stroke="#2c3e50" stroke-width="3"/>
+              <ellipse cx="60" cy="15" rx="60" ry="15" fill="#34495e" stroke="#2c3e50" stroke-width="3"/>
+              <ellipse cx="60" cy="220" rx="60" ry="15" fill="#2c3e50" stroke="#2c3e50" stroke-width="3"/>
+              <rect x="8" y="25" width="104" height="185" fill="#3498db" opacity="0.16"/>
+
+              <text x="60" y="20" text-anchor="middle" dominant-baseline="middle"
+                    fill="white" font-size="${z}" font-weight="bold">
+                ${this.config.dhw_tank?.name||"Tapwater"}
+              </text>
+              <text x="60" y="47" text-anchor="middle" fill="#bdc3c7"
+                    font-size="${T}">${C} L</text>
+
+              <!-- Heat-pump coil: deliberately prominent -->
+              <path d="M 120 65 H 95
+                       Q 68 65, 68 83
+                       Q 68 101, 95 101
+                       Q 112 101, 112 119
+                       Q 112 137, 85 137
+                       Q 58 137, 58 155
+                       Q 58 173, 85 173
+                       Q 112 173, 112 191
+                       Q 112 205, 95 205
+                       H 120"
+                    stroke="${a.isActive?_:y}"
+                    stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <text x="62" y="125" text-anchor="middle" fill="var(--primary-text-color)"
+                    font-size="${T}" font-weight="bold">Spiraal</text>
+
+              <!-- Separate electric immersion element -->
+              <g opacity="${f?1:0}">
+                <path d="M 25 82 V 178 M 25 116 H 42 M 25 146 H 42"
+                      stroke="${F}" stroke-width="6" fill="none" stroke-linecap="round"/>
+                <text x="25" y="198" text-anchor="middle" fill="${F}"
+                      font-size="${T}" font-weight="bold">
+                  ${c?.label||"EL"}
+                </text>
+              </g>
+
+              <text x="60" y="73" text-anchor="middle" fill="white"
+                    font-size="${A}" font-weight="bold">
+                ${void 0!==M?this.formatValue(M,1)+"°":"—"}
+              </text>
+              <text x="60" y="214" text-anchor="middle" fill="#e74c3c"
+                    font-size="${T}" font-weight="bold">
+                Doel ${void 0!==L?this.formatValue(L,1)+"°":"—"}
+              </text>
+            </g>
+
+            <!-- Potable water: cold in at bottom, hot out at top, both bend right -->
+            <path d="M 170 575 V 603 H 300"
+                  stroke="${this.config.dhw_tank?.tank_inlet_color||"#3498db"}"
+                  stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            ${this.renderIcon(this.config.dhw_tank?.tank_inlet_icon_url||"mdi:water-outline",303,584,34,34,.95,this.config.dhw_tank?.tank_inlet_icon_color)}
+
+            <path d="M 170 355 V 325 H 300"
+                  stroke="${this.config.dhw_tank?.tank_outlet_color||"#e74c3c"}"
+                  stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            ${this.renderIcon(this.config.dhw_tank?.tank_outlet_icon_url||"mdi:water-thermometer",303,306,34,34,.95,this.config.dhw_tank?.tank_outlet_icon_color)}
+
+            <!-- Underfloor heating -->
+            <g transform="translate(555, 365)" filter="url(#entity-shadow)">
+              <rect width="190" height="125" rx="12" fill="#273746" stroke="#34495e" stroke-width="2"/>
+              <text x="95" y="24" text-anchor="middle" fill="white"
+                    font-size="${z}" font-weight="bold">
+                ${this.config.hvac?.name||"Vloerverwarming"}
+              </text>
+              <path d="M 22 48 H 160 Q 174 48 174 62 Q 174 76 160 76 H 30 Q 16 76 16 90 Q 16 102 30 102 H 166"
+                    fill="none" stroke="#e67e22" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+              <text x="16" y="118" fill="#bdc3c7" font-size="${T}">Huidig</text>
+              <text x="70" y="118" text-anchor="end" fill="white"
+                    font-size="${A}" font-weight="bold">
+                ${void 0!==P?this.formatValue(P,1)+"°":"—"}
+              </text>
+
+              <text x="118" y="118" fill="#bdc3c7" font-size="${T}">Doel</text>
+              <text x="178" y="118" text-anchor="end" fill="#e67e22"
+                    font-size="${A}" font-weight="bold">
+                ${void 0!==V?this.formatValue(V,1)+"°":"—"}
+              </text>
+            </g>
+
+            <!-- Larger temperature badges at useful hydraulic points -->
+            ${this.renderTemperatureIndicator(220,145,this.config.temperature_status?.points?.hp_outlet?.entity||this.config.heat_pump?.outlet_temp_entity,t.outletTemp,this.config.temperature_status?.points?.hp_outlet,$)}
+            ${this.renderTemperatureIndicator(210,525,this.config.temperature_status?.points?.hp_inlet?.entity||this.config.heat_pump?.inlet_temp_entity,t.inletTemp,this.config.temperature_status?.points?.hp_inlet,b)}
+            ${this.renderTemperatureIndicator(620,295,this.config.temperature_status?.points?.hvac_supply?.entity||this.config.hvac?.supply_temp_entity,i.supplyTemp,this.config.temperature_status?.points?.hvac_supply,k)}
+            ${this.renderTemperatureIndicator(530,470,this.config.temperature_status?.points?.hvac_return?.entity||this.config.hvac?.return_temp_entity,i.returnTemp,this.config.temperature_status?.points?.hvac_return,b)}
+            ${this.renderTemperatureIndicator(255,405,this.config.temperature_status?.points?.dhw_inlet?.entity||this.config.dhw_tank?.inlet_temp_entity,o.inletTemp,this.config.temperature_status?.points?.dhw_inlet,v)}
+            ${this.renderTemperatureIndicator(255,510,this.config.temperature_status?.points?.dhw_outlet?.entity||this.config.dhw_tank?.outlet_temp_entity,o.outletTemp,this.config.temperature_status?.points?.dhw_outlet,S)}
+
+            <text x="790" y="18" text-anchor="end" fill="#95a5a6" font-size="10" opacity="0.7">
+              v${ut}
+            </text>
+          </svg>
+        </div>
+      </ha-card>
+    `}render(){if(!this.config||!this.hass)return U``;if("daikin_split"===this.config.layout?.type)return this.renderDaikinSplitCard();const t=this.getHeatPumpState(),e=this.getBufferTankState(),i=this.getHVACState(),o=this.getDHWTankState(),a=this.getDHWTank2State(),r=this.getG2ValveState(),n=this.getAuxHeaterState(),s="common_return"===this.config.buffer_tank?.position,l=this.config.animation?.idle_threshold??0,h=this.getPipeColors(t.outletTemp,t.inletTemp,t.flowRate),c=this.getPipeColors(s?t.outletTemp:e.supplyTemp,i.returnTemp,i.flowRate),d=h.hotPipe,p=h.coldPipe,f=c.hotPipe,u=c.coldPipe,g=t.flowRate>l,m=this.config.temperature.hot_color,y=this.config.temperature.cold_color,_=this.config.dhw_tank?.inlet_color||this.config.temperature.hot_color,w=this.config.dhw_tank?.outlet_color||this.config.temperature.cold_color,x=this.config.dhw_tank?.tank_inlet_color||"#3498db",$=this.config.dhw_tank?.tank_outlet_color||"#e74c3c",b=this.config.dhw_tank_2?.tank_outlet_color||"#e74c3c",k=e.supplyTemp>e.returnTemp,v=e.supplyTemp,S=this.generateTankGradient("buffer",v,k),T=S.levels,A=S.fillPercentage,z=o.tankTemp??o.inletTemp,H=this.generateTankGradient("dhw",z,!0),C=H.levels,M=H.fillPercentage;let L=[],P=0;if(a.enabled){const t=a.tankTemp??a.inletTemp,e=this.generateTankGradient("dhw_tank_2",t,!0);L=e.levels,P=e.fillPercentage}const V=this.getHeatPumpColor(t),D=this.getContrastTextColor(V),E="var(--primary-text-color)";t.error;const R=n.intensity;let O="#bdc3c7";if(R>0){const t=189,e=195,i=199,o=255,a=68,r=34;O=`rgb(${Math.round(t+(o-t)*R)}, ${Math.round(e+(a-e)*R)}, ${Math.round(i+(r-i)*R)})`}const W=this.config.aux_heater?.glow_size??8,F=224,N=172,I=60,G=F,B=N-W,j=I,q=16+2*W,Z=2,Y=2,J=F,X=N-.75*W,K=I,tt=16+2*W*.75,et=2,it=2,ot=F,at=N-.5*W,rt=I,nt=16+2*W*.5,st=2,lt=2,ht=R>0?2-1.4*R:2,ct=Math.max(1.2,Math.min(4,4-.18*t.flowRate)),dt=this.config.aux_heater?.shadow_blur??1,pt=R>0?"aux-glow-outer":"aux-heater-layer",ft=R>0?"aux-glow-middle":"aux-heater-layer",gt=R>0?"aux-glow-inner":"aux-heater-layer",mt=R>0?"aux-cylinder-pulse":"",yt=this.config.logo_size||40,_t=!1!==this.config.show_logo,wt=this.config.logo_path||"/local/heat-pump-flow.png",xt=this.config.logo_url||"https://github.com/jasipsw/heat-pump-flow-card#readme";return U`
       <ha-card style="--logo-size: ${yt}px">
         ${this.config.title||_t?U`
           <h1 class="card-header">
             <span>${this.config.title||""}</span>
             ${_t?U`
-              <a href="${$t}" target="_blank" rel="noopener noreferrer" class="card-logo-link">
+              <a href="${xt}" target="_blank" rel="noopener noreferrer" class="card-logo-link">
                 <img src="${wt}" class="card-logo" alt="Heat Pump Flow Card" />
               </a>
             `:""}
@@ -435,14 +697,14 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                   stroke-width="12"
                   fill="none"
                   stroke-linecap="butt"
-                  opacity="${D>0?"0.5":"1"}"/>
+                  opacity="${R>0?"0.5":"1"}"/>
 
             <!-- Pipe: Aux heater to G2 valve (second segment) -->
             <!-- Shows boosted temperature after aux heater adds energy -->
             <!-- Hidden when flow animation is active to prevent color visibility issues -->
             <path id="aux-to-g2-heating-path"
                   d="M 254 180 L 328 180"
-                  stroke="${D>0?this.config.temperature?.hot_color||"#e74c3c":d}"
+                  stroke="${R>0?this.config.temperature?.hot_color||"#e74c3c":d}"
                   stroke-width="12"
                   fill="none"
                   stroke-linecap="butt"
@@ -490,7 +752,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
             <!-- Pipe: Street water inlet to DHW tank (cold water supply to vertical center) -->
             <path id="dhw-tank-inlet-path"
                   d="M 305 420 L 435 420"
-                  stroke="${$}"
+                  stroke="${x}"
                   stroke-width="8"
                   fill="none"
                   stroke-linecap="butt"/>
@@ -499,7 +761,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
             ${this.renderIcon(this.config.dhw_tank?.tank_inlet_icon_url||"mdi:water-outline",245,390,60,60,.9,this.config.dhw_tank?.tank_inlet_icon_color)}
 
             <!-- Pipe: DHW tank outlet (hot water) -->
-            ${a.enabled?G`
+            ${a.enabled?Q`
               <!-- Pipe from DHW tank 1 to DHW tank 2 -->
               <path id="dhw-tank-outlet-path"
                     d="M 470 380 L 560 380"
@@ -507,18 +769,18 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                     stroke-width="8"
                     fill="none"
                     stroke-linecap="butt"/>
-            `:G`
+            `:Q`
               <!-- Pipe from DHW tank 1 to house (when tank 2 is disabled) -->
               <path id="dhw-tank-outlet-path"
                     d="M 470 380 L 550 380"
-                    stroke="${x}"
+                    stroke="${$}"
                     stroke-width="8"
                     fill="none"
                     stroke-linecap="butt"/>
             `}
 
             <!-- Pipe: DHW tank 2 outlet to house (only when tank 2 is enabled) -->
-            ${a.enabled?G`
+            ${a.enabled?Q`
               <path id="dhw-tank-2-outlet-path"
                     d="M 630 380 L 710 380"
                     stroke="${b}"
@@ -528,7 +790,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
 
               <!-- Faucet icon at final outlet -->
               ${this.renderIcon(this.config.dhw_tank_2?.tank_outlet_icon_url||"mdi:water-thermometer",705,350,60,60,.9,this.config.dhw_tank_2?.tank_outlet_icon_color)}
-            `:G`
+            `:Q`
               <!-- Faucet icon at DHW tank 1 outlet (when tank 2 is disabled) -->
               ${this.renderIcon(this.config.dhw_tank?.tank_outlet_icon_url||"mdi:water-thermometer",545,350,60,60,.9,this.config.dhw_tank?.tank_outlet_icon_color)}
             `}
@@ -571,8 +833,8 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                 <stop offset="50%" stop-color="rgba(255, 130, 90, 1.0)" />
                 <stop offset="60%" stop-color="rgba(240, 100, 70, 0.9)" />
                 <stop offset="100%" stop-color="rgba(200, 60, 40, 0.6)" />
-                <animate attributeName="x1" values="-50%;50%" dur="${ht}s" begin="0s" repeatCount="indefinite" />
-                <animate attributeName="x2" values="50%;150%" dur="${ht}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="x1" values="-50%;50%" dur="${ct}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="x2" values="50%;150%" dur="${ct}s" begin="0s" repeatCount="indefinite" />
               </linearGradient>
             </defs>
             <path class="flow-gradient"
@@ -599,8 +861,8 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                 <stop offset="50%" stop-color="rgba(255, 130, 90, 1.0)" />
                 <stop offset="60%" stop-color="rgba(240, 100, 70, 0.9)" />
                 <stop offset="100%" stop-color="rgba(200, 60, 40, 0.6)" />
-                <animate attributeName="x1" values="-50%;50%" dur="${ht}s" begin="0s" repeatCount="indefinite" />
-                <animate attributeName="x2" values="50%;150%" dur="${ht}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="x1" values="-50%;50%" dur="${ct}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="x2" values="50%;150%" dur="${ct}s" begin="0s" repeatCount="indefinite" />
               </linearGradient>
             </defs>
             <path class="flow-gradient"
@@ -628,8 +890,8 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                 <stop offset="50%" stop-color="rgba(255, 130, 90, 1.0)" />
                 <stop offset="60%" stop-color="rgba(240, 100, 70, 0.9)" />
                 <stop offset="100%" stop-color="rgba(200, 60, 40, 0.6)" />
-                <animate attributeName="x1" values="-50%;50%" dur="${ht}s" begin="0.9s" repeatCount="indefinite" />
-                <animate attributeName="x2" values="50%;150%" dur="${ht}s" begin="0.9s" repeatCount="indefinite" />
+                <animate attributeName="x1" values="-50%;50%" dur="${ct}s" begin="0.9s" repeatCount="indefinite" />
+                <animate attributeName="x2" values="50%;150%" dur="${ct}s" begin="0.9s" repeatCount="indefinite" />
               </linearGradient>
             </defs>
             <path class="flow-gradient"
@@ -656,8 +918,8 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                 <stop offset="50%" stop-color="rgba(110, 170, 255, 1.0)" />
                 <stop offset="60%" stop-color="rgba(80, 140, 220, 0.9)" />
                 <stop offset="100%" stop-color="rgba(50, 100, 180, 0.6)" />
-                <animate attributeName="x1" values="50%;-50%" dur="${ht}s" begin="1.2s" repeatCount="indefinite" />
-                <animate attributeName="x2" values="150%;50%" dur="${ht}s" begin="1.2s" repeatCount="indefinite" />
+                <animate attributeName="x1" values="50%;-50%" dur="${ct}s" begin="1.2s" repeatCount="indefinite" />
+                <animate attributeName="x2" values="150%;50%" dur="${ct}s" begin="1.2s" repeatCount="indefinite" />
               </linearGradient>
             </defs>
             <path class="flow-gradient"
@@ -684,8 +946,8 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                 <stop offset="50%" stop-color="rgba(110, 170, 255, 1.0)" />
                 <stop offset="60%" stop-color="rgba(80, 140, 220, 0.9)" />
                 <stop offset="100%" stop-color="rgba(50, 100, 180, 0.6)" />
-                <animate attributeName="x1" values="50%;-50%" dur="${ht}s" begin="1.5s" repeatCount="indefinite" />
-                <animate attributeName="x2" values="150%;50%" dur="${ht}s" begin="1.5s" repeatCount="indefinite" />
+                <animate attributeName="x1" values="50%;-50%" dur="${ct}s" begin="1.5s" repeatCount="indefinite" />
+                <animate attributeName="x2" values="150%;50%" dur="${ct}s" begin="1.5s" repeatCount="indefinite" />
               </linearGradient>
             </defs>
             <path class="flow-gradient"
@@ -714,8 +976,8 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                 <stop offset="50%" stop-color="rgba(110, 170, 255, 1.0)" />
                 <stop offset="60%" stop-color="rgba(80, 140, 220, 0.9)" />
                 <stop offset="100%" stop-color="rgba(50, 100, 180, 0.6)" />
-                <animate attributeName="x1" values="50%;-50%" dur="${ht}s" begin="0s" repeatCount="indefinite" />
-                <animate attributeName="x2" values="150%;50%" dur="${ht}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="x1" values="50%;-50%" dur="${ct}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="x2" values="150%;50%" dur="${ct}s" begin="0s" repeatCount="indefinite" />
               </linearGradient>
             </defs>
             <path class="flow-gradient"
@@ -742,8 +1004,8 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                 <stop offset="50%" stop-color="rgba(110, 170, 255, 1.0)" />
                 <stop offset="60%" stop-color="rgba(80, 140, 220, 0.9)" />
                 <stop offset="100%" stop-color="rgba(50, 100, 180, 0.6)" />
-                <animate attributeName="y1" values="345;95" dur="${ht}s" begin="0s" repeatCount="indefinite" />
-                <animate attributeName="y2" values="595;345" dur="${ht}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="y1" values="345;95" dur="${ct}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="y2" values="595;345" dur="${ct}s" begin="0s" repeatCount="indefinite" />
               </linearGradient>
             </defs>
             <path class="flow-gradient"
@@ -770,8 +1032,8 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                 <stop offset="50%" stop-color="rgba(110, 170, 255, 1.0)" />
                 <stop offset="60%" stop-color="rgba(80, 140, 220, 0.9)" />
                 <stop offset="100%" stop-color="rgba(50, 100, 180, 0.6)" />
-                <animate attributeName="x1" values="50%;-50%" dur="${ht}s" begin="0s" repeatCount="indefinite" />
-                <animate attributeName="x2" values="150%;50%" dur="${ht}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="x1" values="50%;-50%" dur="${ct}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="x2" values="150%;50%" dur="${ct}s" begin="0s" repeatCount="indefinite" />
               </linearGradient>
             </defs>
             <path class="flow-gradient"
@@ -798,8 +1060,8 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                 <stop offset="50%" stop-color="rgba(255, 130, 90, 1.0)" />
                 <stop offset="60%" stop-color="rgba(240, 100, 70, 0.9)" />
                 <stop offset="100%" stop-color="rgba(200, 60, 40, 0.6)" />
-                <animate attributeName="y1" values="107;282" dur="${ht}s" begin="0s" repeatCount="indefinite" />
-                <animate attributeName="y2" values="282;457" dur="${ht}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="y1" values="107;282" dur="${ct}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="y2" values="282;457" dur="${ct}s" begin="0s" repeatCount="indefinite" />
               </linearGradient>
             </defs>
             <path class="flow-gradient"
@@ -826,8 +1088,8 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                 <stop offset="50%" stop-color="rgba(255, 130, 90, 1.0)" />
                 <stop offset="60%" stop-color="rgba(240, 100, 70, 0.9)" />
                 <stop offset="100%" stop-color="rgba(200, 60, 40, 0.6)" />
-                <animate attributeName="x1" values="-50%;50%" dur="${ht}s" begin="0s" repeatCount="indefinite" />
-                <animate attributeName="x2" values="50%;150%" dur="${ht}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="x1" values="-50%;50%" dur="${ct}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="x2" values="50%;150%" dur="${ct}s" begin="0s" repeatCount="indefinite" />
               </linearGradient>
             </defs>
             <path class="flow-gradient"
@@ -854,8 +1116,8 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                 <stop offset="50%" stop-color="rgba(255, 130, 90, 1.0)" />
                 <stop offset="60%" stop-color="rgba(240, 100, 70, 0.9)" />
                 <stop offset="100%" stop-color="rgba(200, 60, 40, 0.6)" />
-                <animate attributeName="y1" values="316;424" dur="${ht}s" begin="0s" repeatCount="indefinite" />
-                <animate attributeName="y2" values="424;532" dur="${ht}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="y1" values="316;424" dur="${ct}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="y2" values="424;532" dur="${ct}s" begin="0s" repeatCount="indefinite" />
               </linearGradient>
             </defs>
             <path class="flow-gradient"
@@ -869,7 +1131,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
             <!-- DHW Tank Inlet (street water) - horizontal cold -->
             <!-- Solid backing to prevent color bleeding through gradient -->
             <path d="M 360 420 L 397.5 420 L 397.5 420.01 L 435 420"
-                  stroke="${$}"
+                  stroke="${x}"
                   stroke-width="6"
                   fill="none"
                   stroke-linecap="butt"
@@ -882,8 +1144,8 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                 <stop offset="50%" stop-color="rgba(92, 192, 255, 1.0)" />
                 <stop offset="60%" stop-color="rgba(72, 172, 239, 0.9)" />
                 <stop offset="100%" stop-color="rgba(52, 152, 219, 0.6)" />
-                <animate attributeName="x1" values="-50%;50%" dur="${ht}s" begin="0s" repeatCount="indefinite" />
-                <animate attributeName="x2" values="50%;150%" dur="${ht}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="x1" values="-50%;50%" dur="${ct}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="x2" values="50%;150%" dur="${ct}s" begin="0s" repeatCount="indefinite" />
               </linearGradient>
             </defs>
             <path class="flow-gradient"
@@ -897,7 +1159,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
             <!-- DHW Tank Outlet (hot water to house) - horizontal hot -->
             <!-- Solid backing to prevent color bleeding through gradient -->
             <path d="M 470 380 L 510 380 L 510 380.01 L 550 380"
-                  stroke="${x}"
+                  stroke="${$}"
                   stroke-width="6"
                   fill="none"
                   stroke-linecap="butt"
@@ -910,8 +1172,8 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                 <stop offset="50%" stop-color="rgba(255, 130, 90, 1.0)" />
                 <stop offset="60%" stop-color="rgba(240, 100, 70, 0.9)" />
                 <stop offset="100%" stop-color="rgba(200, 60, 40, 0.6)" />
-                <animate attributeName="x1" values="-50%;50%" dur="${ht}s" begin="0s" repeatCount="indefinite" />
-                <animate attributeName="x2" values="50%;150%" dur="${ht}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="x1" values="-50%;50%" dur="${ct}s" begin="0s" repeatCount="indefinite" />
+                <animate attributeName="x2" values="50%;150%" dur="${ct}s" begin="0s" repeatCount="indefinite" />
               </linearGradient>
             </defs>
             <path class="flow-gradient"
@@ -990,18 +1252,18 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
               `:""}
 
               <!-- Temperature Setpoint Indicators (3 circles below mode text, styled like pipe temp sensors) -->
-              ${(()=>{const e=this.getDisplayMode(t,r).toLowerCase(),i=e.includes("heat"),o=e.includes("dhw"),a=e.includes("cool"),n="off"===e||"defrost"===e,s=i||n?.95:.3,l=o||n?.95:.3,c=a||n?.95:.3,h=this.config.temperature_status?.circle_radius||12,d="#e74c3c",p="#e74c3c",f="#3498db";return G`
+              ${(()=>{const e=this.getDisplayMode(t,r).toLowerCase(),i=e.includes("heat"),o=e.includes("dhw"),a=e.includes("cool"),n="off"===e||"defrost"===e,s=i||n?.95:.3,l=o||n?.95:.3,h=a||n?.95:.3,c=this.config.temperature_status?.circle_radius||12,d="#e74c3c",p="#e74c3c",f="#3498db";return Q`
                   <g id="hp-setpoints" transform="translate(0, 115)">
                     <!-- Setpoints label above circles -->
                     <text x="60" y="-8" text-anchor="middle"
-                          fill="${E}" font-size="5" opacity="0.5"
+                          fill="${D}" font-size="5" opacity="0.5"
                           letter-spacing="0.5" font-family="Arial, sans-serif">
                       SETPOINTS
                     </text>
 
                     <!-- Heating Target Temperature (red circle, left position) -->
-                    ${void 0!==t.heatingTargetTemp?G`
-                      <circle cx="24" cy="8" r="${h}"
+                    ${void 0!==t.heatingTargetTemp?Q`
+                      <circle cx="24" cy="8" r="${c}"
                               fill="white" stroke="${d}" stroke-width="2"
                               opacity="${s}"
                               filter="url(#circle-shadow)"/>
@@ -1012,14 +1274,14 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                         ${this.formatValue(t.heatingTargetTemp,0)}°
                       </text>
                       <text x="24" y="27" text-anchor="middle"
-                            fill="${E}" font-size="6" opacity="${.7*s}">
+                            fill="${D}" font-size="6" opacity="${.7*s}">
                         HEAT
                       </text>
                     `:""}
 
                     <!-- DHW Target Temperature (red circle, center position) -->
-                    ${void 0!==t.dhwTargetTemp?G`
-                      <circle cx="60" cy="8" r="${h}"
+                    ${void 0!==t.dhwTargetTemp?Q`
+                      <circle cx="60" cy="8" r="${c}"
                               fill="white" stroke="${p}" stroke-width="2"
                               opacity="${l}"
                               filter="url(#circle-shadow)"/>
@@ -1030,25 +1292,25 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                         ${this.formatValue(t.dhwTargetTemp,0)}°
                       </text>
                       <text x="60" y="27" text-anchor="middle"
-                            fill="${E}" font-size="6" opacity="${.7*l}">
+                            fill="${D}" font-size="6" opacity="${.7*l}">
                         DHW
                       </text>
                     `:""}
 
                     <!-- Cooling Target Temperature (blue circle, right position) -->
-                    ${void 0!==t.coolingTargetTemp?G`
-                      <circle cx="96" cy="8" r="${h}"
+                    ${void 0!==t.coolingTargetTemp?Q`
+                      <circle cx="96" cy="8" r="${c}"
                               fill="white" stroke="${f}" stroke-width="2"
-                              opacity="${c}"
+                              opacity="${h}"
                               filter="url(#circle-shadow)"/>
                       <text x="96" y="9" text-anchor="middle" dominant-baseline="middle"
                             fill="${f}" font-size="7.5" font-weight="bold"
                             letter-spacing="-0.5" font-family="Arial, sans-serif"
-                            opacity="${c}">
+                            opacity="${h}">
                         ${this.formatValue(t.coolingTargetTemp,0)}°
                       </text>
                       <text x="96" y="27" text-anchor="middle"
-                            fill="${E}" font-size="6" opacity="${.7*c}">
+                            fill="${D}" font-size="6" opacity="${.7*h}">
                         COOL
                       </text>
                     `:""}
@@ -1060,248 +1322,248 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
             <!-- Position below the heat pump box (box is 150px tall, so start at y=255) -->
             <g id="hp-detailed-metrics" transform="translate(50, 255)">
                 <!-- Divider line -->
-                <line x1="8" y1="0" x2="112" y2="0" stroke="${R}" stroke-width="0.5" opacity="0.3"/>
+                <line x1="8" y1="0" x2="112" y2="0" stroke="${E}" stroke-width="0.5" opacity="0.3"/>
 
                 <!-- Core Metrics Row 1: Power In, Thermal Out, COP -->
-                ${this.config.heat_pump?.power_entity?G`
+                ${this.config.heat_pump?.power_entity?Q`
                   <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.power_entity)}">
-                    <text x="8" y="8" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">IN</text>
-                    <text x="8" y="15" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                    <text x="8" y="8" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">IN</text>
+                    <text x="8" y="15" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                       ${this.formatValue(t.power/1e3,1)}kW
                     </text>
                   </g>
                 `:""}
 
-                ${this.config.heat_pump?.thermal_entity?G`
+                ${this.config.heat_pump?.thermal_entity?Q`
                   <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.thermal_entity)}">
-                    <text x="42" y="8" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">OUT</text>
-                    <text x="42" y="15" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                    <text x="42" y="8" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">OUT</text>
+                    <text x="42" y="15" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                       ${this.formatValue(t.thermal/1e3,1)}kW
                     </text>
                   </g>
                 `:""}
 
-                ${this.config.heat_pump?.cop_entity?G`
+                ${this.config.heat_pump?.cop_entity?Q`
                   <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.cop_entity)}">
-                    <text x="76" y="8" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">COP</text>
-                    <text x="76" y="15" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                    <text x="76" y="8" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">COP</text>
+                    <text x="76" y="15" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                       ${this.formatValue(t.cop,2)}
                     </text>
                   </g>
                 `:""}
 
                 <!-- Core Metrics Row 2: Flow Rate, Amps, Volts -->
-                ${this.config.heat_pump?.flow_rate_entity?G`
+                ${this.config.heat_pump?.flow_rate_entity?Q`
                   <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.flow_rate_entity)}">
-                    <text x="8" y="26" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Flow</text>
-                    <text x="8" y="33" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                    <text x="8" y="26" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Flow</text>
+                    <text x="8" y="33" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                       ${this.formatValue(t.flowRate,1)}${this.getStateUnit(this.config.heat_pump?.flow_rate_entity)||"L/m"}
                     </text>
                   </g>
                 `:""}
 
-                ${void 0!==t.amps&&this.config.heat_pump?.amps_entity?G`
+                ${void 0!==t.amps&&this.config.heat_pump?.amps_entity?Q`
                   <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.amps_entity)}">
-                    <text x="42" y="26" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Amps</text>
-                    <text x="42" y="33" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                    <text x="42" y="26" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Amps</text>
+                    <text x="42" y="33" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                       ${this.formatValue(t.amps,1)}A
                     </text>
                   </g>
                 `:""}
 
-                ${void 0!==t.volts&&this.config.heat_pump?.volts_entity?G`
+                ${void 0!==t.volts&&this.config.heat_pump?.volts_entity?Q`
                   <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.volts_entity)}">
-                    <text x="76" y="26" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Volts</text>
-                    <text x="76" y="33" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                    <text x="76" y="26" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Volts</text>
+                    <text x="76" y="33" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                       ${this.formatValue(t.volts,0)}V
                     </text>
                   </g>
                 `:""}
 
                 <!-- Optional Detailed Metrics (shown only if enabled) -->
-                ${this.config.heat_pump?.show_detailed_metrics?G`
+                ${this.config.heat_pump?.show_detailed_metrics?Q`
                   <!-- Divider line before detailed metrics -->
-                  <line x1="8" y1="42" x2="112" y2="42" stroke="${R}" stroke-width="0.5" opacity="0.3"/>
+                  <line x1="8" y1="42" x2="112" y2="42" stroke="${E}" stroke-width="0.5" opacity="0.3"/>
 
                   <!-- Detailed Row 1: Compressor, Discharge, Ambient -->
-                  ${void 0!==t.compressorFrequency&&this.config.heat_pump?.compressor_frequency_entity?G`
+                  ${void 0!==t.compressorFrequency&&this.config.heat_pump?.compressor_frequency_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.compressor_frequency_entity)}">
-                      <text x="8" y="50" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Comp</text>
-                      <text x="8" y="57" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="8" y="50" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Comp</text>
+                      <text x="8" y="57" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${this.formatValue(t.compressorFrequency,0)}Hz
                       </text>
                     </g>
                   `:""}
 
-                  ${void 0!==t.dischargeTemp&&this.config.heat_pump?.discharge_temp_entity?G`
+                  ${void 0!==t.dischargeTemp&&this.config.heat_pump?.discharge_temp_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.discharge_temp_entity)}">
-                      <text x="42" y="50" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Disch</text>
-                      <text x="42" y="57" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="42" y="50" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Disch</text>
+                      <text x="42" y="57" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${this.formatValue(t.dischargeTemp,0)}°
                       </text>
                     </g>
                   `:""}
 
-                  ${void 0!==t.ambientTemp&&this.config.heat_pump?.ambient_temp_entity?G`
+                  ${void 0!==t.ambientTemp&&this.config.heat_pump?.ambient_temp_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.ambient_temp_entity)}">
-                      <text x="76" y="50" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Amb</text>
-                      <text x="76" y="57" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="76" y="50" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Amb</text>
+                      <text x="76" y="57" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${this.formatValue(t.ambientTemp,0)}°
                       </text>
                     </g>
                   `:""}
 
                   <!-- Detailed Row 2: DHW, Outdoor Coil, Suction -->
-                  ${void 0!==t.dhwTemp&&this.config.heat_pump?.dhw_temp_entity?G`
+                  ${void 0!==t.dhwTemp&&this.config.heat_pump?.dhw_temp_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.dhw_temp_entity)}">
-                      <text x="8" y="68" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">DHW</text>
-                      <text x="8" y="75" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="8" y="68" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">DHW</text>
+                      <text x="8" y="75" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${this.formatValue(t.dhwTemp,0)}°
                       </text>
                     </g>
                   `:""}
 
-                  ${void 0!==t.outdoorCoilTemp&&this.config.heat_pump?.outdoor_coil_temp_entity?G`
+                  ${void 0!==t.outdoorCoilTemp&&this.config.heat_pump?.outdoor_coil_temp_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.outdoor_coil_temp_entity)}">
-                      <text x="42" y="68" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">O-Coil</text>
-                      <text x="42" y="75" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="42" y="68" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">O-Coil</text>
+                      <text x="42" y="75" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${this.formatValue(t.outdoorCoilTemp,0)}°
                       </text>
                     </g>
                   `:""}
 
-                  ${void 0!==t.suctionTemp&&this.config.heat_pump?.suction_temp_entity?G`
+                  ${void 0!==t.suctionTemp&&this.config.heat_pump?.suction_temp_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.suction_temp_entity)}">
-                      <text x="76" y="68" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Suct</text>
-                      <text x="76" y="75" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="76" y="68" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Suct</text>
+                      <text x="76" y="75" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${this.formatValue(t.suctionTemp,0)}°
                       </text>
                     </g>
                   `:""}
 
                   <!-- Detailed Row 3: Heat Exchanger, Plate Exchange -->
-                  ${void 0!==t.heatExchangerTemp&&this.config.heat_pump?.heat_exchanger_temp_entity?G`
+                  ${void 0!==t.heatExchangerTemp&&this.config.heat_pump?.heat_exchanger_temp_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.heat_exchanger_temp_entity)}">
-                      <text x="8" y="86" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">HX</text>
-                      <text x="8" y="93" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="8" y="86" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">HX</text>
+                      <text x="8" y="93" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${this.formatValue(t.heatExchangerTemp,0)}°
                       </text>
                     </g>
                   `:""}
 
-                  ${void 0!==t.plateExchangeTemp&&this.config.heat_pump?.plate_exchange_temp_entity?G`
+                  ${void 0!==t.plateExchangeTemp&&this.config.heat_pump?.plate_exchange_temp_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.plate_exchange_temp_entity)}">
-                      <text x="42" y="86" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Plate</text>
-                      <text x="42" y="93" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="42" y="86" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Plate</text>
+                      <text x="42" y="93" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${this.formatValue(t.plateExchangeTemp,0)}°
                       </text>
                     </g>
                   `:""}
 
-                  ${void 0!==t.ipmTemp&&this.config.heat_pump?.ipm_temp_entity?G`
+                  ${void 0!==t.ipmTemp&&this.config.heat_pump?.ipm_temp_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.ipm_temp_entity)}">
-                      <text x="76" y="86" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">IPM</text>
-                      <text x="76" y="93" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="76" y="86" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">IPM</text>
+                      <text x="76" y="93" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${this.formatValue(t.ipmTemp,0)}°
                       </text>
                     </g>
                   `:""}
 
                   <!-- Detailed Row 4: Fan Motors -->
-                  ${void 0!==t.ecFanMotor1Speed&&this.config.heat_pump?.ec_fan_motor_1_speed_entity?G`
+                  ${void 0!==t.ecFanMotor1Speed&&this.config.heat_pump?.ec_fan_motor_1_speed_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.ec_fan_motor_1_speed_entity)}">
-                      <text x="8" y="104" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Fan1</text>
-                      <text x="8" y="111" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="8" y="104" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Fan1</text>
+                      <text x="8" y="111" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${this.formatValue(t.ecFanMotor1Speed,0)}
                       </text>
                     </g>
                   `:""}
 
-                  ${void 0!==t.ecFanMotor2Speed&&this.config.heat_pump?.ec_fan_motor_2_speed_entity?G`
+                  ${void 0!==t.ecFanMotor2Speed&&this.config.heat_pump?.ec_fan_motor_2_speed_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.ec_fan_motor_2_speed_entity)}">
-                      <text x="42" y="104" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Fan2</text>
-                      <text x="42" y="111" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="42" y="104" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Fan2</text>
+                      <text x="42" y="111" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${this.formatValue(t.ecFanMotor2Speed,0)}
                       </text>
                     </g>
                   `:""}
 
-                  ${void 0!==t.busLineVoltage&&this.config.heat_pump?.bus_line_voltage_entity?G`
+                  ${void 0!==t.busLineVoltage&&this.config.heat_pump?.bus_line_voltage_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.bus_line_voltage_entity)}">
-                      <text x="76" y="104" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Bus V</text>
-                      <text x="76" y="111" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="76" y="104" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Bus V</text>
+                      <text x="76" y="111" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${this.formatValue(t.busLineVoltage,0)}V
                       </text>
                     </g>
                   `:""}
 
                   <!-- Detailed Row 5: Additional metrics -->
-                  ${void 0!==t.eHeaterPower&&this.config.heat_pump?.e_heater_power_entity?G`
+                  ${void 0!==t.eHeaterPower&&this.config.heat_pump?.e_heater_power_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.e_heater_power_entity)}">
-                      <text x="8" y="122" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">E-Htr</text>
-                      <text x="8" y="129" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="8" y="122" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">E-Htr</text>
+                      <text x="8" y="129" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${this.formatValue(t.eHeaterPower,0)}W
                       </text>
                     </g>
                   `:""}
 
-                  ${void 0!==t.compressorRunningTime&&this.config.heat_pump?.compressor_running_time_entity?G`
+                  ${void 0!==t.compressorRunningTime&&this.config.heat_pump?.compressor_running_time_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.compressor_running_time_entity)}">
-                      <text x="42" y="122" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Comp H</text>
-                      <text x="42" y="129" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="42" y="122" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Comp H</text>
+                      <text x="42" y="129" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${this.formatValue(t.compressorRunningTime,0)}h
                       </text>
                     </g>
                   `:""}
 
-                  ${void 0!==t.compressorMaxPercentage&&this.config.heat_pump?.compressor_max_percentage_entity?G`
+                  ${void 0!==t.compressorMaxPercentage&&this.config.heat_pump?.compressor_max_percentage_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.compressor_max_percentage_entity)}">
-                      <text x="76" y="122" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">MaxC%</text>
-                      <text x="76" y="129" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="76" y="122" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">MaxC%</text>
+                      <text x="76" y="129" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${this.formatValue(t.compressorMaxPercentage,0)}%
                       </text>
                     </g>
                   `:""}
 
                   <!-- Detailed Row 6: Status indicators -->
-                  ${void 0!==t.pumpEnabled&&this.config.heat_pump?.pump_enabled_entity?G`
+                  ${void 0!==t.pumpEnabled&&this.config.heat_pump?.pump_enabled_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.pump_enabled_entity)}">
-                      <text x="8" y="140" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Pump</text>
-                      <text x="8" y="147" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="8" y="140" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Pump</text>
+                      <text x="8" y="147" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${t.pumpEnabled?"ON":"OFF"}
                       </text>
                     </g>
                   `:""}
 
-                  ${void 0!==t.fanShutdownCode&&0!==t.fanShutdownCode&&this.config.heat_pump?.fan_shutdown_code_entity?G`
+                  ${void 0!==t.fanShutdownCode&&0!==t.fanShutdownCode&&this.config.heat_pump?.fan_shutdown_code_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.fan_shutdown_code_entity)}">
-                      <text x="42" y="140" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">F-Code</text>
-                      <text x="42" y="147" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="42" y="140" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">F-Code</text>
+                      <text x="42" y="147" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${this.formatValue(t.fanShutdownCode,0)}
                       </text>
                     </g>
                   `:""}
 
-                  ${void 0!==t.din6ModeSwitch&&this.config.heat_pump?.din6_mode_switch_entity?G`
+                  ${void 0!==t.din6ModeSwitch&&this.config.heat_pump?.din6_mode_switch_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.din6_mode_switch_entity)}">
-                      <text x="76" y="140" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">DIN6</text>
-                      <text x="76" y="147" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="76" y="140" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">DIN6</text>
+                      <text x="76" y="147" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${this.formatValue(t.din6ModeSwitch,0)}
                       </text>
                     </g>
                   `:""}
 
                   <!-- Detailed Row 7: Defrost and Error Status -->
-                  ${void 0!==t.defrost&&this.config.heat_pump?.defrost_entity?G`
+                  ${void 0!==t.defrost&&this.config.heat_pump?.defrost_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.defrost_entity)}">
-                      <text x="8" y="158" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Defrost</text>
-                      <text x="8" y="165" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                      <text x="8" y="158" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">Defrost</text>
+                      <text x="8" y="165" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                         ${t.defrost?"ON":"OFF"}
                       </text>
                     </g>
                   `:""}
 
-                  ${t.error&&this.config.heat_pump?.error_entity?G`
+                  ${t.error&&this.config.heat_pump?.error_entity?Q`
                     <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.heat_pump.error_entity)}">
                       <text x="42" y="158" fill="#e74c3c" font-size="${this.getTextSize("label",7)}" opacity="0.7">Error</text>
                       <text x="42" y="165" fill="#e74c3c" font-size="${this.getTextSize("value",8)}" font-weight="bold">
@@ -1312,15 +1574,15 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                 `:""}
 
                 <!-- Custom Metrics Section -->
-                ${this.config.metrics&&this.config.metrics.length>0?(()=>{const t=this.config.heat_pump?.show_detailed_metrics?176:44,e=this.config.heat_pump?.show_detailed_metrics?168:36,i=[];for(let t=0;t<this.config.metrics.length;t+=3)i.push(this.config.metrics.slice(t,t+3));return G`
+                ${this.config.metrics&&this.config.metrics.length>0?(()=>{const t=this.config.heat_pump?.show_detailed_metrics?176:44,e=this.config.heat_pump?.show_detailed_metrics?168:36,i=[];for(let t=0;t<this.config.metrics.length;t+=3)i.push(this.config.metrics.slice(t,t+3));return Q`
                     <!-- Divider line before custom metrics -->
-                    <line x1="8" y1="${e}" x2="112" y2="${e}" stroke="${R}" stroke-width="0.5" opacity="0.3"/>
+                    <line x1="8" y1="${e}" x2="112" y2="${e}" stroke="${E}" stroke-width="0.5" opacity="0.3"/>
 
-                    ${i.map((e,i)=>{const o=t+18*i,a=o+7,r=[8,42,76];return G`
-                        ${e.map((t,e)=>{const i=this.getStateValue(t.entity);if(void 0===i)return"";const n=r[e],s=void 0!==t.decimals?t.decimals:1,l=t.unit||this.getStateUnit(t.entity)||"";return G`
+                    ${i.map((e,i)=>{const o=t+18*i,a=o+7,r=[8,42,76];return Q`
+                        ${e.map((t,e)=>{const i=this.getStateValue(t.entity);if(void 0===i)return"";const n=r[e],s=void 0!==t.decimals?t.decimals:1,l=t.unit||this.getStateUnit(t.entity)||"";return Q`
                             <g style="cursor: pointer;" @click="${e=>this.handleTemperatureClick(e,t.entity)}">
-                              <text x="${n}" y="${o}" fill="${R}" font-size="${this.getTextSize("label",7)}" opacity="0.7">${t.label}</text>
-                              <text x="${n}" y="${a}" fill="${R}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
+                              <text x="${n}" y="${o}" fill="${E}" font-size="${this.getTextSize("label",7)}" opacity="0.7">${t.label}</text>
+                              <text x="${n}" y="${a}" fill="${E}" font-size="${this.getTextSize("value",8)}" font-weight="bold">
                                 ${this.formatValue(i,s)}${l}
                               </text>
                             </g>
@@ -1478,7 +1740,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
               </text>
 
               <!-- Brand logo centered above tank -->
-              ${this.config.buffer_tank?.logo_url?G`
+              ${this.config.buffer_tank?.logo_url?Q`
                 <image
                   x="${35}"
                   y="-25"
@@ -1490,7 +1752,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
               `:""}
 
               <!-- Fill percentage display (always shown) -->
-              ${void 0!==e.energyReserve?G`
+              ${void 0!==e.energyReserve?Q`
                 <!-- Percentage on left, energy reserve on right -->
                 <text x="15" y="169" text-anchor="start" fill="${k?"#e74c3c":"#3498db"}" font-size="8" font-weight="bold">
                   ${A}%
@@ -1499,7 +1761,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                       style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.buffer_tank.energy_reserve_entity)}">
                   ${this.formatValue(e.energyReserve,1)} kWh
                 </text>
-              `:G`
+              `:Q`
                 <!-- Just percentage, centered -->
                 <text x="45" y="173" text-anchor="middle" fill="${k?"#e74c3c":"#3498db"}" font-size="11" font-weight="bold">
                   ${A}%
@@ -1521,7 +1783,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
               <!-- Bottom rounded cap -->
               <ellipse cx="45" cy="160" rx="35" ry="15" fill="#2c3e50" stroke="#2c3e50" stroke-width="3"/>
 
-              ${H.length>0?this.renderGradientRects(H):U`
+              ${C.length>0?this.renderGradientRects(C):U`
                 <!-- Inner cylinder (DHW water - fallback to simple blue) -->
                 <rect x="15" y="25" width="60" height="130" fill="#3498db" opacity="0.3"/>
               `}
@@ -1566,7 +1828,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
               </text>
 
               <!-- Brand logo centered above tank -->
-              ${this.config.dhw_tank?.logo_url?G`
+              ${this.config.dhw_tank?.logo_url?Q`
                 <image
                   x="${35}"
                   y="-25"
@@ -1579,13 +1841,13 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
 
               <!-- Fill percentage display (always shown) -->
               <text x="45" y="173" text-anchor="middle" fill="#e74c3c" font-size="11" font-weight="bold">
-                ${L}%
+                ${M}%
               </text>
 
               <!-- Tank temperature indicator (optional, centered in tank) -->
               ${this.renderTankTempIndicator(45,90,o.tankTemp,this.config.dhw_tank?.tank_temp_entity,this.config.dhw_tank?.show_temp_indicator,this.config.dhw_tank?.temp_indicator_radius,"#e74c3c")}
 
-              ${void 0!==o.targetTemp?G`
+              ${void 0!==o.targetTemp?Q`
                 <g>
                   <text x="45" y="190" text-anchor="middle"
                         fill="var(--secondary-text-color)"
@@ -1600,7 +1862,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
             </g>
 
             <!-- DHW Tank 2 (Secondary/Finishing Heater) - Optional -->
-            ${a.enabled?G`
+            ${a.enabled?Q`
             <g id="dhw-tank-2" transform="translate(550, 330)" filter="url(#entity-shadow)">
               <!-- Tank cylinder body -->
               <rect x="10" y="20" width="70" height="140" fill="#34495e" stroke="#2c3e50" stroke-width="3"/>
@@ -1611,7 +1873,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
               <!-- Bottom rounded cap -->
               <ellipse cx="45" cy="160" rx="35" ry="15" fill="#2c3e50" stroke="#2c3e50" stroke-width="3"/>
 
-              ${M.length>0?this.renderGradientRects(M):G`
+              ${L.length>0?this.renderGradientRects(L):Q`
                 <!-- Inner cylinder (DHW water - fallback to simple red) -->
                 <rect x="15" y="25" width="60" height="130" fill="#e74c3c" opacity="0.3"/>
               `}
@@ -1630,7 +1892,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
               </text>
 
               <!-- Brand logo centered above tank -->
-              ${this.config.dhw_tank_2?.logo_url?G`
+              ${this.config.dhw_tank_2?.logo_url?Q`
                 <image
                   x="${35}"
                   y="-25"
@@ -1652,7 +1914,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
             `:""}
 
             <!-- HVAC / Underfloor Heating Load (right side) -->
-            ${"underfloor_heating"===this.config.hvac?.type?G`
+            ${"underfloor_heating"===this.config.hvac?.type?Q`
               <g id="hvac-load" transform="translate(630, 145)" filter="url(#entity-shadow)">
                 <rect width="120" height="115" rx="10" fill="#2c3e50" stroke="#34495e" stroke-width="2"/>
 
@@ -1667,7 +1929,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                 <path d="M 18 38 v 40 M 102 78 v -8"
                       fill="none" stroke="#bdc3c7" stroke-width="2" opacity="0.75"/>
 
-                ${void 0!==i.currentTemp?G`
+                ${void 0!==i.currentTemp?Q`
                   <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.hvac.current_temp_entity)}">
                     <text x="8" y="96" text-anchor="start" fill="#bdc3c7"
                           font-size="${this.getTextSize("label",8)}">Huidig</text>
@@ -1678,7 +1940,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                   </g>
                 `:""}
 
-                ${void 0!==i.targetTemp?G`
+                ${void 0!==i.targetTemp?Q`
                   <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.hvac.target_temp_entity)}">
                     <text x="112" y="96" text-anchor="end" fill="#bdc3c7"
                           font-size="${this.getTextSize("label",8)}">Doel</text>
@@ -1689,10 +1951,10 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                   </g>
                 `:""}
               </g>
-            `:G`
+            `:Q`
             <g id="hvac-load" transform="translate(630, 150)" filter="url(#entity-shadow)">
               <!-- Logo centered above HVAC box -->
-              ${this.config.hvac?.logo_url?G`
+              ${this.config.hvac?.logo_url?Q`
                 <image
                   x="${50}"
                   y="-25"
@@ -1707,25 +1969,25 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
               <text x="60" y="30" text-anchor="middle" fill="white" font-size="12" font-weight="bold">
                 HVAC LOAD
               </text>
-              ${this.config.hvac?.thermal_entity?G`
+              ${this.config.hvac?.thermal_entity?Q`
                 <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.hvac.thermal_entity)}">
                   <text x="60" y="55" text-anchor="middle" fill="#e74c3c" font-size="20" font-weight="bold">
                     ${this.formatValue(i.thermal,0)} W
                   </text>
                 </g>
-              `:G`
+              `:Q`
                 <text x="60" y="55" text-anchor="middle" fill="#e74c3c" font-size="20" font-weight="bold">
                   ${this.formatValue(i.thermal,0)} W
                 </text>
               `}
               <!-- Flow rate display at bottom -->
-              ${this.config.hvac?.flow_rate_entity?G`
+              ${this.config.hvac?.flow_rate_entity?Q`
                 <g style="cursor: pointer;" @click="${t=>this.handleTemperatureClick(t,this.config.hvac.flow_rate_entity)}">
                   <text x="60" y="85" text-anchor="middle" fill="white" font-size="10">
                     ${this.formatValue(i.flowRate,1)} ${this.getStateUnit(this.config.hvac?.flow_rate_entity)||"L/m"}
                   </text>
                 </g>
-              `:G`
+              `:Q`
                 <text x="60" y="85" text-anchor="middle" fill="white" font-size="10">
                   ${this.formatValue(i.flowRate,1)} ${this.getStateUnit(this.config.hvac?.flow_rate_entity)||"L/m"}
                 </text>
@@ -1739,18 +2001,18 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
             <!-- Shadow blur configurable via aux_heater.shadow_blur (default: 1.0) -->
             <g id="aux-heater"
                opacity="${n.enabled?"1":"0"}"
-               style="--aux-anim-speed: ${ct}s; --aux-shadow-blur: ${dt};">
+               style="--aux-anim-speed: ${ht}s; --aux-shadow-blur: ${dt};">
               <!-- Glow layers - simple solid colors with CSS pulsing animation -->
               <!-- Outermost glow layer - size based on config -->
-              ${G`<rect x="${Q}" y="${B}"
+              ${Q`<rect x="${G}" y="${B}"
                     width="${j}" height="${q}"
-                    rx="${Z}" ry="${J}"
+                    rx="${Z}" ry="${Y}"
                     class="${pt}"
                     fill="#ff4422"
                     pointer-events="none"></rect>`}
 
               <!-- Middle glow layer - size based on config -->
-              ${G`<rect x="${Y}" y="${X}"
+              ${Q`<rect x="${J}" y="${X}"
                     width="${K}" height="${tt}"
                     rx="${et}" ry="${it}"
                     class="${ft}"
@@ -1758,7 +2020,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                     pointer-events="none"></rect>`}
 
               <!-- Inner glow layer - size based on config -->
-              ${G`<rect x="${ot}" y="${at}"
+              ${Q`<rect x="${ot}" y="${at}"
                     width="${rt}" height="${nt}"
                     rx="${st}" ry="${lt}"
                     class="${gt}"
@@ -1766,27 +2028,27 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                     pointer-events="none"></rect>`}
 
               <!-- Main heated cylinder body (centered at x=254) -->
-              ${G`<rect x="${W}" y="${N}" width="${I}" height="${16}" rx="2" ry="2"
+              ${Q`<rect x="${F}" y="${N}" width="${I}" height="${16}" rx="2" ry="2"
                     class="${mt}"
                     fill="${O}"
                     stroke="#7f8c8d"
                     stroke-width="1.5"></rect>`}
 
               <!-- Left flange (pipe connection) -->
-              ${G`<rect x="${218}" y="${174}" width="6" height="12"
+              ${Q`<rect x="${218}" y="${174}" width="6" height="12"
                     fill="#95a5a6"
                     stroke="#7f8c8d"
                     stroke-width="1.5"></rect>`}
 
               <!-- Right flange (pipe connection) -->
-              ${G`<rect x="${284}" y="${174}" width="6" height="12"
+              ${Q`<rect x="${284}" y="${174}" width="6" height="12"
                     fill="#95a5a6"
                     stroke="#7f8c8d"
                     stroke-width="1.5"></rect>`}
 
               <!-- Label and logo (inside the heater cylinder) -->
               <!-- Brand logo (if configured) - left-aligned within cylinder, vertically centered -->
-              ${this.config.aux_heater?.logo_url?G`<image x="${227}"
+              ${this.config.aux_heater?.logo_url?Q`<image x="${227}"
                        y="${175}"
                        width="10"
                        height="10"
@@ -1794,7 +2056,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                        opacity="0.9"></image>`:""}
 
               <!-- Label text (if show_label is not false and displayName exists) - horizontally centered in cylinder, vertically centered -->
-              ${!1!==this.config.aux_heater?.show_label&&n.displayName?G`<text x="${254}"
+              ${!1!==this.config.aux_heater?.show_label&&n.displayName?Q`<text x="${254}"
                       y="${180}"
                       text-anchor="middle"
                       dominant-baseline="middle"
@@ -1834,10 +2096,10 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
             ${this.renderTemperatureIndicator(385,470,this.config.temperature_status?.points?.dhw_outlet?.entity||this.config.dhw_tank?.outlet_temp_entity,o.outletTemp,this.config.temperature_status?.points?.dhw_outlet,w)}
 
             <!-- DHW Tank Street Water Inlet (cold water supply) -->
-            ${this.renderTemperatureIndicator(370,420,this.config.temperature_status?.points?.dhw_tank_inlet?.entity||this.config.dhw_tank?.tank_inlet_temp_entity,o.tankInletTemp??0,this.config.temperature_status?.points?.dhw_tank_inlet,$)}
+            ${this.renderTemperatureIndicator(370,420,this.config.temperature_status?.points?.dhw_tank_inlet?.entity||this.config.dhw_tank?.tank_inlet_temp_entity,o.tankInletTemp??0,this.config.temperature_status?.points?.dhw_tank_inlet,x)}
 
             <!-- DHW Tank Hot Water Outlet (to house or to tank 2) -->
-            ${this.renderTemperatureIndicator(510,380,this.config.temperature_status?.points?.dhw_tank_outlet?.entity||this.config.dhw_tank?.tank_outlet_temp_entity,o.tankOutletTemp??0,this.config.temperature_status?.points?.dhw_tank_outlet,x)}
+            ${this.renderTemperatureIndicator(510,380,this.config.temperature_status?.points?.dhw_tank_outlet?.entity||this.config.dhw_tank?.tank_outlet_temp_entity,o.tankOutletTemp??0,this.config.temperature_status?.points?.dhw_tank_outlet,$)}
 
             <!-- DHW Tank 2 Temperature Indicator (only when tank 2 is enabled) -->
             <!-- DHW Tank 2 Outlet (to house) -->
