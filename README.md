@@ -574,7 +574,8 @@ heat_pump_visual:
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| `supply_temp_entity` | string | - | Buffer tank supply (hot) temperature |
+| `position` | string | `standard` | Buffer topology: `standard` (between HP and HVAC) or `common_return` (series buffer in the shared return) |
+| `supply_temp_entity` | string | - | Buffer tank supply/inlet temperature |
 | `return_temp_entity` | string | - | Buffer tank return (cold) temperature |
 | `level_entity` | string | - | Tank level sensor (optional) |
 | `tank_temp_entity` | string | - | Tank temperature sensor (optional, required for temperature indicator) |
@@ -619,6 +620,7 @@ Domestic Hot Water tank with heating coil visualization.
 | `inlet_temp_entity` | string | - | DHW coil inlet temperature (hot from HP) |
 | `outlet_temp_entity` | string | - | DHW coil outlet temperature (return to HP) |
 | `tank_temp_entity` | string | - | DHW tank temperature (optional, required for temperature indicator) |
+| `target_temp_entity` | string | - | DHW target/set temperature. Falls back to `heat_pump.dhw_target_temp_entity` when omitted |
 | `name` | string | DHW | Tank display name/label |
 | `logo_url` | string | - | Logo URL displayed left of label |
 | `label_color` | string | white | Tank label text color |
@@ -628,10 +630,10 @@ Domestic Hot Water tank with heating coil visualization.
 | `tank_inlet_flow_entity` | string | - | Street water flow rate (L/min) - optional, no animation if not provided |
 | `tank_inlet_temp_entity` | string | - | Street water temperature |
 | `tank_inlet_color` | string | #3498db | Street water pipe color (light blue for cold) |
-| `tank_inlet_icon_url` | string | mdi:water-pump | Icon for water source (supports MDI icons like `mdi:water-pump` or image URLs) |
+| `tank_inlet_icon_url` | string | `mdi:water-outline` | Cold-water inlet icon (MDI icon or image URL) |
 | `tank_outlet_temp_entity` | string | - | Hot water outlet temperature (to house or tank 2) |
 | `tank_outlet_color` | string | #e74c3c | Hot water outlet pipe color (red for hot) |
-| `tank_outlet_icon_url` | string | mdi:faucet-variant | Hot water outlet icon (supports MDI icons like `mdi:faucet-variant` or image URLs, shown when tank 2 is disabled) |
+| `tank_outlet_icon_url` | string | `mdi:water-thermometer` | Hot-water outlet icon (MDI icon or image URL, shown when tank 2 is disabled) |
 | `gradient` | object | - | Gradient visualization configuration |
 
 > **Icon Support:** The `tank_inlet_icon_url` and `tank_outlet_icon_url` properties support both:
@@ -737,10 +739,41 @@ Heating/cooling load (e.g., radiant floor, radiators, fan coils).
 
 | Name | Type | Description |
 |------|------|-------------|
+| `type` | string | Visualization type: `generic` or `underfloor_heating` |
 | `thermal_entity` | string | Thermal power consumed by HVAC (W) |
 | `flow_rate_entity` | string | HVAC flow rate sensor (L/min, GPM, etc.) |
 | `supply_temp_entity` | string | HVAC supply temperature |
 | `return_temp_entity` | string | HVAC return temperature |
+| `current_temp_entity` | string | Current room/zone temperature, shown in `underfloor_heating` mode |
+| `target_temp_entity` | string | Target room/zone temperature, shown in `underfloor_heating` mode |
+| `name` | string | Custom load name, e.g. `Vloerverwarming` |
+
+
+
+### Common-return buffer + underfloor heating example
+
+Use this layout when the buffer tank is installed **in series in the shared return**, after the HVAC/DHW return paths have joined:
+
+```yaml
+buffer_tank:
+  position: common_return
+  name: Buffer
+  tank_temp_entity: sensor.buffer_temperature
+
+dhw_tank:
+  tank_temp_entity: sensor.dhw_temperature
+  target_temp_entity: number.dhw_target_temperature
+  tank_inlet_icon_url: mdi:water-outline
+  tank_outlet_icon_url: mdi:water-thermometer
+
+hvac:
+  type: underfloor_heating
+  name: Vloerverwarming
+  current_temp_entity: sensor.room_temperature
+  target_temp_entity: number.room_target_temperature
+```
+
+In `common_return` mode, the heating supply bypasses the buffer and the HVAC and DHW returns join before passing through the buffer back to the heat pump.
 
 ### House Performance Options (`house`)
 
@@ -849,7 +882,11 @@ temperature_status:
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
 | `font_family` | string | Courier New, monospace | Font family for temperature and flow values |
-| `font_size` | number | 11 | Font size in pixels |
+| `font_size` | number | 11 | Base SVG font size in pixels; now applied to metrics and temperature indicators |
+| `label_font_size` | number | derived | Metric/secondary label size override |
+| `value_font_size` | number | derived | Metric/value size override |
+| `temperature_font_size` | number | derived | Temperature-circle text size override |
+| `component_font_size` | number | derived | Main component label size override |
 | `font_weight` | string | bold | Font weight |
 | `show_labels` | boolean | false | Show descriptive labels like "HP Supply:" before values |
 
