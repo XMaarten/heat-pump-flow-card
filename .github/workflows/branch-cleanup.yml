@@ -1,74 +1,35 @@
-name: Clean up merged branches
+name: Delete merged branches
 
 on:
-  # Run once when this workflow is added to main.
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/branch-cleanup.yml'
-  # Keep future merged PR branches tidy.
   pull_request:
     branches: [main]
     types: [closed]
 
 permissions:
   contents: write
-  pull-requests: read
 
 jobs:
   cleanup:
-    if: github.event_name == 'push' || github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
-      - name: Remove branches already merged into main
+      - name: Delete merged branch if no new commits exist
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
+          BRANCH: ${{ github.event.pull_request.head.ref }}
         shell: bash
         run: |
           set -euo pipefail
-          open_heads="$(gh api --paginate "repos/$REPO/pulls?state=open&per_page=100" --jq '.[].head.ref')"
-
-          while IFS= read -r branch; do
-            [ "$branch" = "main" ] && continue
-
-            # Never remove a branch which has an open pull request.
-            if grep -Fxq -- "$branch" <<< "$open_heads"; then
-              echo "Keeping $branch: open pull request"
-              continue
-            fi
-
-            # compare/<base>...<head>: behind_by counts commits on the
-            # branch which are not yet in main.
-            unmerged="$(gh api "repos/$REPO/compare/$branch...main" --jq '.behind_by' || true)"
-            [ -n "$unmerged" ] || continue
-            if [ "$unmerged" != "0" ]; then
-              # Three old experiment branches contain only obsolete CI
-              # version-bump commits. Remove only at the verified SHA.
-              case "$branch" in
-                claude/daikin-split-compact)
-                  expected="c25fe91e139ec8827e5ece2b806ddbae33803bfc" ;;
-                feature/daikin-layout-v2)
-                  expected="1cb6344dc7040d0b3475825d1faf6747555d8ecd" ;;
-                fix/full-width-sections)
-                  expected="da498ab65b2acddbc92d96ada4bb8c3fb3c01b8b" ;;
-                *)
-                  echo "Keeping $branch: $unmerged unmerged commit(s)"
-                  continue ;;
-              esac
-              head="$(gh api "repos/$REPO/branches/$branch" --jq '.commit.sha' || true)"
-              if [ "$head" != "$expected" ]; then
-                echo "Keeping $branch: changed since review"
-                continue
-              fi
-            fi
-
-            if gh api --method DELETE "repos/$REPO/git/refs/heads/$branch" >/dev/null; then
-              echo "Deleted $branch"
-            elif gh api "repos/$REPO/branches/$branch" >/dev/null 2>&1; then
-              echo "::error::Unable to delete $branch"
-              exit 1
-            else
-              echo "Already deleted: $branch"
-            fi
-          done < <(gh api --paginate "repos/$REPO/branches?per_page=100" --jq '.[].name')
+          [ "$BRANCH" != "main" ] || exit 0
+          if ! gh api "repos/$REPO/branches/$BRANCH" >/dev/null 2>&1; then
+            echo "Branch already deleted"
+            exit 0
+          fi
+          unmerged="$(gh api "repos/$REPO/compare/$BRANCH...main" --jq '.behind_by')"
+          if [ "$unmerged" != "0" ]; then
+            echo "Keeping $BRANCH: contains new commits"
+            exit 0
+          fi
+          gh api --method DELETE "repos/$REPO/git/refs/heads/$BRANCH"
+          echo "Deleted $BRANCH"
