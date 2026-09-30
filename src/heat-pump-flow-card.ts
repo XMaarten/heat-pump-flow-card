@@ -954,7 +954,7 @@ export class HeatPumpFlowCard extends LitElement {
 
             <!-- Returns: UFH drops straight down into a T with the DHW-coil return.
                  The combined return then passes through the 40 L buffer to the outdoor unit. -->
-            <path d="M 405 540 V 568"
+            <path d="M 405 540 V 567"
                   stroke="${returnColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 0.30 : 1}"/>
             <path d="M 620 505 H 575 V 561 H 405"
@@ -985,44 +985,43 @@ export class HeatPumpFlowCard extends LitElement {
                 ${this.formatValue(hpState.outletTemp, 1)}°
               </text>
 
-              <circle cx="105" cy="126" r="37" fill="#34495e"
-                      stroke="${this.getHeatPumpColor(hpState)}" stroke-width="2"/>
-              <g id="fan-blades">
-                <path d="M 105 89 Q 118 113, 105 126 Q 92 113, 105 89" fill="#7f8c8d"/>
-                <path d="M 142 126 Q 118 139, 105 126 Q 118 113, 142 126" fill="#7f8c8d"/>
-                <path d="M 105 163 Q 92 139, 105 126 Q 118 139, 105 163" fill="#7f8c8d"/>
-                <path d="M 68 126 Q 92 113, 105 126 Q 92 139, 68 126" fill="#7f8c8d"/>
-                <circle cx="105" cy="126" r="9" fill="#2c3e50"/>
-              </g>
-
-              <text x="105" y="181" text-anchor="middle"
-                    fill="var(--primary-text-color)" font-size="${labelSize}" font-weight="bold">
-                ${this.getDisplayMode(hpState, g2ValveState)}
-              </text>
-            </g>
-
-            <!-- Readable outdoor metrics: 2 x 2 -->
-            <g transform="translate(30, 255)">
-              <rect width="210" height="112" rx="10"
-                    fill="var(--secondary-background-color)" opacity="0.90"/>
-              <text x="14" y="24" fill="var(--secondary-text-color)" font-size="${labelSize}">Elektrisch</text>
-              <text x="14" y="48" fill="var(--primary-text-color)" font-size="${valueSize}" font-weight="bold">
+              <text x="18" y="104" fill="#bdc3c7" font-size="${labelSize}">Elektrisch</text>
+              <text x="18" y="124" fill="white" font-size="${valueSize}" font-weight="bold">
                 ${this.formatValue(hpState.power / 1000, 1)} kW
               </text>
 
-              <text x="112" y="24" fill="var(--secondary-text-color)" font-size="${labelSize}">Thermisch</text>
-              <text x="112" y="48" fill="var(--primary-text-color)" font-size="${valueSize}" font-weight="bold">
+              <text x="18" y="148" fill="#bdc3c7" font-size="${labelSize}">Thermisch</text>
+              <text x="18" y="168" fill="white" font-size="${valueSize}" font-weight="bold">
                 ${this.formatValue(hpState.thermal / 1000, 1)} kW
               </text>
 
-              <text x="14" y="77" fill="var(--secondary-text-color)" font-size="${labelSize}">COP</text>
-              <text x="14" y="101" fill="var(--primary-text-color)" font-size="${valueSize}" font-weight="bold">
-                ${this.formatValue(hpState.cop, 2)}
+              <g transform="translate(157, 123)">
+                <circle r="34" fill="#34495e"
+                        stroke="${this.getHeatPumpColor(hpState)}" stroke-width="2"/>
+                <g id="fan-blades">
+                  <path d="M 0 -34 Q 12 -12, 0 0 Q -12 -12, 0 -34" fill="#7f8c8d"/>
+                  <path d="M 34 0 Q 12 12, 0 0 Q 12 -12, 34 0" fill="#7f8c8d"/>
+                  <path d="M 0 34 Q -12 12, 0 0 Q 12 12, 0 34" fill="#7f8c8d"/>
+                  <path d="M -34 0 Q -12 -12, 0 0 Q -12 12, -34 0" fill="#7f8c8d"/>
+                  <circle r="8" fill="#2c3e50"/>
+                </g>
+              </g>
+            </g>
+
+            <!-- Compact metrics placed around the hydronic path -->
+            <g>
+              <text x="380" y="322" text-anchor="end"
+                    fill="var(--secondary-text-color)" font-size="${labelSize}">Flow</text>
+              <text x="380" y="344" text-anchor="end"
+                    fill="var(--primary-text-color)" font-size="${valueSize}" font-weight="bold">
+                ${this.formatValue(hpState.flowRate, 1)} ${this.getStateUnit(this.config.heat_pump?.flow_rate_entity) || 'L/min'}
               </text>
 
-              <text x="112" y="77" fill="var(--secondary-text-color)" font-size="${labelSize}">Flow</text>
-              <text x="112" y="101" fill="var(--primary-text-color)" font-size="${valueSize}" font-weight="bold">
-                ${this.formatValue(hpState.flowRate, 1)} ${this.getStateUnit(this.config.heat_pump?.flow_rate_entity) || 'L/min'}
+              <text x="535" y="105"
+                    fill="var(--secondary-text-color)" font-size="${labelSize}">COP</text>
+              <text x="535" y="128"
+                    fill="var(--primary-text-color)" font-size="${valueSize}" font-weight="bold">
+                ${this.formatValue(hpState.cop, 2)}
               </text>
             </g>
 
@@ -1144,36 +1143,36 @@ export class HeatPumpFlowCard extends LitElement {
               766, 252, 30, 30, 0.95, this.config.dhw_tank?.tank_outlet_icon_color
             )}
 
-            <!-- Underfloor heating -->
-            <g transform="translate(255, 360)" filter="url(#entity-shadow)">
-              <rect width="300" height="180" rx="12" fill="#273746" stroke="#34495e" stroke-width="2"/>
-              <text x="150" y="28" text-anchor="middle" fill="white"
+            <!-- Underfloor heating: same width and alignment as indoor unit -->
+            <g transform="translate(300, 360)" filter="url(#entity-shadow)">
+              <rect width="210" height="180" rx="12" fill="#273746" stroke="#34495e" stroke-width="2"/>
+              <text x="105" y="28" text-anchor="middle" fill="white"
                     font-size="${componentSize}" font-weight="bold">
                 ${this.config.hvac?.name || 'Vloerverwarming'}
               </text>
 
               <!-- Current and target room temperatures above the floor element -->
-              <text x="75" y="52" text-anchor="middle" fill="#bdc3c7"
+              <text x="52" y="52" text-anchor="middle" fill="#bdc3c7"
                     font-size="${labelSize}">Huidig</text>
-              <text x="75" y="76" text-anchor="middle" fill="white"
+              <text x="52" y="76" text-anchor="middle" fill="white"
                     font-size="${setpointTempSize}" font-weight="bold">
                 ${roomTemp !== undefined ? this.formatValue(roomTemp, 1) + '°' : '—'}
               </text>
 
-              <text x="225" y="52" text-anchor="middle" fill="#bdc3c7"
+              <text x="158" y="52" text-anchor="middle" fill="#bdc3c7"
                     font-size="${labelSize}">Doel</text>
-              <text x="225" y="76" text-anchor="middle" fill="#e67e22"
+              <text x="158" y="76" text-anchor="middle" fill="#e67e22"
                     font-size="${setpointTempSize}" font-weight="bold">
                 ${roomTarget !== undefined ? this.formatValue(roomTarget, 1) + '°' : '—'}
               </text>
 
-              <path d="M 30 100 H 250
-                       Q 270 100, 270 118
-                       Q 270 136, 250 136
-                       H 58
-                       Q 36 136, 36 154
-                       Q 36 166, 58 166
-                       H 254"
+              <path d="M 22 100 H 170
+                       Q 188 100, 188 118
+                       Q 188 136, 170 136
+                       H 42
+                       Q 22 136, 22 154
+                       Q 22 166, 42 166
+                       H 176"
                     fill="none" stroke="#e67e22" stroke-width="7"
                     stroke-linecap="round" stroke-linejoin="round"/>
             </g>
@@ -1181,9 +1180,6 @@ export class HeatPumpFlowCard extends LitElement {
             <!-- Pipe temperature badges are intentionally omitted in the Daikin layout.
                  The outdoor and indoor units show their water temperatures directly. -->
 
-            <text x="790" y="18" text-anchor="end" fill="#95a5a6" font-size="10" opacity="0.7">
-              v${CARD_VERSION}
-            </text>
           </svg>
         </div>
       </ha-card>
