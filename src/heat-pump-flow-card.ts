@@ -857,7 +857,6 @@ export class HeatPumpFlowCard extends LitElement {
 
   private renderDaikinSplitCard() {
     const hpState = this.getHeatPumpState();
-    const bufferState = this.getBufferTankState();
     const hvacState = this.getHVACState();
     const dhwState = this.getDHWTankState();
     const g2ValveState = this.getG2ValveState();
@@ -952,19 +951,17 @@ export class HeatPumpFlowCard extends LitElement {
                   stroke="${dhwBranchColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 1 : 0.30}"/>
 
-            <!-- Returns: UFH drops straight down into a T with the DHW-coil return.
-                 The combined return then passes through the 40 L buffer to the outdoor unit. -->
-            <path d="M 405 540 V 567"
+            <!-- Returns: UFH drops into a T with the DHW-coil return,
+                 then the combined return goes directly back to the outdoor unit. -->
+            <path d="M 405 540 V 566"
                   stroke="${returnColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 0.30 : 1}"/>
             <path d="M 620 505 H 575 V 561 H 405"
                   stroke="${dhwReturnColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 1 : 0.30}"/>
-            <path d="M 405 561 H 210"
+            <path d="M 405 561 H 15 V 145 H 30"
                   stroke="${g2ValveState.isActive ? dhwReturnColor : returnColor}"
                   stroke-width="12" fill="none" stroke-linecap="butt"/>
-            <path d="M 130 561 H 15 V 145 H 30"
-                  stroke="${returnColor}" stroke-width="12" fill="none" stroke-linecap="butt"/>
 
             <!-- OUTDOOR UNIT -->
             <g transform="translate(30, 50)" filter="url(#entity-shadow)">
@@ -1008,18 +1005,18 @@ export class HeatPumpFlowCard extends LitElement {
               </g>
             </g>
 
-            <!-- Compact metrics placed around the hydronic path -->
+            <!-- Flow and COP aligned with the electrical/thermal metric column above -->
             <g>
-              <text x="380" y="322" text-anchor="end"
+              <text x="48" y="285"
                     fill="var(--secondary-text-color)" font-size="${labelSize}">Flow</text>
-              <text x="380" y="344" text-anchor="end"
+              <text x="48" y="307"
                     fill="var(--primary-text-color)" font-size="${valueSize}" font-weight="bold">
                 ${this.formatValue(hpState.flowRate, 1)} ${this.getStateUnit(this.config.heat_pump?.flow_rate_entity) || 'L/min'}
               </text>
 
-              <text x="535" y="105"
+              <text x="48" y="333"
                     fill="var(--secondary-text-color)" font-size="${labelSize}">COP</text>
-              <text x="535" y="128"
+              <text x="48" y="355"
                     fill="var(--primary-text-color)" font-size="${valueSize}" font-weight="bold">
                 ${this.formatValue(hpState.cop, 2)}
               </text>
@@ -1061,18 +1058,6 @@ export class HeatPumpFlowCard extends LitElement {
               <path d="M 0 7 V 22" stroke="${heatingBranchColor}" stroke-width="6"/>
             </g>
 
-            <!-- 40 L return buffer -->
-            <g transform="translate(130, 480)" filter="url(#entity-shadow)">
-              <rect x="0" y="12" width="80" height="130" fill="#34495e" stroke="#2c3e50" stroke-width="3"/>
-              <ellipse cx="40" cy="12" rx="40" ry="12" fill="#34495e" stroke="#2c3e50" stroke-width="3"/>
-              <ellipse cx="40" cy="142" rx="40" ry="12" fill="#2c3e50" stroke="#2c3e50" stroke-width="3"/>
-              <rect x="7" y="22" width="66" height="110" fill="${returnColor}" opacity="0.20"/>
-              <text x="40" y="17" text-anchor="middle" dominant-baseline="middle"
-                    fill="white" font-size="${labelSize}" font-weight="bold">
-                ${this.config.buffer_tank?.name || 'Buffer'}
-              </text>
-            </g>
-
             <!-- 300 L DHW tank -->
             <g transform="translate(620, 300)" filter="url(#entity-shadow)">
               <rect x="0" y="15" width="130" height="220" fill="#34495e" stroke="#2c3e50" stroke-width="3"/>
@@ -1084,18 +1069,15 @@ export class HeatPumpFlowCard extends LitElement {
                     fill="white" font-size="${componentSize}" font-weight="bold">
                 ${this.config.dhw_tank?.name || 'Tapwater'}
               </text>
-              <!-- Current and target DHW temperatures side by side -->
-              <text x="34" y="58" text-anchor="middle" fill="#bdc3c7"
-                    font-size="${labelSize}">Huidig</text>
-              <text x="34" y="80" text-anchor="middle" fill="white"
-                    font-size="${setpointTempSize}" font-weight="bold">
+              <!-- Current -> target DHW temperature -->
+              <text x="32" y="72" text-anchor="middle" fill="white"
+                    font-size="${prominentTempSize}" font-weight="bold">
                 ${tankTemp !== undefined ? this.formatValue(tankTemp, 1) + '°' : '—'}
               </text>
-
-              <text x="96" y="58" text-anchor="middle" fill="#bdc3c7"
-                    font-size="${labelSize}">Doel</text>
-              <text x="96" y="80" text-anchor="middle" fill="#e74c3c"
-                    font-size="${setpointTempSize}" font-weight="bold">
+              <text x="65" y="72" text-anchor="middle" fill="#bdc3c7"
+                    font-size="${setpointTempSize}" font-weight="bold">→</text>
+              <text x="98" y="72" text-anchor="middle" fill="#e74c3c"
+                    font-size="${prominentTempSize}" font-weight="bold">
                 ${targetTemp !== undefined ? this.formatValue(targetTemp, 1) + '°' : '—'}
               </text>
 
@@ -1151,18 +1133,15 @@ export class HeatPumpFlowCard extends LitElement {
                 ${this.config.hvac?.name || 'Vloerverwarming'}
               </text>
 
-              <!-- Current and target room temperatures above the floor element -->
-              <text x="52" y="52" text-anchor="middle" fill="#bdc3c7"
-                    font-size="${labelSize}">Huidig</text>
-              <text x="52" y="76" text-anchor="middle" fill="white"
-                    font-size="${setpointTempSize}" font-weight="bold">
+              <!-- Current -> target room temperature -->
+              <text x="48" y="70" text-anchor="middle" fill="white"
+                    font-size="${prominentTempSize}" font-weight="bold">
                 ${roomTemp !== undefined ? this.formatValue(roomTemp, 1) + '°' : '—'}
               </text>
-
-              <text x="158" y="52" text-anchor="middle" fill="#bdc3c7"
-                    font-size="${labelSize}">Doel</text>
-              <text x="158" y="76" text-anchor="middle" fill="#e67e22"
-                    font-size="${setpointTempSize}" font-weight="bold">
+              <text x="105" y="70" text-anchor="middle" fill="#bdc3c7"
+                    font-size="${setpointTempSize}" font-weight="bold">→</text>
+              <text x="162" y="70" text-anchor="middle" fill="#e67e22"
+                    font-size="${prominentTempSize}" font-weight="bold">
                 ${roomTarget !== undefined ? this.formatValue(roomTarget, 1) + '°' : '—'}
               </text>
 
