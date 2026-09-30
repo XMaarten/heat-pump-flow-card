@@ -907,8 +907,6 @@ export class HeatPumpFlowCard extends LitElement {
     const valueSize = this.getTextSize('value', 14);
     const componentSize = this.getTextSize('component', 14);
     const prominentTempSize = Math.max(valueSize + 5, 20);
-    const setpointTempSize = Math.max(valueSize + 3, 18);
-    const targetTempSize = Math.max(valueSize + 7, 22);
 
     const tankTemp = dhwState.tankTemp;
     const targetTemp = dhwState.targetTemp;
@@ -951,7 +949,7 @@ export class HeatPumpFlowCard extends LitElement {
             <!-- SUPPLY: outdoor -> indoor -> 3-way valve (Daikin compact layout) -->
             <path d="M 240 145 H 300"
                   stroke="${supplyColor}" stroke-width="12" fill="none" stroke-linecap="butt"/>
-            <path d="M 405 220 V 258"
+            <path d="M 405 240 V 258"
                   stroke="${supplyColor}" stroke-width="12" fill="none" stroke-linecap="butt"/>
 
             <!-- 3-way valve -> underfloor heating (down into top of the floor loop) -->
@@ -1035,9 +1033,9 @@ export class HeatPumpFlowCard extends LitElement {
               </text>
             </g>
 
-            <!-- INDOOR UNIT with BUH -->
+            <!-- INDOOR UNIT with BUH: same height as the outdoor unit -->
             <g transform="translate(300, 50)" filter="url(#entity-shadow)">
-              <rect width="210" height="170" rx="12" fill="#273746" stroke="#5d6d7e" stroke-width="3"/>
+              <rect width="210" height="190" rx="12" fill="#273746" stroke="#5d6d7e" stroke-width="3"/>
               <text x="105" y="25" text-anchor="middle" fill="white"
                     font-size="${componentSize}" font-weight="bold">
                 ${indoorCfg.name || 'Binnenunit'}
@@ -1053,10 +1051,11 @@ export class HeatPumpFlowCard extends LitElement {
               </text>
 
               <path d="M 34 116 H 52 L 64 98 L 80 134 L 96 98 L 112 134 L 128 98 L 144 134 L 156 116 H 176"
+                    transform="translate(0, 12)"
                     stroke="${showBuh ? buhColor : '#5d6d7e'}"
                     stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"
                     opacity="${showBuh ? 1 : 0.25}"/>
-              <text x="105" y="158" text-anchor="middle"
+              <text x="105" y="170" text-anchor="middle"
                     fill="${showBuh ? buhColor : '#95a5a6'}" font-size="${labelSize}" font-weight="bold">
                 BUH${auxHeaterState.power > 0 ? ' ' + this.formatValue(auxHeaterState.power / 1000, 1) + ' kW' : ''}
               </text>
@@ -1084,7 +1083,7 @@ export class HeatPumpFlowCard extends LitElement {
               </text>
               <!-- Actual temperature is centered when no target entity is available. -->
               <text x="${hasTankTarget ? 34 : 75}" y="73" text-anchor="middle" fill="white"
-                    font-size="${targetTempSize}" font-weight="bold">
+                    font-size="${prominentTempSize}" font-weight="bold">
                 ${tankTemp !== undefined ? this.formatValue(tankTemp, 1) + '°' : '—'}
               </text>
               ${hasTankTarget ? svg`
@@ -1092,7 +1091,7 @@ export class HeatPumpFlowCard extends LitElement {
                       stroke="#bdc3c7" stroke-width="3.5" fill="none"
                       stroke-linecap="round" stroke-linejoin="round"/>
                 <text x="116" y="73" text-anchor="middle" fill="#e74c3c"
-                      font-size="${targetTempSize}" font-weight="bold">
+                      font-size="${prominentTempSize}" font-weight="bold">
                   ${this.formatValue(targetTemp, 1)}°
                 </text>
               ` : ''}
@@ -1128,19 +1127,9 @@ export class HeatPumpFlowCard extends LitElement {
             <path d="M 685 550 V 590 H 770"
                   stroke="${this.config.dhw_tank?.tank_inlet_color || '#3498db'}"
                   stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            ${this.renderIcon(
-              this.config.dhw_tank?.tank_inlet_icon_url || 'mdi:water-outline',
-              766, 572, 30, 30, 0.95, this.config.dhw_tank?.tank_inlet_icon_color
-            )}
-
             <path d="M 685 300 V 270 H 770"
                   stroke="${this.config.dhw_tank?.tank_outlet_color || '#e74c3c'}"
                   stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            ${this.renderIcon(
-              this.config.dhw_tank?.tank_outlet_icon_url || 'mdi:water-thermometer',
-              766, 252, 30, 30, 0.95, this.config.dhw_tank?.tank_outlet_icon_color
-            )}
-
             <!-- Underfloor heating: same width and alignment as indoor unit -->
             <g transform="translate(300, 360)" filter="url(#entity-shadow)">
               <rect width="210" height="180" rx="12" fill="#273746" stroke="#34495e" stroke-width="2"/>
@@ -1151,7 +1140,7 @@ export class HeatPumpFlowCard extends LitElement {
 
               <!-- Actual temperature is centered when no target entity is available. -->
               <text x="${hasRoomTarget ? 46 : 105}" y="70" text-anchor="middle" fill="white"
-                    font-size="${targetTempSize}" font-weight="bold">
+                    font-size="${prominentTempSize}" font-weight="bold">
                 ${roomTemp !== undefined ? this.formatValue(roomTemp, 1) + '°' : '—'}
               </text>
               ${hasRoomTarget ? svg`
@@ -1159,7 +1148,7 @@ export class HeatPumpFlowCard extends LitElement {
                       stroke="#bdc3c7" stroke-width="3.5" fill="none"
                       stroke-linecap="round" stroke-linejoin="round"/>
                 <text x="164" y="70" text-anchor="middle" fill="#e67e22"
-                      font-size="${targetTempSize}" font-weight="bold">
+                      font-size="${prominentTempSize}" font-weight="bold">
                   ${this.formatValue(roomTarget, 1)}°
                 </text>
               ` : ''}
