@@ -33,6 +33,7 @@ title: Heat Pump
 show_logo: false
 layout:
   type: daikin_split
+  # text_scale: 1.3  # Optional: enlarge text for a narrow HA column
 
 heat_pump:
   display_name: Outdoor unit
@@ -77,6 +78,8 @@ hvac:
 grid_options:
   columns: full
 ```
+
+For a single narrow Home Assistant column, set `layout.text_scale: 1.3` to enlarge metric labels, values (including Flow, COP and pressure) and component names. Temperatures keep their original size to avoid overlapping the arrows. This option changes only the Daikin layout and does not change dashboard column settings.
 
 In the Daikin layout, water pressure appears below COP when `heat_pump.pressure_entity` is configured, and outside air temperature appears below pressure when `heat_pump.ambient_temp_entity` is configured. Outdoor leaving water and indoor PHE outlet can be configured separately.
 
