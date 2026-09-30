@@ -386,22 +386,26 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                   stroke="${w}" stroke-width="12" fill="none" stroke-linecap="butt"/>
 
             <!-- 3-way valve -> underfloor heating (down into top of the floor loop) -->
-            <path d="M 405 302 V 390"
+            <path d="M 405 302 V 360"
                   stroke="${b}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${o.isActive?.3:1}"/>
 
-            <!-- 3-way valve -> DHW coil (right) -->
-            <path d="M 427 280 H 585 V 385 H 620"
+            <!-- 3-way valve -> DHW coil (right), aligned with the coil inlet -->
+            <path d="M 427 280 H 585 V 405 H 620"
                   stroke="${k}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${o.isActive?1:.3}"/>
 
-            <!-- Returns: floor exits downward, joins DHW return, then through the 40 L buffer to outdoor unit -->
-            <path d="M 405 570 V 590 H 210 V 557"
+            <!-- Returns: UFH drops straight down into a T with the DHW-coil return.
+                 The combined return then passes through the 40 L buffer to the outdoor unit. -->
+            <path d="M 405 540 V 557"
                   stroke="${$}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${o.isActive?.3:1}"/>
-            <path d="M 620 505 H 575 V 557 H 210"
+            <path d="M 620 505 H 575 V 557 H 405"
                   stroke="${v}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${o.isActive?1:.3}"/>
+            <path d="M 405 557 H 210"
+                  stroke="${o.isActive?v:$}"
+                  stroke-width="12" fill="none" stroke-linecap="butt"/>
             <path d="M 130 557 H 15 V 145 H 30"
                   stroke="${$}" stroke-width="12" fill="none" stroke-linecap="butt"/>
 
@@ -586,7 +590,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
             ${this.renderIcon(this.config.dhw_tank?.tank_outlet_icon_url||"mdi:water-thermometer",766,252,30,30,.95,this.config.dhw_tank?.tank_outlet_icon_color)}
 
             <!-- Underfloor heating -->
-            <g transform="translate(255, 390)" filter="url(#entity-shadow)">
+            <g transform="translate(255, 360)" filter="url(#entity-shadow)">
               <rect width="300" height="180" rx="12" fill="#273746" stroke="#34495e" stroke-width="2"/>
               <text x="150" y="28" text-anchor="middle" fill="white"
                     font-size="${A}" font-weight="bold">
