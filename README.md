@@ -7,7 +7,7 @@ A Home Assistant custom card for visualizing heat-pump water circuits. It suppor
 ## Features
 
 - Outdoor and indoor units, backup heater, three-way valve, hot-water tank and underfloor heating.
-- Live temperatures, current → target temperatures, electrical and thermal power, COP and flow.
+- Live temperatures, current → target temperatures, electrical and thermal power, COP, flow and optional water pressure.
 - Heating/cooling pipe colors; the standard layout also supports animated flow, buffer tanks, custom metrics and temperature indicators.
 
 ## Installation
@@ -25,7 +25,7 @@ Reload the dashboard after installation. If an update does not appear, refresh t
 
 ## Daikin split example
 
-Replace the example entities with your Home Assistant entities. Electrical and thermal power sensors should provide watts (W).
+Replace the example entities with your Home Assistant entities. For the Daikin layout, electrical and thermal power sensors can report W or kW (read from their Home Assistant unit).
 
 ```yaml
 type: custom:heat-pump-flow-card
@@ -40,8 +40,10 @@ heat_pump:
   thermal_entity: sensor.heat_pump_thermal_power_w
   cop_entity: sensor.heat_pump_cop
   flow_rate_entity: sensor.heat_pump_flow
+  pressure_entity: sensor.heat_pump_water_pressure  # Optional, bar
+  ambient_temp_entity: sensor.heat_pump_outdoor_air_temperature  # Optional
   inlet_temp_entity: sensor.heat_pump_return_temperature
-  outlet_temp_entity: sensor.heat_pump_phe_outlet_temperature
+  outlet_temp_entity: sensor.heat_pump_outdoor_leaving_temperature
 
 indoor_unit:
   name: Indoor unit
@@ -75,6 +77,8 @@ hvac:
 grid_options:
   columns: full
 ```
+
+In the Daikin layout, water pressure appears below COP when `heat_pump.pressure_entity` is configured, and outside air temperature appears below pressure when `heat_pump.ambient_temp_entity` is configured. Outdoor leaving water and indoor PHE outlet can be configured separately.
 
 The optional heater `state_entity` takes precedence over `power_entity` (positive W means active); `active_entity` is also accepted. The DHW coil turns red only during DHW flow, and the floor loop is gray when inactive.
 

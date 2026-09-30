@@ -903,6 +903,21 @@ export class HeatPumpFlowCard extends LitElement {
       ? (isCooling ? cold : '#e67e22')
       : neutral;
 
+    // Normalize W/kW only in the compact Daikin layout.
+    const powerToKw = (value: number, entityId?: string): number => {
+      const unit = this.getStateUnit(entityId).trim().toLowerCase();
+      if (unit === 'kw') return value;
+      if (unit === 'mw') return value * 1000;
+      return value / 1000; // W or legacy entities without units
+    };
+    const electricalKw = powerToKw(hpState.power, this.config.heat_pump?.power_entity);
+    const thermalKw = powerToKw(hpState.thermal, this.config.heat_pump?.thermal_entity);
+    const pressureEntity = this.config.heat_pump?.pressure_entity;
+    const pressure = this.getStateValue(pressureEntity);
+    const ambient = this.getStateValue(this.config.heat_pump?.ambient_temp_entity);
+    const ambientLabelY = pressureEntity ? 429 : 381;
+    const ambientValueY = pressureEntity ? 451 : 403;
+
     const labelSize = this.getTextSize('label', 10);
     const valueSize = this.getTextSize('value', 14);
     const componentSize = this.getTextSize('component', 14);
@@ -995,12 +1010,12 @@ export class HeatPumpFlowCard extends LitElement {
 
               <text x="18" y="104" fill="#bdc3c7" font-size="${labelSize}">Electrical</text>
               <text x="18" y="124" fill="white" font-size="${valueSize}" font-weight="bold">
-                ${this.formatValue(hpState.power / 1000, 1)} kW
+                ${this.formatValue(electricalKw, 1)} kW
               </text>
 
               <text x="18" y="148" fill="#bdc3c7" font-size="${labelSize}">Thermal</text>
               <text x="18" y="168" fill="white" font-size="${valueSize}" font-weight="bold">
-                ${this.formatValue(hpState.thermal / 1000, 1)} kW
+                ${this.formatValue(thermalKw, 1)} kW
               </text>
 
               <g transform="translate(157, 123)">
@@ -1031,6 +1046,25 @@ export class HeatPumpFlowCard extends LitElement {
                     fill="var(--primary-text-color)" font-size="${valueSize}" font-weight="bold">
                 ${hasFlow && hpState.cop > 0 ? this.formatValue(hpState.cop, 2) : '—'}
               </text>
+
+              ${pressureEntity ? svg`
+                <text x="48" y="381"
+                      fill="var(--secondary-text-color)" font-size="${labelSize}">Pressure</text>
+                <text x="48" y="403"
+                      fill="var(--primary-text-color)" font-size="${valueSize}" font-weight="bold">
+                  ${pressure !== undefined
+                    ? this.formatValue(pressure, 1) + ' ' + (this.getStateUnit(pressureEntity) || 'bar')
+                    : '—'}
+                </text>
+              ` : ''}
+              ${ambient !== undefined ? svg`
+                <text x="48" y="${ambientLabelY}"
+                      fill="var(--secondary-text-color)" font-size="${labelSize}">Outside</text>
+                <text x="48" y="${ambientValueY}"
+                      fill="var(--primary-text-color)" font-size="${valueSize}" font-weight="bold">
+                  ${this.formatValue(ambient, 1)} ${this.getStateUnit(this.config.heat_pump?.ambient_temp_entity) || '°C'}
+                </text>
+              ` : ''}
             </g>
 
             <!-- INDOOR UNIT with BUH: same height as the outdoor unit -->
