@@ -897,6 +897,8 @@ export class HeatPumpFlowCard extends LitElement {
     const labelSize = this.getTextSize('label', 10);
     const valueSize = this.getTextSize('value', 14);
     const componentSize = this.getTextSize('component', 14);
+    const prominentTempSize = Math.max(valueSize + 5, 20);
+    const setpointTempSize = Math.max(valueSize + 3, 18);
 
     const bufferVolume = this.config.buffer_tank?.volume_l ?? 40;
     const dhwVolume = this.config.dhw_tank?.volume_l ?? 300;
@@ -954,16 +956,16 @@ export class HeatPumpFlowCard extends LitElement {
 
             <!-- Returns: UFH drops straight down into a T with the DHW-coil return.
                  The combined return then passes through the 40 L buffer to the outdoor unit. -->
-            <path d="M 405 540 V 557"
+            <path d="M 405 540 V 561"
                   stroke="${returnColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 0.30 : 1}"/>
-            <path d="M 620 505 H 575 V 557 H 405"
+            <path d="M 620 505 H 575 V 561 H 405"
                   stroke="${dhwReturnColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 1 : 0.30}"/>
-            <path d="M 405 557 H 210"
+            <path d="M 405 561 H 210"
                   stroke="${g2ValveState.isActive ? dhwReturnColor : returnColor}"
                   stroke-width="12" fill="none" stroke-linecap="butt"/>
-            <path d="M 130 557 H 15 V 145 H 30"
+            <path d="M 130 561 H 15 V 145 H 30"
                   stroke="${returnColor}" stroke-width="12" fill="none" stroke-linecap="butt"/>
 
             <!-- OUTDOOR UNIT -->
@@ -976,13 +978,12 @@ export class HeatPumpFlowCard extends LitElement {
                 ${this.config.heat_pump?.display_name || 'Buitenunit'}
               </text>
 
-              <text x="18" y="48" fill="#bdc3c7" font-size="${labelSize}">Retour</text>
-              <text x="18" y="69" fill="white" font-size="${valueSize}" font-weight="bold">
+              <text x="18" y="62" fill="white" font-size="${prominentTempSize}" font-weight="bold">
                 ${this.formatValue(hpState.inletTemp, 1)}°
               </text>
 
-              <text x="192" y="48" text-anchor="end" fill="#bdc3c7" font-size="${labelSize}">WP uit</text>
-              <text x="192" y="69" text-anchor="end" fill="white" font-size="${valueSize}" font-weight="bold">
+              <text x="192" y="62" text-anchor="end" fill="white"
+                    font-size="${prominentTempSize}" font-weight="bold">
                 ${this.formatValue(hpState.outletTemp, 1)}°
               </text>
 
@@ -1035,13 +1036,12 @@ export class HeatPumpFlowCard extends LitElement {
                 ${indoorCfg.name || 'Binnenunit'}
               </text>
 
-              <text x="20" y="55" fill="#bdc3c7" font-size="${labelSize}">PHE uit</text>
-              <text x="20" y="78" fill="white" font-size="${valueSize}" font-weight="bold">
+              <text x="20" y="70" fill="white" font-size="${prominentTempSize}" font-weight="bold">
                 ${this.formatValue(indoorInTemp, 1)}°
               </text>
 
-              <text x="190" y="55" text-anchor="end" fill="#bdc3c7" font-size="${labelSize}">Na BUH</text>
-              <text x="190" y="78" text-anchor="end" fill="white" font-size="${valueSize}" font-weight="bold">
+              <text x="190" y="70" text-anchor="end" fill="white"
+                    font-size="${prominentTempSize}" font-weight="bold">
                 ${this.formatValue(indoorOutTemp, 1)}°
               </text>
 
@@ -1098,14 +1098,14 @@ export class HeatPumpFlowCard extends LitElement {
               <text x="34" y="69" text-anchor="middle" fill="#bdc3c7"
                     font-size="${labelSize}">Huidig</text>
               <text x="34" y="90" text-anchor="middle" fill="white"
-                    font-size="${valueSize}" font-weight="bold">
+                    font-size="${setpointTempSize}" font-weight="bold">
                 ${tankTemp !== undefined ? this.formatValue(tankTemp, 1) + '°' : '—'}
               </text>
 
               <text x="96" y="69" text-anchor="middle" fill="#bdc3c7"
                     font-size="${labelSize}">Doel</text>
               <text x="96" y="90" text-anchor="middle" fill="#e74c3c"
-                    font-size="${valueSize}" font-weight="bold">
+                    font-size="${setpointTempSize}" font-weight="bold">
                 ${targetTemp !== undefined ? this.formatValue(targetTemp, 1) + '°' : '—'}
               </text>
 
@@ -1160,27 +1160,30 @@ export class HeatPumpFlowCard extends LitElement {
                 ${this.config.hvac?.name || 'Vloerverwarming'}
               </text>
 
-              <path d="M 30 60 H 250
-                       Q 270 60, 270 80
-                       Q 270 100, 250 100
-                       H 58
-                       Q 36 100, 36 122
-                       Q 36 140, 58 140
-                       H 254"
-                    fill="none" stroke="#e67e22" stroke-width="7"
-                    stroke-linecap="round" stroke-linejoin="round"/>
-
-              <text x="24" y="158" fill="#bdc3c7" font-size="${labelSize}">Huidig</text>
-              <text x="120" y="158" text-anchor="end" fill="white"
-                    font-size="${valueSize}" font-weight="bold">
+              <!-- Current and target room temperatures above the floor element -->
+              <text x="75" y="52" text-anchor="middle" fill="#bdc3c7"
+                    font-size="${labelSize}">Huidig</text>
+              <text x="75" y="76" text-anchor="middle" fill="white"
+                    font-size="${setpointTempSize}" font-weight="bold">
                 ${roomTemp !== undefined ? this.formatValue(roomTemp, 1) + '°' : '—'}
               </text>
 
-              <text x="178" y="158" fill="#bdc3c7" font-size="${labelSize}">Doel</text>
-              <text x="276" y="158" text-anchor="end" fill="#e67e22"
-                    font-size="${valueSize}" font-weight="bold">
+              <text x="225" y="52" text-anchor="middle" fill="#bdc3c7"
+                    font-size="${labelSize}">Doel</text>
+              <text x="225" y="76" text-anchor="middle" fill="#e67e22"
+                    font-size="${setpointTempSize}" font-weight="bold">
                 ${roomTarget !== undefined ? this.formatValue(roomTarget, 1) + '°' : '—'}
               </text>
+
+              <path d="M 30 100 H 250
+                       Q 270 100, 270 118
+                       Q 270 136, 250 136
+                       H 58
+                       Q 36 136, 36 154
+                       Q 36 166, 58 166
+                       H 254"
+                    fill="none" stroke="#e67e22" stroke-width="7"
+                    stroke-linecap="round" stroke-linejoin="round"/>
             </g>
 
             <!-- Pipe temperature badges are intentionally omitted in the Daikin layout.
