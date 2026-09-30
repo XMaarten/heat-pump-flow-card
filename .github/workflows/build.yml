@@ -7,6 +7,7 @@ on:
       - main
       - master
       - 'claude/**'
+      - 'chatgpt/**'
       - 'copilot/**'
     paths:
       - 'src/**'
