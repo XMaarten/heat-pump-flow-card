@@ -918,10 +918,18 @@ export class HeatPumpFlowCard extends LitElement {
     const ambientLabelY = pressureEntity ? 429 : 381;
     const ambientValueY = pressureEntity ? 451 : 403;
 
-    const labelSize = this.getTextSize('label', 10);
-    const valueSize = this.getTextSize('value', 14);
-    const componentSize = this.getTextSize('component', 14);
-    const prominentTempSize = Math.max(valueSize + 5, 20);
+    // The 800-wide schematic is also used inside narrow HA Sections columns.
+    // Enlarge metric labels and values on demand without changing the hydraulic
+    // geometry or the temperature fonts (which must fit beside their arrows).
+    const requestedTextScale = this.config.layout?.text_scale ?? 1;
+    const textScale = Number.isFinite(requestedTextScale)
+      ? Math.min(1.35, Math.max(1, requestedTextScale))
+      : 1;
+    const baseValueSize = this.getTextSize('value', 14);
+    const labelSize = Math.round(this.getTextSize('label', 10) * textScale);
+    const valueSize = Math.round(baseValueSize * textScale);
+    const componentSize = Math.round(this.getTextSize('component', 14) * textScale);
+    const prominentTempSize = Math.max(baseValueSize + 5, 20);
 
     const tankTemp = dhwState.tankTemp;
     const targetTemp = dhwState.targetTemp;
