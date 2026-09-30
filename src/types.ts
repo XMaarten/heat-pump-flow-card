@@ -15,12 +15,13 @@ export interface HeatPumpFlowCardConfig extends LovelaceCardConfig {
 
   // Heat Pump Configuration
   heat_pump?: {
-    power_entity?: string;      // Electrical power input (W)
-    thermal_entity?: string;     // Thermal power output (W)
+    power_entity?: string;      // Electrical input (W; Daikin layout also accepts kW)
+    thermal_entity?: string;     // Thermal output (W; Daikin layout also accepts kW)
     cop_entity?: string;         // COP sensor
     outlet_temp_entity?: string; // Outlet temperature
     inlet_temp_entity?: string;  // Inlet temperature
     flow_rate_entity?: string;   // Flow rate (L/min)
+    pressure_entity?: string;    // Water pressure (bar), optional in compact Daikin layout
     fan_speed_entity?: string;   // Fan speed (0-100%)
     mode_entity?: string;        // Operating mode (heating/cooling/dhw/idle/off)
     mode_display_entity?: string; // Mode display text entity (e.g., "Heat+DHW", "Heating Only")
