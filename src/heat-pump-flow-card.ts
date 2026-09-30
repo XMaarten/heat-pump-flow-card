@@ -304,6 +304,16 @@ export class HeatPumpFlowCard extends LitElement {
     return state?.state;
   }
 
+  // An explicit heater state takes precedence over measured power; unknown states
+  // return undefined so an optional power sensor can act as a fallback.
+  private isEntityActive(entityId?: string): boolean | undefined {
+    const value = this.getStateString(entityId)?.toLowerCase();
+    if (value === undefined || value === 'unknown' || value === 'unavailable') return undefined;
+    if (['on', 'true', '1', 'active', 'heating', 'heat'].includes(value)) return true;
+    if (['off', 'false', '0', 'inactive', 'idle', 'standby', 'disabled'].includes(value)) return false;
+    return undefined;
+  }
+
   private getBufferTankState(): BufferTankState {
     const cfg = this.config.buffer_tank || {};
     return {
@@ -869,14 +879,11 @@ export class HeatPumpFlowCard extends LitElement {
 
     const electricCfg = this.config.dhw_tank?.electric_heater;
     const electricPower = this.getStateValue(electricCfg?.power_entity) ?? 0;
-    const electricState = this.getStateString(electricCfg?.state_entity);
+    const electricStatus = this.isEntityActive(electricCfg?.active_entity ?? electricCfg?.state_entity);
     const electricEnabled = electricCfg?.enabled !== false;
-    const electricActive = electricEnabled && (
-      electricPower > 0 ||
-      electricState === 'on' ||
-      electricState === 'true' ||
-      electricState === '1'
-    );
+    const electricActive = electricEnabled && (electricStatus ?? (electricPower > 0));
+    const buhStatus = this.isEntityActive(this.config.aux_heater?.active_entity ?? this.config.aux_heater?.state_entity);
+    const buhActive = showBuh && (buhStatus ?? (auxHeaterState.power > 0));
 
     const idleThreshold = this.config.animation?.idle_threshold ?? 0;
     const hasFlow = hpState.flowRate > idleThreshold;
@@ -892,24 +899,30 @@ export class HeatPumpFlowCard extends LitElement {
     const heatingBranchColor = !g2ValveState.isActive && hasFlow ? supplyColor : neutral;
     const dhwBranchColor = g2ValveState.isActive && hasFlow ? hot : neutral;
     const dhwReturnColor = g2ValveState.isActive && hasFlow ? cold : neutral;
+    const floorLoopColor = !g2ValveState.isActive && hasFlow
+      ? (isCooling ? cold : '#e67e22')
+      : neutral;
 
     const labelSize = this.getTextSize('label', 10);
     const valueSize = this.getTextSize('value', 14);
     const componentSize = this.getTextSize('component', 14);
     const prominentTempSize = Math.max(valueSize + 5, 20);
     const setpointTempSize = Math.max(valueSize + 3, 18);
+    const targetTempSize = Math.max(valueSize + 7, 22);
 
     const tankTemp = dhwState.tankTemp;
     const targetTemp = dhwState.targetTemp;
     const roomTemp = hvacState.currentTemp;
     const roomTarget = hvacState.targetTemp;
+    const hasTankTarget = targetTemp !== undefined && Number.isFinite(targetTemp);
+    const hasRoomTarget = roomTarget !== undefined && Number.isFinite(roomTarget);
     const logoSize = this.config.logo_size || 40;
     const showLogo = this.config.show_logo !== false;
     const logoPath = this.config.logo_path || '/local/heat-pump-flow.png';
     const logoUrl = this.config.logo_url || 'https://github.com/XMaarten/heat-pump-flow-card';
 
-    const buhColor = auxHeaterState.power > 0 ? '#ff7043' : '#95a5a6';
-    const elementColor = electricActive ? '#ff7043' : '#95a5a6';
+    const buhColor = buhActive ? hot : neutral;
+    const elementColor = electricActive ? hot : neutral;
 
     return html`
       <ha-card style="--logo-size: ${logoSize}px">
@@ -947,7 +960,7 @@ export class HeatPumpFlowCard extends LitElement {
                   opacity="${g2ValveState.isActive ? 0.30 : 1}"/>
 
             <!-- 3-way valve -> DHW coil (right), aligned with the coil inlet -->
-            <path d="M 427 280 H 585 V 405 H 620"
+            <path d="M 427 280 H 585 V 405 H 610"
                   stroke="${dhwBranchColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 1 : 0.30}"/>
 
@@ -956,7 +969,7 @@ export class HeatPumpFlowCard extends LitElement {
             <path d="M 405 540 V 566"
                   stroke="${returnColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 0.30 : 1}"/>
-            <path d="M 620 505 H 575 V 561 H 405"
+            <path d="M 610 505 H 575 V 561 H 405"
                   stroke="${dhwReturnColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 1 : 0.30}"/>
             <path d="M 405 561 H 15 V 145 H 30"
@@ -982,12 +995,12 @@ export class HeatPumpFlowCard extends LitElement {
                 ${this.formatValue(hpState.outletTemp, 1)}°
               </text>
 
-              <text x="18" y="104" fill="#bdc3c7" font-size="${labelSize}">Elektrisch</text>
+              <text x="18" y="104" fill="#bdc3c7" font-size="${labelSize}">Electrical</text>
               <text x="18" y="124" fill="white" font-size="${valueSize}" font-weight="bold">
                 ${this.formatValue(hpState.power / 1000, 1)} kW
               </text>
 
-              <text x="18" y="148" fill="#bdc3c7" font-size="${labelSize}">Thermisch</text>
+              <text x="18" y="148" fill="#bdc3c7" font-size="${labelSize}">Thermal</text>
               <text x="18" y="168" fill="white" font-size="${valueSize}" font-weight="bold">
                 ${this.formatValue(hpState.thermal / 1000, 1)} kW
               </text>
@@ -1018,7 +1031,7 @@ export class HeatPumpFlowCard extends LitElement {
                     fill="var(--secondary-text-color)" font-size="${labelSize}">COP</text>
               <text x="48" y="355"
                     fill="var(--primary-text-color)" font-size="${valueSize}" font-weight="bold">
-                ${this.formatValue(hpState.cop, 2)}
+                ${hasFlow && hpState.cop > 0 ? this.formatValue(hpState.cop, 2) : '—'}
               </text>
             </g>
 
@@ -1058,28 +1071,31 @@ export class HeatPumpFlowCard extends LitElement {
               <path d="M 0 7 V 22" stroke="${heatingBranchColor}" stroke-width="6"/>
             </g>
 
-            <!-- 300 L DHW tank -->
-            <g transform="translate(620, 300)" filter="url(#entity-shadow)">
-              <rect x="0" y="15" width="130" height="220" fill="#34495e" stroke="#2c3e50" stroke-width="3"/>
-              <ellipse cx="65" cy="15" rx="65" ry="15" fill="#34495e" stroke="#2c3e50" stroke-width="3"/>
-              <ellipse cx="65" cy="235" rx="65" ry="15" fill="#2c3e50" stroke="#2c3e50" stroke-width="3"/>
-              <rect x="8" y="25" width="114" height="200" fill="#3498db" opacity="0.16"/>
+            <!-- DHW tank: a little wider to give both temperatures and the arrow breathing room -->
+            <g transform="translate(610, 300)" filter="url(#entity-shadow)">
+              <rect x="0" y="15" width="150" height="220" fill="#34495e" stroke="#2c3e50" stroke-width="3"/>
+              <ellipse cx="75" cy="15" rx="75" ry="15" fill="#34495e" stroke="#2c3e50" stroke-width="3"/>
+              <ellipse cx="75" cy="235" rx="75" ry="15" fill="#2c3e50" stroke="#2c3e50" stroke-width="3"/>
+              <rect x="8" y="25" width="134" height="200" fill="#3498db" opacity="0.16"/>
 
-              <text x="65" y="20" text-anchor="middle" dominant-baseline="middle"
+              <text x="75" y="20" text-anchor="middle" dominant-baseline="middle"
                     fill="white" font-size="${componentSize}" font-weight="bold">
-                ${this.config.dhw_tank?.name || 'Tapwater'}
+                ${this.config.dhw_tank?.name || 'Hot water'}
               </text>
-              <!-- Current -> target DHW temperature -->
-              <text x="32" y="72" text-anchor="middle" fill="white"
-                    font-size="${prominentTempSize}" font-weight="bold">
+              <!-- Actual temperature is centered when no target entity is available. -->
+              <text x="${hasTankTarget ? 34 : 75}" y="73" text-anchor="middle" fill="white"
+                    font-size="${targetTempSize}" font-weight="bold">
                 ${tankTemp !== undefined ? this.formatValue(tankTemp, 1) + '°' : '—'}
               </text>
-              <text x="65" y="72" text-anchor="middle" fill="#bdc3c7"
-                    font-size="${setpointTempSize}" font-weight="bold">→</text>
-              <text x="98" y="72" text-anchor="middle" fill="#e74c3c"
-                    font-size="${prominentTempSize}" font-weight="bold">
-                ${targetTemp !== undefined ? this.formatValue(targetTemp, 1) + '°' : '—'}
-              </text>
+              ${hasTankTarget ? svg`
+                <path d="M 69 65 H 81 M 76 60 L 81 65 L 76 70"
+                      stroke="#bdc3c7" stroke-width="3.5" fill="none"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+                <text x="116" y="73" text-anchor="middle" fill="#e74c3c"
+                      font-size="${targetTempSize}" font-weight="bold">
+                  ${this.formatValue(targetTemp, 1)}°
+                </text>
+              ` : ''}
 
               <!-- Heat-pump coil -->
               <path d="M 0 105 H 24
@@ -1091,7 +1107,7 @@ export class HeatPumpFlowCard extends LitElement {
                        Q 70 207, 42 207
                        Q 14 207, 14 205
                        H 0"
-                    stroke="${g2ValveState.isActive ? hot : neutral}"
+                    stroke="${dhwBranchColor}"
                     stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
               <!-- Separate electric immersion element: same zig-zag language as BUH, rotated vertically -->
               <g opacity="${electricEnabled ? 1 : 0}">
@@ -1133,17 +1149,20 @@ export class HeatPumpFlowCard extends LitElement {
                 ${this.config.hvac?.name || 'Vloerverwarming'}
               </text>
 
-              <!-- Current -> target room temperature -->
-              <text x="48" y="70" text-anchor="middle" fill="white"
-                    font-size="${prominentTempSize}" font-weight="bold">
+              <!-- Actual temperature is centered when no target entity is available. -->
+              <text x="${hasRoomTarget ? 46 : 105}" y="70" text-anchor="middle" fill="white"
+                    font-size="${targetTempSize}" font-weight="bold">
                 ${roomTemp !== undefined ? this.formatValue(roomTemp, 1) + '°' : '—'}
               </text>
-              <text x="105" y="70" text-anchor="middle" fill="#bdc3c7"
-                    font-size="${setpointTempSize}" font-weight="bold">→</text>
-              <text x="162" y="70" text-anchor="middle" fill="#e67e22"
-                    font-size="${prominentTempSize}" font-weight="bold">
-                ${roomTarget !== undefined ? this.formatValue(roomTarget, 1) + '°' : '—'}
-              </text>
+              ${hasRoomTarget ? svg`
+                <path d="M 96 62 H 114 M 108 56 L 114 62 L 108 68"
+                      stroke="#bdc3c7" stroke-width="3.5" fill="none"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+                <text x="164" y="70" text-anchor="middle" fill="#e67e22"
+                      font-size="${targetTempSize}" font-weight="bold">
+                  ${this.formatValue(roomTarget, 1)}°
+                </text>
+              ` : ''}
 
               <path d="M 22 100 H 170
                        Q 188 100, 188 118
@@ -1152,7 +1171,7 @@ export class HeatPumpFlowCard extends LitElement {
                        Q 22 136, 22 154
                        Q 22 166, 42 166
                        H 176"
-                    fill="none" stroke="#e67e22" stroke-width="7"
+                    fill="none" stroke="${floorLoopColor}" stroke-width="7"
                     stroke-linecap="round" stroke-linejoin="round"/>
             </g>
 

@@ -128,8 +128,9 @@ export interface HeatPumpFlowCardConfig extends LovelaceCardConfig {
     volume_l?: number;              // Nominal tank volume, shown in compact layouts
     electric_heater?: {
       enabled?: boolean;            // Show immersion/electric element in the tank
-      state_entity?: string;        // Optional binary/state entity for on/off status
-      power_entity?: string;        // Optional power entity (W)
+      state_entity?: string;        // Optional binary/state entity for on/off status (takes precedence)
+      active_entity?: string;       // Alias for state_entity
+      power_entity?: string;        // Optional power entity (W); fallback when state is absent
       max_power?: number;           // Used for visual intensity (default: 3000 W)
       label?: string;               // Display label (default: "EL")
     };
@@ -210,7 +211,9 @@ export interface HeatPumpFlowCardConfig extends LovelaceCardConfig {
   // Auxiliary Heater Configuration (inline heater between HP and DHW diverter valve)
   aux_heater?: {
     enabled?: boolean;             // Show auxiliary heater visualization (default: false)
-    power_entity?: string;         // Power consumption entity (W)
+    power_entity?: string;         // Power consumption entity (W); fallback when state is absent
+    state_entity?: string;         // Optional binary/state entity indicating active backup heating
+    active_entity?: string;        // Alias for state_entity
     max_power?: number;            // Maximum power for normalization (default: 18000W = 18kW)
     display_name?: string;         // Display name shown on visualization (e.g., "V18", "AUX", etc.)
     show_label?: boolean;          // Show label above heater (default: true when display_name is set)
