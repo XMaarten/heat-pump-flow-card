@@ -900,8 +900,6 @@ export class HeatPumpFlowCard extends LitElement {
     const prominentTempSize = Math.max(valueSize + 5, 20);
     const setpointTempSize = Math.max(valueSize + 3, 18);
 
-    const bufferVolume = this.config.buffer_tank?.volume_l ?? 40;
-    const dhwVolume = this.config.dhw_tank?.volume_l ?? 300;
     const tankTemp = dhwState.tankTemp;
     const targetTemp = dhwState.targetTemp;
     const roomTemp = hvacState.currentTemp;
@@ -956,7 +954,7 @@ export class HeatPumpFlowCard extends LitElement {
 
             <!-- Returns: UFH drops straight down into a T with the DHW-coil return.
                  The combined return then passes through the 40 L buffer to the outdoor unit. -->
-            <path d="M 405 540 V 561"
+            <path d="M 405 540 V 568"
                   stroke="${returnColor}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${g2ValveState.isActive ? 0.30 : 1}"/>
             <path d="M 620 505 H 575 V 561 H 405"
@@ -1062,8 +1060,6 @@ export class HeatPumpFlowCard extends LitElement {
               <path d="M 0 -22 V -7" stroke="${supplyColor}" stroke-width="6"/>
               <path d="M 7 0 H 22" stroke="${dhwBranchColor}" stroke-width="6"/>
               <path d="M 0 7 V 22" stroke="${heatingBranchColor}" stroke-width="6"/>
-              <text x="0" y="-34" text-anchor="middle"
-                    fill="var(--primary-text-color)" font-size="${labelSize}" font-weight="bold">3-wegklep</text>
             </g>
 
             <!-- 40 L return buffer -->
@@ -1076,8 +1072,6 @@ export class HeatPumpFlowCard extends LitElement {
                     fill="white" font-size="${labelSize}" font-weight="bold">
                 ${this.config.buffer_tank?.name || 'Buffer'}
               </text>
-              <text x="40" y="84" text-anchor="middle" fill="white"
-                    font-size="${valueSize}" font-weight="bold">${bufferVolume} L</text>
             </g>
 
             <!-- 300 L DHW tank -->
@@ -1091,20 +1085,17 @@ export class HeatPumpFlowCard extends LitElement {
                     fill="white" font-size="${componentSize}" font-weight="bold">
                 ${this.config.dhw_tank?.name || 'Tapwater'}
               </text>
-              <text x="65" y="48" text-anchor="middle" fill="#bdc3c7"
-                    font-size="${labelSize}">${dhwVolume} L</text>
-
               <!-- Current and target DHW temperatures side by side -->
-              <text x="34" y="69" text-anchor="middle" fill="#bdc3c7"
+              <text x="34" y="58" text-anchor="middle" fill="#bdc3c7"
                     font-size="${labelSize}">Huidig</text>
-              <text x="34" y="90" text-anchor="middle" fill="white"
+              <text x="34" y="80" text-anchor="middle" fill="white"
                     font-size="${setpointTempSize}" font-weight="bold">
                 ${tankTemp !== undefined ? this.formatValue(tankTemp, 1) + '°' : '—'}
               </text>
 
-              <text x="96" y="69" text-anchor="middle" fill="#bdc3c7"
+              <text x="96" y="58" text-anchor="middle" fill="#bdc3c7"
                     font-size="${labelSize}">Doel</text>
-              <text x="96" y="90" text-anchor="middle" fill="#e74c3c"
+              <text x="96" y="80" text-anchor="middle" fill="#e74c3c"
                     font-size="${setpointTempSize}" font-weight="bold">
                 ${targetTemp !== undefined ? this.formatValue(targetTemp, 1) + '°' : '—'}
               </text>
@@ -1121,17 +1112,18 @@ export class HeatPumpFlowCard extends LitElement {
                        H 0"
                     stroke="${g2ValveState.isActive ? hot : neutral}"
                     stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-              <text x="43" y="164" text-anchor="middle" fill="var(--primary-text-color)"
-                    font-size="${labelSize}" font-weight="bold">Spiraal</text>
-
-              <!-- Separate electric immersion element -->
+              <!-- Separate electric immersion element: same zig-zag language as BUH, rotated vertically -->
               <g opacity="${electricEnabled ? 1 : 0}">
-                <path d="M 102 110 V 205 M 84 138 H 102 M 84 170 H 102"
-                      stroke="${elementColor}" stroke-width="6" fill="none" stroke-linecap="round"/>
-                <text x="102" y="220" text-anchor="middle" fill="${elementColor}"
-                      font-size="${labelSize}" font-weight="bold">
-                  ${electricCfg?.label || 'EL'}
-                </text>
+                <path d="M 102 108 V 120
+                         L 88 134
+                         L 116 150
+                         L 88 166
+                         L 116 182
+                         L 88 198
+                         L 102 212
+                         V 220"
+                      stroke="${elementColor}" stroke-width="5" fill="none"
+                      stroke-linecap="round" stroke-linejoin="round"/>
               </g>
             </g>
 
