@@ -41,6 +41,7 @@ heat_pump:
   thermal_entity: sensor.heat_pump_thermal_power_w
   cop_entity: sensor.heat_pump_cop
   flow_rate_entity: sensor.heat_pump_flow
+  compressor_running_entity: binary_sensor.heat_pump_compressor_running  # Fan fallback
   pressure_entity: sensor.heat_pump_water_pressure  # Optional, bar
   ambient_temp_entity: sensor.heat_pump_outdoor_air_temperature  # Optional
   inlet_temp_entity: sensor.heat_pump_return_temperature
@@ -54,7 +55,10 @@ indoor_unit:
 
 aux_heater:
   enabled: true
-  # state_entity: binary_sensor.backup_heater_active
+  # For multi-stage BUH systems, the symbol is active if any relay is on.
+  # state_entities:
+  #   - binary_sensor.backup_heater_relay_1
+  #   - binary_sensor.backup_heater_relay_2
   # power_entity: sensor.backup_heater_power_w
 
 g2_valve:
@@ -83,7 +87,7 @@ For a single narrow Home Assistant column, set `layout.text_scale: 1.3` to enlar
 
 In the Daikin layout, water pressure appears below COP when `heat_pump.pressure_entity` is configured, and outside air temperature appears below pressure when `heat_pump.ambient_temp_entity` is configured. Outdoor leaving water and indoor PHE outlet can be configured separately.
 
-The optional heater `state_entity` takes precedence over `power_entity` (positive W means active); `active_entity` is also accepted. The DHW coil turns red only during DHW flow, and the floor loop is gray when inactive.
+For the backup heater, `state_entities` may contain multiple relay/stage sensors; the BUH turns active when any one is on. A single `state_entity`/`active_entity` remains supported, with `power_entity` as fallback. Fan animation uses `fan_speed_entity` when available and otherwise `compressor_running_entity`. The DHW coil turns red only during DHW flow, and the floor loop is gray when inactive.
 
 Omit `layout` to use the standard layout. See the [standard configuration example](examples/cx50-configuration.yaml) and [configuration types](src/types.ts) for additional options.
 
