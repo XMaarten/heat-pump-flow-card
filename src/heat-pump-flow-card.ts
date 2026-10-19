@@ -946,7 +946,7 @@ export class HeatPumpFlowCard extends LitElement {
     const baseValueSize = this.getTextSize('value', 14);
     const labelSize = Math.round(this.getTextSize('label', 10) * textScale);
     const valueSize = Math.round(baseValueSize * textScale);
-    const thermalValueSize = valueSize + 2;
+    const thermalValueSize = valueSize + 3;
     const componentSize = Math.round(this.getTextSize('component', 14) * textScale);
     const prominentTempSize = Math.max(baseValueSize + 5, 20);
 
@@ -1035,8 +1035,7 @@ export class HeatPumpFlowCard extends LitElement {
                 ${this.formatValue(hpState.outletTemp, 1)}°
               </text>
 
-              <text x="18" y="84" fill="#bdc3c7" font-size="${labelSize}">Thermal</text>
-              <text x="18" y="109" fill="white" font-size="${thermalValueSize}" font-weight="bold">
+              <text x="18" y="118" fill="white" font-size="${thermalValueSize}" font-weight="bold">
                 ${this.formatValue(thermalKw, 1)} kW
               </text>
 
@@ -1115,10 +1114,6 @@ export class HeatPumpFlowCard extends LitElement {
                     stroke="${showBuh ? buhColor : '#5d6d7e'}"
                     stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"
                     opacity="${showBuh ? 1 : 0.25}"/>
-              <text x="105" y="151" text-anchor="middle"
-                    fill="${showBuh ? buhColor : '#95a5a6'}" font-size="${labelSize}" font-weight="bold">
-                BUH${auxHeaterState.power > 0 ? ' ' + this.formatValue(auxHeaterState.power / 1000, 1) + ' kW' : ''}
-              </text>
               ${showBuh ? svg`
                 <text x="18" y="174"
                       fill="${buhColor}" font-size="${valueSize}" font-weight="bold">
