@@ -898,6 +898,12 @@ export class HeatPumpFlowCard extends LitElement {
 
     const idleThreshold = this.config.animation?.idle_threshold ?? 0;
     const hasFlow = hpState.flowRate > idleThreshold;
+    // Estimate the BUH's delivered heat from the measured temperature rise
+    // across the indoor backup heater, using the same 70 W/(L/min·K)
+    // approximation as the Daikin integration's thermal-output calculation.
+    const buhThermalKw = buhActive && hasFlow
+      ? hpState.flowRate * Math.max(indoorOutTemp - indoorInTemp, 0) * 70 / 1000
+      : 0;
     const neutral = this.config.temperature?.neutral_color ?? '#95a5a6';
     const hot = this.config.temperature?.hot_color ?? '#e74c3c';
     const cold = this.config.temperature?.cold_color ?? '#3498db';
@@ -1112,6 +1118,12 @@ export class HeatPumpFlowCard extends LitElement {
                     fill="${showBuh ? buhColor : '#95a5a6'}" font-size="${labelSize}" font-weight="bold">
                 BUH${auxHeaterState.power > 0 ? ' ' + this.formatValue(auxHeaterState.power / 1000, 1) + ' kW' : ''}
               </text>
+              ${showBuh ? svg`
+                <text x="18" y="174"
+                      fill="${buhColor}" font-size="${valueSize}" font-weight="bold">
+                  ${this.formatValue(buhThermalKw, 1)} kW
+                </text>
+              ` : ''}
             </g>
 
             <!-- 3-way valve below indoor unit -->
