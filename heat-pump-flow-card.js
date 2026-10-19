@@ -356,14 +356,14 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
           href="${t}"
           opacity="${r}"
         />
-      `}getAnimationDuration(t){const e=this.config.animation,i=e?.min_flow_rate??5,o=e?.max_flow_rate??1,a=e?.max_flow_rate_value??50;if(t<=0)return i;return i-Math.min(t/a,1)*(i-o)}renderDaikinSplitCard(){const t=this.getHeatPumpState(),e=this.getHVACState(),i=this.getDHWTankState(),o=this.getG2ValveState(),a=this.getAuxHeaterState(),r=this.config.indoor_unit||{},n=this.getStateValue(r.inlet_temp_entity)??t.outletTemp,s=this.getStateValue(r.outlet_temp_entity)??n,l=!1!==r.show_buh,h=this.config.dhw_tank?.electric_heater,c=this.getStateValue(h?.power_entity)??0,d=this.isEntityActive(h?.active_entity??h?.state_entity),p=!1!==h?.enabled,f=p&&(d??c>0),u=this.isAnyEntityActive(this.config.aux_heater?.state_entities)??this.isEntityActive(this.config.aux_heater?.active_entity??this.config.aux_heater?.state_entity),g=l&&(u??a.power>0),m=this.config.animation?.idle_threshold??0,y=t.flowRate>m,_=this.config.temperature?.neutral_color??"#95a5a6",w=this.config.temperature?.hot_color??"#e74c3c",x=this.config.temperature?.cold_color??"#3498db",$=(t.modeDisplay||t.mode||"").toLowerCase().includes("cool"),b=y?$?x:w:_,k=y?$?w:x:_,v=!o.isActive&&y?b:_,S=o.isActive&&y?w:_,T=o.isActive&&y?x:_,A=!o.isActive&&y?$?x:"#e67e22":_,z=(t,e)=>{const i=this.getStateUnit(e).trim().toLowerCase();return"kw"===i?t:"mw"===i?1e3*t:t/1e3},C=z(t.power,this.config.heat_pump?.power_entity),H=z(t.thermal,this.config.heat_pump?.thermal_entity),M=this.config.heat_pump?.pressure_entity,L=this.getStateValue(M),V=this.getStateValue(this.config.heat_pump?.ambient_temp_entity),P=M?429:381,E=M?451:403,D=this.config.layout?.text_scale??1,R=Number.isFinite(D)?Math.min(1.35,Math.max(1,D)):1,O=this.getTextSize("value",14),F=Math.round(this.getTextSize("label",10)*R),W=Math.round(O*R),N=Math.round(this.getTextSize("component",14)*R),U=Math.max(O+5,20),G=i.tankTemp,B=i.targetTemp,j=e.currentTemp,q=e.targetTemp,Z=void 0!==B&&Number.isFinite(B),Y=void 0!==q&&Number.isFinite(q),J=this.config.logo_size||40,X=!1!==this.config.show_logo,K=this.config.logo_path||"/local/heat-pump-flow.png",tt=this.config.logo_url||"https://github.com/XMaarten/heat-pump-flow-card",et=g?w:_,it=f?w:_;return I`
-      <ha-card style="--logo-size: ${J}px">
-        ${this.config.title||X?I`
+      `}getAnimationDuration(t){const e=this.config.animation,i=e?.min_flow_rate??5,o=e?.max_flow_rate??1,a=e?.max_flow_rate_value??50;if(t<=0)return i;return i-Math.min(t/a,1)*(i-o)}renderDaikinSplitCard(){const t=this.getHeatPumpState(),e=this.getHVACState(),i=this.getDHWTankState(),o=this.getG2ValveState(),a=this.getAuxHeaterState(),r=this.config.indoor_unit||{},n=this.getStateValue(r.inlet_temp_entity)??t.outletTemp,s=this.getStateValue(r.outlet_temp_entity)??n,l=!1!==r.show_buh,h=this.config.dhw_tank?.electric_heater,c=this.getStateValue(h?.power_entity)??0,d=this.isEntityActive(h?.active_entity??h?.state_entity),p=!1!==h?.enabled,f=p&&(d??c>0),u=this.isAnyEntityActive(this.config.aux_heater?.state_entities)??this.isEntityActive(this.config.aux_heater?.active_entity??this.config.aux_heater?.state_entity),g=l&&(u??a.power>0),m=this.config.animation?.idle_threshold??0,y=t.flowRate>m,_=g&&y?t.flowRate*Math.max(s-n,0)*70/1e3:0,w=this.config.temperature?.neutral_color??"#95a5a6",x=this.config.temperature?.hot_color??"#e74c3c",$=this.config.temperature?.cold_color??"#3498db",b=(t.modeDisplay||t.mode||"").toLowerCase().includes("cool"),k=y?b?$:x:w,v=y?b?x:$:w,S=!o.isActive&&y?k:w,T=o.isActive&&y?x:w,A=o.isActive&&y?$:w,z=!o.isActive&&y?b?$:"#e67e22":w,C=(t,e)=>{const i=this.getStateUnit(e).trim().toLowerCase();return"kw"===i?t:"mw"===i?1e3*t:t/1e3},H=C(t.power,this.config.heat_pump?.power_entity),M=C(t.thermal,this.config.heat_pump?.thermal_entity),L=this.config.heat_pump?.pressure_entity,V=this.getStateValue(L),P=this.getStateValue(this.config.heat_pump?.ambient_temp_entity),E=L?429:381,D=L?451:403,R=this.config.layout?.text_scale??1,O=Number.isFinite(R)?Math.min(1.35,Math.max(1,R)):1,F=this.getTextSize("value",14),W=Math.round(this.getTextSize("label",10)*O),N=Math.round(F*O),U=Math.round(this.getTextSize("component",14)*O),G=Math.max(F+5,20),B=i.tankTemp,j=i.targetTemp,q=e.currentTemp,Z=e.targetTemp,Y=void 0!==j&&Number.isFinite(j),J=void 0!==Z&&Number.isFinite(Z),X=this.config.logo_size||40,K=!1!==this.config.show_logo,tt=this.config.logo_path||"/local/heat-pump-flow.png",et=this.config.logo_url||"https://github.com/XMaarten/heat-pump-flow-card",it=g?x:w,ot=f?x:w;return I`
+      <ha-card style="--logo-size: ${X}px">
+        ${this.config.title||K?I`
           <h1 class="card-header">
             <span>${this.config.title||""}</span>
-            ${X?I`
-              <a href="${tt}" target="_blank" rel="noopener noreferrer" class="card-logo-link">
-                <img src="${K}" class="card-logo" alt="Heat Pump Flow Card" />
+            ${K?I`
+              <a href="${et}" target="_blank" rel="noopener noreferrer" class="card-logo-link">
+                <img src="${tt}" class="card-logo" alt="Heat Pump Flow Card" />
               </a>
             `:""}
           </h1>
@@ -382,30 +382,30 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
 
             <!-- SUPPLY: outdoor -> indoor -> 3-way valve (Daikin compact layout) -->
             <path d="M 240 145 H 300"
-                  stroke="${b}" stroke-width="12" fill="none" stroke-linecap="butt"/>
+                  stroke="${k}" stroke-width="12" fill="none" stroke-linecap="butt"/>
             <path d="M 405 240 V 258"
-                  stroke="${b}" stroke-width="12" fill="none" stroke-linecap="butt"/>
+                  stroke="${k}" stroke-width="12" fill="none" stroke-linecap="butt"/>
 
             <!-- 3-way valve -> underfloor heating (down into top of the floor loop) -->
             <path d="M 405 302 V 360"
-                  stroke="${v}" stroke-width="12" fill="none" stroke-linecap="butt"
+                  stroke="${S}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${o.isActive?.3:1}"/>
 
             <!-- 3-way valve -> DHW coil (right), aligned with the coil inlet -->
             <path d="M 427 280 H 585 V 405 H 610"
-                  stroke="${S}" stroke-width="12" fill="none" stroke-linecap="butt"
+                  stroke="${T}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${o.isActive?1:.3}"/>
 
             <!-- Returns: UFH drops into a T with the DHW-coil return,
                  then the combined return goes directly back to the outdoor unit. -->
             <path d="M 405 540 V 566"
-                  stroke="${k}" stroke-width="12" fill="none" stroke-linecap="butt"
+                  stroke="${v}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${o.isActive?.3:1}"/>
             <path d="M 610 505 H 575 V 561 H 405"
-                  stroke="${T}" stroke-width="12" fill="none" stroke-linecap="butt"
+                  stroke="${A}" stroke-width="12" fill="none" stroke-linecap="butt"
                   opacity="${o.isActive?1:.3}"/>
             <path d="M 405 561 H 15 V 145 H 30"
-                  stroke="${o.isActive?T:k}"
+                  stroke="${o.isActive?A:v}"
                   stroke-width="12" fill="none" stroke-linecap="butt"/>
 
             <!-- OUTDOOR UNIT -->
@@ -414,27 +414,27 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                     fill="${this.getHeatPumpColor(t)}" fill-opacity="0.16"
                     stroke="${this.getHeatPumpColor(t)}" stroke-width="3"/>
               <text x="105" y="24" text-anchor="middle"
-                    fill="var(--primary-text-color)" font-size="${N}" font-weight="bold">
+                    fill="var(--primary-text-color)" font-size="${U}" font-weight="bold">
                 ${this.config.heat_pump?.display_name||"Buitenunit"}
               </text>
 
-              <text x="18" y="62" fill="white" font-size="${U}" font-weight="bold">
+              <text x="18" y="62" fill="white" font-size="${G}" font-weight="bold">
                 ${this.formatValue(t.inletTemp,1)}°
               </text>
 
               <text x="192" y="62" text-anchor="end" fill="white"
-                    font-size="${U}" font-weight="bold">
+                    font-size="${G}" font-weight="bold">
                 ${this.formatValue(t.outletTemp,1)}°
               </text>
 
-              <text x="18" y="104" fill="#bdc3c7" font-size="${F}">Electrical</text>
-              <text x="18" y="124" fill="white" font-size="${W}" font-weight="bold">
-                ${this.formatValue(C,1)} kW
+              <text x="18" y="104" fill="#bdc3c7" font-size="${W}">Electrical</text>
+              <text x="18" y="124" fill="white" font-size="${N}" font-weight="bold">
+                ${this.formatValue(H,1)} kW
               </text>
 
-              <text x="18" y="148" fill="#bdc3c7" font-size="${F}">Thermal</text>
-              <text x="18" y="168" fill="white" font-size="${W}" font-weight="bold">
-                ${this.formatValue(H,1)} kW
+              <text x="18" y="148" fill="#bdc3c7" font-size="${W}">Thermal</text>
+              <text x="18" y="168" fill="white" font-size="${N}" font-weight="bold">
+                ${this.formatValue(M,1)} kW
               </text>
 
               <g transform="translate(157, 123)">
@@ -453,33 +453,33 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
             <!-- Flow and COP aligned with the electrical/thermal metric column above -->
             <g>
               <text x="48" y="285"
-                    fill="var(--secondary-text-color)" font-size="${F}">Flow</text>
+                    fill="var(--secondary-text-color)" font-size="${W}">Flow</text>
               <text x="48" y="307"
-                    fill="var(--primary-text-color)" font-size="${W}" font-weight="bold">
+                    fill="var(--primary-text-color)" font-size="${N}" font-weight="bold">
                 ${this.formatValue(t.flowRate,1)} ${this.getStateUnit(this.config.heat_pump?.flow_rate_entity)||"L/min"}
               </text>
 
               <text x="48" y="333"
-                    fill="var(--secondary-text-color)" font-size="${F}">COP</text>
+                    fill="var(--secondary-text-color)" font-size="${W}">COP</text>
               <text x="48" y="355"
-                    fill="var(--primary-text-color)" font-size="${W}" font-weight="bold">
+                    fill="var(--primary-text-color)" font-size="${N}" font-weight="bold">
                 ${y&&t.cop>0?this.formatValue(t.cop,2):"—"}
               </text>
 
-              ${M?Q`
+              ${L?Q`
                 <text x="48" y="381"
-                      fill="var(--secondary-text-color)" font-size="${F}">Pressure</text>
+                      fill="var(--secondary-text-color)" font-size="${W}">Pressure</text>
                 <text x="48" y="403"
-                      fill="var(--primary-text-color)" font-size="${W}" font-weight="bold">
-                  ${void 0!==L?this.formatValue(L,1)+" "+(this.getStateUnit(M)||"bar"):"—"}
+                      fill="var(--primary-text-color)" font-size="${N}" font-weight="bold">
+                  ${void 0!==V?this.formatValue(V,1)+" "+(this.getStateUnit(L)||"bar"):"—"}
                 </text>
               `:""}
-              ${void 0!==V?Q`
-                <text x="48" y="${P}"
-                      fill="var(--secondary-text-color)" font-size="${F}">Outside</text>
+              ${void 0!==P?Q`
                 <text x="48" y="${E}"
-                      fill="var(--primary-text-color)" font-size="${W}" font-weight="bold">
-                  ${this.formatValue(V,1)} ${this.getStateUnit(this.config.heat_pump?.ambient_temp_entity)||"°C"}
+                      fill="var(--secondary-text-color)" font-size="${W}">Outside</text>
+                <text x="48" y="${D}"
+                      fill="var(--primary-text-color)" font-size="${N}" font-weight="bold">
+                  ${this.formatValue(P,1)} ${this.getStateUnit(this.config.heat_pump?.ambient_temp_entity)||"°C"}
                 </text>
               `:""}
             </g>
@@ -488,37 +488,43 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
             <g transform="translate(300, 50)" filter="url(#entity-shadow)">
               <rect width="210" height="190" rx="12" fill="#273746" stroke="#5d6d7e" stroke-width="3"/>
               <text x="105" y="25" text-anchor="middle" fill="white"
-                    font-size="${N}" font-weight="bold">
+                    font-size="${U}" font-weight="bold">
                 ${r.name||"Binnenunit"}
               </text>
 
-              <text x="20" y="70" fill="white" font-size="${U}" font-weight="bold">
+              <text x="20" y="70" fill="white" font-size="${G}" font-weight="bold">
                 ${this.formatValue(n,1)}°
               </text>
 
               <text x="190" y="70" text-anchor="end" fill="white"
-                    font-size="${U}" font-weight="bold">
+                    font-size="${G}" font-weight="bold">
                 ${this.formatValue(s,1)}°
               </text>
 
               <path d="M 34 116 H 52 L 64 98 L 80 134 L 96 98 L 112 134 L 128 98 L 144 134 L 156 116 H 176"
                     transform="translate(0, 12)"
-                    stroke="${l?et:"#5d6d7e"}"
+                    stroke="${l?it:"#5d6d7e"}"
                     stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"
                     opacity="${l?1:.25}"/>
               <text x="105" y="170" text-anchor="middle"
-                    fill="${l?et:"#95a5a6"}" font-size="${F}" font-weight="bold">
+                    fill="${l?it:"#95a5a6"}" font-size="${W}" font-weight="bold">
                 BUH${a.power>0?" "+this.formatValue(a.power/1e3,1)+" kW":""}
               </text>
+              ${l?Q`
+                <text x="18" y="174"
+                      fill="${it}" font-size="${N}" font-weight="bold">
+                  ${this.formatValue(_,1)} kW
+                </text>
+              `:""}
             </g>
 
             <!-- 3-way valve below indoor unit -->
             <g transform="translate(405, 280)" filter="url(#entity-shadow)">
               <circle r="22" fill="#d5dbdb" stroke="#7f8c8d" stroke-width="3"/>
-              <circle r="7" fill="${b}"/>
-              <path d="M 0 -22 V -7" stroke="${b}" stroke-width="6"/>
-              <path d="M 7 0 H 22" stroke="${S}" stroke-width="6"/>
-              <path d="M 0 7 V 22" stroke="${v}" stroke-width="6"/>
+              <circle r="7" fill="${k}"/>
+              <path d="M 0 -22 V -7" stroke="${k}" stroke-width="6"/>
+              <path d="M 7 0 H 22" stroke="${T}" stroke-width="6"/>
+              <path d="M 0 7 V 22" stroke="${S}" stroke-width="6"/>
             </g>
 
             <!-- DHW tank: a little wider to give both temperatures and the arrow breathing room -->
@@ -529,21 +535,21 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
               <rect x="8" y="25" width="134" height="200" fill="#3498db" opacity="0.16"/>
 
               <text x="75" y="20" text-anchor="middle" dominant-baseline="middle"
-                    fill="white" font-size="${N}" font-weight="bold">
+                    fill="white" font-size="${U}" font-weight="bold">
                 ${this.config.dhw_tank?.name||"Hot water"}
               </text>
               <!-- Actual temperature is centered when no target entity is available. -->
-              <text x="${Z?34:75}" y="73" text-anchor="middle" fill="white"
-                    font-size="${U}" font-weight="bold">
-                ${void 0!==G?this.formatValue(G,1)+"°":"—"}
+              <text x="${Y?34:75}" y="73" text-anchor="middle" fill="white"
+                    font-size="${G}" font-weight="bold">
+                ${void 0!==B?this.formatValue(B,1)+"°":"—"}
               </text>
-              ${Z?Q`
+              ${Y?Q`
                 <path d="M 69 65 H 81 M 76 60 L 81 65 L 76 70"
                       stroke="#bdc3c7" stroke-width="3.5" fill="none"
                       stroke-linecap="round" stroke-linejoin="round"/>
                 <text x="116" y="73" text-anchor="middle" fill="#e74c3c"
-                      font-size="${U}" font-weight="bold">
-                  ${this.formatValue(B,1)}°
+                      font-size="${G}" font-weight="bold">
+                  ${this.formatValue(j,1)}°
                 </text>
               `:""}
 
@@ -557,7 +563,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                        Q 70 207, 42 207
                        Q 14 207, 14 205
                        H 0"
-                    stroke="${S}"
+                    stroke="${T}"
                     stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
               <!-- Separate electric immersion element: same zig-zag language as BUH, rotated vertically -->
               <g opacity="${p?1:0}">
@@ -569,7 +575,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                          L 88 198
                          L 102 212
                          V 220"
-                      stroke="${it}" stroke-width="5" fill="none"
+                      stroke="${ot}" stroke-width="5" fill="none"
                       stroke-linecap="round" stroke-linejoin="round"/>
               </g>
             </g>
@@ -585,22 +591,22 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
             <g transform="translate(300, 360)" filter="url(#entity-shadow)">
               <rect width="210" height="180" rx="12" fill="#273746" stroke="#34495e" stroke-width="2"/>
               <text x="105" y="28" text-anchor="middle" fill="white"
-                    font-size="${N}" font-weight="bold">
+                    font-size="${U}" font-weight="bold">
                 ${this.config.hvac?.name||"Vloerverwarming"}
               </text>
 
               <!-- Actual temperature is centered when no target entity is available. -->
-              <text x="${Y?46:105}" y="70" text-anchor="middle" fill="white"
-                    font-size="${U}" font-weight="bold">
-                ${void 0!==j?this.formatValue(j,1)+"°":"—"}
+              <text x="${J?46:105}" y="70" text-anchor="middle" fill="white"
+                    font-size="${G}" font-weight="bold">
+                ${void 0!==q?this.formatValue(q,1)+"°":"—"}
               </text>
-              ${Y?Q`
+              ${J?Q`
                 <path d="M 96 62 H 114 M 108 56 L 114 62 L 108 68"
                       stroke="#bdc3c7" stroke-width="3.5" fill="none"
                       stroke-linecap="round" stroke-linejoin="round"/>
                 <text x="164" y="70" text-anchor="middle" fill="#e67e22"
-                      font-size="${U}" font-weight="bold">
-                  ${this.formatValue(q,1)}°
+                      font-size="${G}" font-weight="bold">
+                  ${this.formatValue(Z,1)}°
                 </text>
               `:""}
 
@@ -611,7 +617,7 @@ var HeatPumpFlowCard=function(t){"use strict";function e(t,e,i,o){var a,r=argume
                        Q 22 136, 22 154
                        Q 22 166, 42 166
                        H 176"
-                    fill="none" stroke="${A}" stroke-width="7"
+                    fill="none" stroke="${z}" stroke-width="7"
                     stroke-linecap="round" stroke-linejoin="round"/>
             </g>
 
