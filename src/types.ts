@@ -24,6 +24,7 @@ export interface HeatPumpFlowCardConfig extends LovelaceCardConfig {
     flow_rate_entity?: string;   // Flow rate (L/min)
     pressure_entity?: string;    // Water pressure (bar), optional in compact Daikin layout
     fan_speed_entity?: string;   // Fan speed (0-100%)
+    compressor_running_entity?: string; // Optional binary sensor; fan animation fallback when no fan speed is available
     mode_entity?: string;        // Operating mode (heating/cooling/dhw/idle/off)
     mode_display_entity?: string; // Mode display text entity (e.g., "Heat+DHW", "Heating Only")
     defrost_entity?: string;     // Defrost mode (binary sensor)
@@ -214,8 +215,9 @@ export interface HeatPumpFlowCardConfig extends LovelaceCardConfig {
   aux_heater?: {
     enabled?: boolean;             // Show auxiliary heater visualization (default: false)
     power_entity?: string;         // Power consumption entity (W); fallback when state is absent
-    state_entity?: string;         // Optional binary/state entity indicating active backup heating
+    state_entity?: string;         // Optional single binary/state entity indicating active backup heating
     active_entity?: string;        // Alias for state_entity
+    state_entities?: string[];     // Optional list; active when any relay/entity is active
     max_power?: number;            // Maximum power for normalization (default: 18000W = 18kW)
     display_name?: string;         // Display name shown on visualization (e.g., "V18", "AUX", etc.)
     show_label?: boolean;          // Show label above heater (default: true when display_name is set)
@@ -382,6 +384,7 @@ export interface HeatPumpState {
   inletTemp: number;
   flowRate: number;
   fanSpeed?: number;           // Fan speed percentage (0-100)
+  compressorRunning?: boolean; // Optional running state used as fan animation fallback
   mode?: string;               // Operating mode
   modeDisplay?: string;        // Mode display text (e.g., "Heat+DHW")
   defrost?: boolean;           // Defrost active
