@@ -237,13 +237,14 @@ export class HeatPumpFlowCard extends LitElement {
     if (!fanBlades || !this.config.heat_pump_visual?.animate_fan) return;
 
     const hpState = this.getHeatPumpState();
-    const fanSpeed = hpState.fanSpeed || 0;
+    const fanSpeed = hpState.fanSpeed;
+    const shouldRotate = (fanSpeed !== undefined && fanSpeed > 0) || hpState.compressorRunning === true;
 
-    if (fanSpeed > 0) {
-      // Add CSS animation class
+    if (shouldRotate) {
       fanBlades.classList.add('fan-rotating');
-      // At 100% speed: 1 second per rotation, at 50%: 2 seconds, etc.
-      const duration = fanSpeed > 0 ? (100 / fanSpeed) : 999;
+      // Prefer a real 0-100% fan speed. Daikin does not expose one in the
+      // current Modbus map, so use a calm 2 s rotation while the compressor runs.
+      const duration = fanSpeed !== undefined && fanSpeed > 0 ? (100 / fanSpeed) : 2;
       (fanBlades as SVGElement).style.setProperty('--fan-duration', `${duration}s`);
     } else {
       fanBlades.classList.remove('fan-rotating');
@@ -260,6 +261,7 @@ export class HeatPumpFlowCard extends LitElement {
       inletTemp: this.getStateValue(cfg.inlet_temp_entity) || 0,
       flowRate: this.getStateValue(cfg.flow_rate_entity) || 0,
       fanSpeed: this.getStateValue(cfg.fan_speed_entity),
+      compressorRunning: this.isEntityActive(cfg.compressor_running_entity),
       mode: this.getStateString(cfg.mode_entity),
       modeDisplay: this.getStateString(cfg.mode_display_entity),
       defrost: this.getStateString(cfg.defrost_entity) === 'on',
@@ -311,6 +313,14 @@ export class HeatPumpFlowCard extends LitElement {
     if (value === undefined || value === 'unknown' || value === 'unavailable') return undefined;
     if (['on', 'true', '1', 'active', 'heating', 'heat'].includes(value)) return true;
     if (['off', 'false', '0', 'inactive', 'idle', 'standby', 'disabled'].includes(value)) return false;
+    return undefined;
+  }
+
+  private isAnyEntityActive(entityIds?: string[]): boolean | undefined {
+    if (!entityIds?.length) return undefined;
+    const states = entityIds.map((entityId) => this.isEntityActive(entityId));
+    if (states.some((state) => state === true)) return true;
+    if (states.every((state) => state === false)) return false;
     return undefined;
   }
 
@@ -882,7 +892,8 @@ export class HeatPumpFlowCard extends LitElement {
     const electricStatus = this.isEntityActive(electricCfg?.active_entity ?? electricCfg?.state_entity);
     const electricEnabled = electricCfg?.enabled !== false;
     const electricActive = electricEnabled && (electricStatus ?? (electricPower > 0));
-    const buhStatus = this.isEntityActive(this.config.aux_heater?.active_entity ?? this.config.aux_heater?.state_entity);
+    const buhStatus = this.isAnyEntityActive(this.config.aux_heater?.state_entities)
+      ?? this.isEntityActive(this.config.aux_heater?.active_entity ?? this.config.aux_heater?.state_entity);
     const buhActive = showBuh && (buhStatus ?? (auxHeaterState.power > 0));
 
     const idleThreshold = this.config.animation?.idle_threshold ?? 0;
